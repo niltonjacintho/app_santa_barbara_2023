@@ -1,8 +1,10 @@
 // ignore_for_file: unnecessary_null_comparison, avoid_print
 
+import 'package:app_sbrm/modules/auth/auth.service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_boom_menu_new/flutter_boom_menu_new.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -57,7 +59,25 @@ class _HomeState extends State<HomeView> {
             subtitle: "O dia a dia da sua paróquia!!",
             subTitleColor: Colors.grey[850]!,
             backgroundColor: Colors.grey[50]!,
-            onTap: () => print('THIRD CHILD'),
+            onTap: () async => {
+              await AuthService()
+                  .login(email: 'teste@123.com', password: '123456'),
+              print('THIRD CHILD'),
+            },
+            elevation: 10,
+          ),
+          MenuItemModel(
+            child: Image.asset('assets/images/avisos.png',
+                color: Colors.grey[850]),
+            title: "Avisos Paroquiais",
+            titleColor: Colors.grey[850]!,
+            subtitle: "O dia a dia da sua paróquia!!",
+            subTitleColor: Colors.grey[850]!,
+            backgroundColor: Colors.grey[50]!,
+            onTap: () => {
+              log(),
+              print('THIRD CHILD'),
+            },
             elevation: 10,
           ),
           MenuItemModel(
@@ -71,6 +91,17 @@ class _HomeState extends State<HomeView> {
             elevation: 10,
           ),
         ]);
+  }
+
+  log() async {
+    await FirebaseAnalytics.instance.logBeginCheckout(
+        value: 10.0,
+        currency: 'USD',
+        items: [
+          AnalyticsEventItem(
+              itemName: 'Socks', itemId: 'xjw73ndnw', price: 10.0),
+        ],
+        coupon: '10PERCENTOFF');
   }
 
   @override
