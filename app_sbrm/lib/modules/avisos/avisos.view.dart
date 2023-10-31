@@ -1,30 +1,32 @@
 // ignore_for_file: unused_local_variable
 
+import 'package:app_sbrm/modules/avisos/avisos.repository.dart';
 import 'package:app_sbrm/modules/avisos/avisos.service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sticky_grouped_list/sticky_grouped_list.dart';
 
 /// This example shows the basic usage of the [StickyGroupedListView].
 void main() => runApp(const AvisosView());
 
-List<Element> _elements = <Element>[
-  Element(DateTime(2020, 6, 24, 18), 'Got to gym', Icons.fitness_center),
-  Element(DateTime(2020, 6, 24, 9), 'Work', Icons.work),
-  Element(DateTime(2020, 6, 25, 8), 'Buy groceries', Icons.shopping_basket),
-  Element(DateTime(2020, 6, 25, 16), 'Cinema', Icons.movie),
-  Element(DateTime(2020, 6, 25, 20), 'Eat', Icons.fastfood),
-  Element(DateTime(2020, 6, 26, 12), 'Car wash', Icons.local_car_wash),
-  Element(DateTime(2020, 6, 27, 12), 'Car wash', Icons.local_car_wash),
-  Element(DateTime(2020, 6, 27, 13), 'Car wash', Icons.local_car_wash),
-  Element(DateTime(2020, 6, 27, 14), 'Car wash', Icons.local_car_wash),
-  Element(DateTime(2020, 6, 27, 15), 'Car wash', Icons.local_car_wash),
-  Element(DateTime(2020, 6, 28, 12), 'Car wash', Icons.local_car_wash),
-  Element(DateTime(2020, 6, 29, 12), 'Car wash', Icons.local_car_wash),
-  Element(DateTime(2020, 6, 29, 12), 'Car wash', Icons.local_car_wash),
-  Element(DateTime(2020, 6, 30, 12), 'Car wash', Icons.local_car_wash),
-];
+// List<Element> _elements = <Element>[
+//   Element(DateTime(2020, 6, 24, 18), 'Got to gym', Icons.fitness_center),
+//   Element(DateTime(2020, 6, 24, 9), 'Work', Icons.work),
+//   Element(DateTime(2020, 6, 25, 8), 'Buy groceries', Icons.shopping_basket),
+//   Element(DateTime(2020, 6, 25, 16), 'Cinema', Icons.movie),
+//   Element(DateTime(2020, 6, 25, 20), 'Eat', Icons.fastfood),
+//   Element(DateTime(2020, 6, 26, 12), 'Car wash', Icons.local_car_wash),
+//   Element(DateTime(2020, 6, 27, 12), 'Car wash', Icons.local_car_wash),
+//   Element(DateTime(2020, 6, 27, 13), 'Car wash', Icons.local_car_wash),
+//   Element(DateTime(2020, 6, 27, 14), 'Car wash', Icons.local_car_wash),
+//   Element(DateTime(2020, 6, 27, 15), 'Car wash', Icons.local_car_wash),
+//   Element(DateTime(2020, 6, 28, 12), 'Car wash', Icons.local_car_wash),
+//   Element(DateTime(2020, 6, 29, 12), 'Car wash', Icons.local_car_wash),
+//   Element(DateTime(2020, 6, 29, 12), 'Car wash', Icons.local_car_wash),
+//   Element(DateTime(2020, 6, 30, 12), 'Car wash', Icons.local_car_wash),
+// ];
 
 class AvisosView extends StatelessWidget {
   const AvisosView({super.key});
@@ -41,78 +43,60 @@ class AvisosView extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Grouped List View Example'),
         ),
-        body: StickyGroupedListView<Element, DateTime>(
-          elements: _elements,
-          order: StickyGroupedListOrder.ASC,
-          groupBy: (Element element) => DateTime(
-            element.date.year,
-            element.date.month,
-            element.date.day,
-          ),
-          groupComparator: (DateTime value1, DateTime value2) =>
-              value2.compareTo(value1),
-          itemComparator: (Element element1, Element element2) =>
-              element1.date.compareTo(element2.date),
-          floatingHeader: true,
-          groupSeparatorBuilder: _getGroupSeparator,
-          itemBuilder: _getItem,
-        ),
-      ),
-    );
-  }
-
-  Widget _getGroupSeparator(Element element) {
-    return SizedBox(
-      height: 50,
-      child: Align(
-        alignment: Alignment.center,
-        child: Container(
-          width: 120,
-          decoration: BoxDecoration(
-            color: Colors.blue[300],
-            border: Border.all(
-              color: Colors.blue[300]!,
-            ),
-            borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              '${element.date.day}. ${element.date.month}, ${element.date.year}',
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _getItem(BuildContext ctx, Element element) {
-    AvisoService avisoService = AvisoService();
-    avisoService.recuperarAvisos();
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(6.0),
-      ),
-      elevation: 8.0,
-      margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-      child: SizedBox(
-        child: ListTile(
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-          leading: Icon(element.icon),
-          title: Text(element.name),
-          trailing: Text('${element.date.hour}:00'),
-        ),
+        body: MyListView(),
       ),
     );
   }
 }
 
-class Element {
-  DateTime date;
-  String name;
-  IconData icon;
+// ignore: use_key_in_widget_constructors
+class MyListView extends StatelessWidget {
+  // final List<Map<String, dynamic>> items = [
+  //   {
+  //     'title': 'Item 1',
+  //     'subtitle': 'Subtítulo 1',
+  //     'date': '01/10/2023',
+  //     'image': 'https://example.com/image1.jpg',
+  //   },
+  //   {
+  //     'title': 'Item 2',
+  //     'subtitle': 'Subtítulo 2',
+  //     'date': '02/10/2023',
+  //     'image': 'https://example.com/image2.jpg',
+  //   },
+  //   // Adicione mais itens aqui
+  // ];
 
-  Element(this.date, this.name, this.icon);
+  @override
+  Widget build(BuildContext context) {
+    late AvisoRepository avisoRepository =
+        Provider.of<AvisoRepository>(context);
+    avisoRepository.recuperarAvisos();
+    return ListView.builder(
+      itemCount: avisoRepository.lista.length,
+      itemBuilder: (context, index) {
+        return Card(
+          margin: const EdgeInsets.all(8.0),
+          child: ListTile(
+            leading: Image.network(avisoRepository.lista[index].imagem!),
+            title: Text(
+              avisoRepository.lista[index].titulo!,
+              style: const TextStyle(fontSize: 30),
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(avisoRepository.lista[index].subtitulo!,
+                    style: const TextStyle(fontSize: 20)),
+                Text(
+                  avisoRepository.lista[index].autor as String,
+                  style: const TextStyle(fontSize: 18, color: Colors.grey),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 }

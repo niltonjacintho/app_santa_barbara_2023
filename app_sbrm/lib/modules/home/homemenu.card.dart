@@ -18,10 +18,10 @@ class CatalogCard extends StatelessWidget {
       child: Column(
         children: [
           AspectRatio(
-            aspectRatio: 16 / 12,
+            aspectRatio: 16 / 16,
             child: Image.asset(
               catalogItem.photoUrl,
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             ),
           ),
           const SizedBox(height: 8),
