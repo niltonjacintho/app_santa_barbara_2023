@@ -1,6 +1,10 @@
 // ignore_for_file: unnecessary_null_comparison, avoid_print
 
 import 'package:app_sbrm/modules/auth/auth.service.dart';
+import 'package:app_sbrm/modules/avisos/avisos.view.dart';
+import 'package:app_sbrm/modules/home/homemenu.card.dart';
+import 'package:app_sbrm/modules/home/homemenu.data.dart';
+import 'package:flexible_grid_view/flexible_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_boom_menu_new/flutter_boom_menu_new.dart';
@@ -76,6 +80,10 @@ class _HomeState extends State<HomeView> {
             backgroundColor: Colors.grey[50]!,
             onTap: () => {
               log(),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AvisosView()),
+              ),
               print('THIRD CHILD'),
             },
             elevation: 10,
@@ -116,7 +124,26 @@ class _HomeState extends State<HomeView> {
               fit: BoxFit.cover,
             ),
           ),
-          child: null,
+          child: Column(
+            children: [
+              const Text(
+                'Somos Santa Barbara',
+                style: TextStyle(
+                  fontSize: 30,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              Expanded(
+                child: FlexibleGridView(
+                  padding: const EdgeInsets.all(12),
+                  mainAxisSpacing: 16,
+                  crossAxisSpacing: 16,
+                  children:
+                      demoData.map((e) => CatalogCard(catalogItem: e)).toList(),
+                ),
+              ),
+            ],
+          ),
         ),
         floatingActionButton: buildBoomMenu(),
       ),
