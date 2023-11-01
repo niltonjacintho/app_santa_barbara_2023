@@ -1,3 +1,4 @@
+import 'package:app_sbrm/modules/avisos/avisos.view.dart';
 import 'package:app_sbrm/modules/home/homemenu.model.dart';
 import 'package:flutter/material.dart';
 
@@ -10,31 +11,40 @@ class CatalogCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Card(
-      color: Colors.transparent,
-      shadowColor: Colors.transparent,
-      margin: EdgeInsets.zero,
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        children: [
-          AspectRatio(
-            aspectRatio: 16 / 16,
-            child: Image.asset(
-              catalogItem.photoUrl,
-              fit: BoxFit.fill,
+    return GestureDetector(
+      onTap: () => {
+        print(catalogItem.name),
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const AvisosView()),
+        ),
+      },
+      child: Card(
+        color: Colors.transparent,
+        shadowColor: Colors.transparent,
+        margin: EdgeInsets.zero,
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          children: [
+            AspectRatio(
+              aspectRatio: 16 / 16,
+              child: Image.asset(
+                catalogItem.photoUrl,
+                fit: BoxFit.fill,
+              ),
             ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            catalogItem.name,
-            style: theme.textTheme.titleLarge,
-            maxLines: 1,
-          ),
-          const SizedBox(height: 16),
-          const SizedBox(
-            height: 8,
-          ),
-        ],
+            const SizedBox(height: 8),
+            Text(
+              catalogItem.name,
+              style: theme.textTheme.titleLarge,
+              maxLines: 1,
+            ),
+            const SizedBox(height: 16),
+            const SizedBox(
+              height: 8,
+            ),
+          ],
+        ),
       ),
     );
   }

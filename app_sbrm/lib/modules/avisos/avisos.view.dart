@@ -1,5 +1,6 @@
 // ignore_for_file: unused_local_variable
 
+import 'package:app_sbrm/model/avisos.interface.dart';
 import 'package:app_sbrm/modules/avisos/avisos.repository.dart';
 import 'package:app_sbrm/modules/avisos/avisos.service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,39 +10,24 @@ import 'package:provider/provider.dart';
 import 'package:sticky_grouped_list/sticky_grouped_list.dart';
 
 /// This example shows the basic usage of the [StickyGroupedListView].
-void main() => runApp(const AvisosView());
-
-// List<Element> _elements = <Element>[
-//   Element(DateTime(2020, 6, 24, 18), 'Got to gym', Icons.fitness_center),
-//   Element(DateTime(2020, 6, 24, 9), 'Work', Icons.work),
-//   Element(DateTime(2020, 6, 25, 8), 'Buy groceries', Icons.shopping_basket),
-//   Element(DateTime(2020, 6, 25, 16), 'Cinema', Icons.movie),
-//   Element(DateTime(2020, 6, 25, 20), 'Eat', Icons.fastfood),
-//   Element(DateTime(2020, 6, 26, 12), 'Car wash', Icons.local_car_wash),
-//   Element(DateTime(2020, 6, 27, 12), 'Car wash', Icons.local_car_wash),
-//   Element(DateTime(2020, 6, 27, 13), 'Car wash', Icons.local_car_wash),
-//   Element(DateTime(2020, 6, 27, 14), 'Car wash', Icons.local_car_wash),
-//   Element(DateTime(2020, 6, 27, 15), 'Car wash', Icons.local_car_wash),
-//   Element(DateTime(2020, 6, 28, 12), 'Car wash', Icons.local_car_wash),
-//   Element(DateTime(2020, 6, 29, 12), 'Car wash', Icons.local_car_wash),
-//   Element(DateTime(2020, 6, 29, 12), 'Car wash', Icons.local_car_wash),
-//   Element(DateTime(2020, 6, 30, 12), 'Car wash', Icons.local_car_wash),
-// ];
+// void main() => runApp(const AvisosView());
 
 class AvisosView extends StatelessWidget {
   const AvisosView({super.key});
-
   @override
   Widget build(BuildContext context) {
+    late AvisoRepository avisoRepository;
+    avisoRepository = Provider.of<AvisoRepository>(context);
+    context.read<AvisoRepository>().recuperarAvisos();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Avisos Paroquiais',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Grouped List View Example'),
+          title: const Text('Avisos paroquiais'),
         ),
         body: MyListView(),
       ),
@@ -51,50 +37,86 @@ class AvisosView extends StatelessWidget {
 
 // ignore: use_key_in_widget_constructors
 class MyListView extends StatelessWidget {
-  // final List<Map<String, dynamic>> items = [
-  //   {
-  //     'title': 'Item 1',
-  //     'subtitle': 'Subtítulo 1',
-  //     'date': '01/10/2023',
-  //     'image': 'https://example.com/image1.jpg',
-  //   },
-  //   {
-  //     'title': 'Item 2',
-  //     'subtitle': 'Subtítulo 2',
-  //     'date': '02/10/2023',
-  //     'image': 'https://example.com/image2.jpg',
-  //   },
-  //   // Adicione mais itens aqui
-  // ];
+  late AvisoRepository avisoRepository;
 
   @override
   Widget build(BuildContext context) {
-    late AvisoRepository avisoRepository =
-        Provider.of<AvisoRepository>(context);
-    avisoRepository.recuperarAvisos();
-    return ListView.builder(
-      itemCount: avisoRepository.lista.length,
-      itemBuilder: (context, index) {
-        return Card(
-          margin: const EdgeInsets.all(8.0),
-          child: ListTile(
-            leading: Image.network(avisoRepository.lista[index].imagem!),
-            title: Text(
-              avisoRepository.lista[index].titulo!,
-              style: const TextStyle(fontSize: 30),
-            ),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(avisoRepository.lista[index].subtitulo!,
-                    style: const TextStyle(fontSize: 20)),
-                Text(
-                  avisoRepository.lista[index].autor as String,
-                  style: const TextStyle(fontSize: 18, color: Colors.grey),
-                ),
-              ],
-            ),
-          ),
+    avisoRepository = Provider.of<AvisoRepository>(context);
+    return FutureBuilder(
+      future: avisoRepository.recuperarAvisos(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (!snapshot.hasData) {
+          return const Center(child: Text('No data available'));
+        }
+        final avisoList = snapshot.data;
+        // ignore: avoid_print, prefer_interpolation_to_compose_strings
+        // print('AVISO ' + snapshot.data[0].titulo);
+        return ListView.builder(
+          itemCount: avisoList.length,
+          itemBuilder: (context, index) {
+            final aviso =
+                avisoList[index] as AvisoInterface; // as Map<String, dynamic>;
+            return SizedBox(
+              height: 200,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 15),
+                child: Card(
+                    elevation: 20,
+                    color: Colors.white,
+                    margin: const EdgeInsets.all(8.0),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child:
+                                Image.network(aviso.imagem!, fit: BoxFit.fill,
+                                    errorBuilder: (context, error, stackTrace) {
+                              return Image.asset(
+                                'assets/images/default.jpg',
+                              );
+                            }),
+                          ),
+                          Expanded(
+                            flex: 8,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    aviso.titulo!,
+                                    style: const TextStyle(fontSize: 30),
+                                  ),
+                                  Text(
+                                    aviso.subtitulo!,
+                                    style: const TextStyle(fontSize: 20),
+                                    maxLines: 1,
+                                    softWrap: false,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  Text(
+                                    aviso.dtInclusao.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )),
+              ),
+            );
+          },
         );
       },
     );
