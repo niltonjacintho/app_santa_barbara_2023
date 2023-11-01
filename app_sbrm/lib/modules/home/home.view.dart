@@ -18,7 +18,6 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeState extends State<HomeView> {
-  @override
   ScrollController? scrollController;
   bool scrollVisible = true;
 
@@ -84,7 +83,6 @@ class _HomeState extends State<HomeView> {
                 context,
                 MaterialPageRoute(builder: (context) => const AvisosView()),
               ),
-              print('THIRD CHILD'),
             },
             elevation: 10,
           ),
