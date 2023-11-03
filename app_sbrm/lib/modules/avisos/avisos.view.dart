@@ -3,6 +3,7 @@
 import 'package:app_sbrm/model/avisos.interface.dart';
 import 'package:app_sbrm/modules/avisos/avisos.repository.dart';
 import 'package:app_sbrm/modules/avisos/avisos.service.dart';
+import 'package:app_sbrm/modules/avisos/avisoview.details.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
@@ -68,50 +69,60 @@ class MyListView extends StatelessWidget {
                     elevation: 20,
                     color: Colors.white,
                     margin: const EdgeInsets.all(8.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 3,
-                            child:
-                                Image.network(aviso.imagem!, fit: BoxFit.fill,
-                                    errorBuilder: (context, error, stackTrace) {
-                              return Image.asset(
-                                'assets/images/default.jpg',
-                              );
-                            }),
-                          ),
-                          Expanded(
-                            flex: 8,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    aviso.titulo!,
-                                    style: const TextStyle(fontSize: 30),
-                                  ),
-                                  Text(
-                                    aviso.subtitulo!,
-                                    style: const TextStyle(fontSize: 20),
-                                    maxLines: 1,
-                                    softWrap: false,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  Text(
-                                    aviso.dtInclusao.toString(),
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                    child: GestureDetector(
+                      onTap: () => {
+                        avisoRepository.avisoAtual = aviso,
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AvisoviewDetails()),
+                        ),
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 3,
+                              child: Image.network(aviso.imagem!,
+                                  fit: BoxFit.fill,
+                                  errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  'assets/images/default.jpg',
+                                );
+                              }),
                             ),
-                          )
-                        ],
+                            Expanded(
+                              flex: 8,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      aviso.titulo!,
+                                      style: const TextStyle(fontSize: 30),
+                                    ),
+                                    Text(
+                                      aviso.subtitulo!,
+                                      style: const TextStyle(fontSize: 20),
+                                      maxLines: 1,
+                                      softWrap: false,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Text(
+                                      aviso.dtInclusao.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     )),
               ),

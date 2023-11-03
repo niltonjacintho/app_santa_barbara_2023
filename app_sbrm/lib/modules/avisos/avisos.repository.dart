@@ -8,6 +8,10 @@ import 'package:flutter/foundation.dart';
 class AvisoRepository extends ChangeNotifier {
   AvisoService avisoService = AvisoService();
   final List<AvisoInterface> _lista = [];
+  late AvisoInterface _avisoAtual;
+  AvisoInterface get avisoAtual => _avisoAtual;
+  set avisoAtual(value) => _avisoAtual = value;
+
   List<AvisoInterface> get lista => _lista;
 
   AvisoInterface fromJson(Map<String, dynamic> json) {
