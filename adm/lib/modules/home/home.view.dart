@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
 import 'package:adm/modules/avisos/avisos.list.dart';
-import 'package:adm/modules/avisos/avisos.view.dart';
 import 'package:flutter/material.dart';
 import 'package:pluto_menu_bar/pluto_menu_bar.dart';
 
@@ -69,10 +68,10 @@ class _PlutoMenuBarDemoState extends State<PlutoMenuBarDemo> {
           PlutoMenuItem(
             title: 'Avisos Paroquiais',
             icon: Icons.group,
-            onTap: () => Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const AvisosLista()),
-            ),
+            onTap: () => {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const AvisosLista())),
+            },
             children: [
               PlutoMenuItem(
                 title: 'Menu 1-1-1',

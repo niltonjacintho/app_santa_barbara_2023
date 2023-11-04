@@ -1,4 +1,6 @@
 import 'package:adm/firebase_options.dart';
+import 'package:adm/modules/avisos/avisos.list.dart';
+import 'package:adm/modules/avisos/avisos.service.dart';
 import 'package:adm/modules/home/home.view.dart';
 import 'package:adm/modules/login/login.view.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'My Auth App',
       initialRoute: '/login', // Set the initial route to the login screen
       routes: {
-        '/login': (context) => const LoginScreen(),
+        '/login': (context) => const AvisosLista(),
         '/home': (context) =>
             const HomeScreen(), // Create a HomeScreen for authenticated users
       },

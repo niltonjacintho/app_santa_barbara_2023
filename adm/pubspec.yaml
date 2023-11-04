@@ -16,6 +16,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   pluto_menu_bar: ^3.0.1
   pluto_grid: ^7.0.2
+  get: ^4.6.6
 
 dev_dependencies:
   flutter_test:

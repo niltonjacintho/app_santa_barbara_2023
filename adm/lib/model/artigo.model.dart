@@ -2,20 +2,20 @@ import 'package:adm/model/comentarios.model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ArtigosModel {
-  String? documentID;
-  bool? ativo;
-  String? categoria;
-  String? titulo;
-  String? subtitulo;
-  String? texto;
-  DateTime? dataCriacao;
-  String? autorAutor;
-  String? evento;
-  String? image;
-  String? video;
-  String? audio;
-  DateTime? dataValidade;
-  int? visualizacoes;
+  String? documentID = '';
+  bool? ativo = false;
+  String? categoria = '';
+  String? titulo = '';
+  String? subtitulo = '';
+  String? texto = '';
+  DateTime? dataCriacao = DateTime.now();
+  String? autorAutor = '';
+  String? evento = '';
+  String? image = '';
+  String? video = '';
+  String? audio = '';
+  DateTime? dataValidade = DateTime.now();
+  int? visualizacoes = 0;
   List<ComentariosModel>? comentarios;
 
   ArtigosModel(
@@ -157,5 +157,24 @@ class ArtigosModel {
         return ComentariosModel.fromMap(comentarioData);
       }).toList(),
     );
+  }
+
+  ArtigosModel init() {
+    ArtigosModel retorno = ArtigosModel();
+    retorno.documentID = '';
+    retorno.ativo = false;
+    retorno.categoria = '';
+    retorno.titulo = '';
+    retorno.subtitulo = '';
+    retorno.texto = '';
+    retorno.dataCriacao = DateTime.now();
+    retorno.autorAutor = '';
+    retorno.evento = '';
+    retorno.image = '';
+    retorno.video = '';
+    retorno.audio = '';
+    retorno.dataValidade = DateTime.now();
+    retorno.visualizacoes = 0;
+    return retorno;
   }
 }
