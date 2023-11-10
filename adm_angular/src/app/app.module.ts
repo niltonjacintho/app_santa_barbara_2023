@@ -6,10 +6,12 @@ import { ButtonModule } from 'primeng/button';
 import { MessagesModule } from 'primeng/messages';
 import { ToastModule } from 'primeng/toast';
 import { PasswordModule } from 'primeng/password';
+import { TableModule } from 'primeng/table';
 
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
+import { MenubarModule } from 'primeng/menubar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -44,7 +46,9 @@ import { MessageService } from 'primeng/api';
     PanelModule,
     MessagesModule,
     PasswordModule,
+    MenubarModule,
     ToastModule,
+    TableModule,
     AngularFireModule.initializeApp({
       "projectId": "project-2297216869628270192",
       "appId": "1:999243580674:web:97bcb06337ef4d04352e1b",

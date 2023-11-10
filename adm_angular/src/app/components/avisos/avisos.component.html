@@ -1,1 +1,24 @@
-<p>avisos works!</p>
+<app-home></app-home>
+<div [ngStyle]="{'display':'flex', 'justify-content': 'center'}">
+    <p-table [value]="avisos">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Título</th>
+                <th>Subtítulo</th>
+                <th>Data de Inclusão</th>
+            </tr>
+        </ng-template>
+        <ng-template let-aviso pTemplate="body">
+            <tr>
+                <td>{{ aviso.titulo }}</td>
+                <td>{{ aviso.subtitulo }}</td>
+                <td>{{ aviso.dtInclusao }}</td>
+                <!-- <td>
+                <button (click)="adicionarAviso(aviso)" pButton type="button" icon="pi pi-plus"></button>
+                <button (click)="excluirAviso(aviso.id)" pButton type="button" icon="pi pi-trash"></button>
+                <button (click)="atualizarAviso(aviso.id, aviso)" pButton type="button" icon="pi pi-refresh"></button>
+            </td> -->
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
