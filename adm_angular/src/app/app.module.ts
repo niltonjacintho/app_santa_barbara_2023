@@ -3,6 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { MessagesModule } from 'primeng/messages';
+import { ToastModule } from 'primeng/toast';
+import { PasswordModule } from 'primeng/password';
 
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
@@ -18,12 +21,17 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { LoginComponent } from './components/login/login.component';
 import { AuthService } from './services/auth.service';
+import { HomeComponent } from './components/home/home.component';
+import { AvisosComponent } from './components/avisos/avisos.component';
+import { MessageService } from 'primeng/api';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent,
+    AvisosComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +42,9 @@ import { AuthService } from './services/auth.service';
     DialogModule,
     ButtonModule,
     PanelModule,
+    MessagesModule,
+    PasswordModule,
+    ToastModule,
     AngularFireModule.initializeApp({
       "projectId": "project-2297216869628270192",
       "appId": "1:999243580674:web:97bcb06337ef4d04352e1b",
@@ -48,7 +59,7 @@ import { AuthService } from './services/auth.service';
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore())
   ],
-  providers: [AuthService],
+  providers: [AuthService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
