@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "project-2297216869628270192": {
+      "hosting": {
+        "adm_angular": [
+          "paroquia"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "project-2297216869628270192"
+  }
+}

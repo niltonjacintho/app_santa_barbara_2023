@@ -1,0 +1,25 @@
+<div [ngClass]="'centerlogin'" [ngStyle]="{'height':'60vh'}">
+    <p-panel [style]="{ 
+        width: '40vw',  
+        height:'40vh',
+        fontSize: '20px',  
+        border: '2px solid black',  
+        borderRadius: '9px' 
+    }" header="Login">
+        <span class="p-float-label" style="padding-bottom: 20px;">
+            <input pInputText id="username" [(ngModel)]="username" [ngClass]="'inputlogin'" />
+            <label htmlFor="username">Usuario</label>
+        </span>
+        <span class="p-float-label" style="padding-bottom: 20px;">
+            <input pInputText id="username" [(ngModel)]="password" [ngClass]="'inputlogin'" />
+            <label htmlFor="username">Senha</label>
+        </span>
+        <ng-template pTemplate="footer">
+            <div style="display: flex; justify-content: center; align-items: center;">
+
+                <p-button label="Entrar" (click)="login()" class="p-button-success">
+                </p-button>
+            </div>
+        </ng-template>
+    </p-panel>
+</div>

@@ -50,12 +50,8 @@ class AvisoService extends GetxController {
         rows.value = r;
         d.value++;
         rows.refresh();
-        print('Rows Length ${rows.value.length}');
       },
     );
-
-    update();
-    print('notify no final ${rows.length}');
   }
 
   Future<void> gravarEntrada(ArtigosModel entrada) async {
