@@ -1,23 +1,30 @@
 <app-home></app-home>
 <div [ngStyle]="{'display':'flex', 'justify-content': 'center'}">
-    <p-table [value]="avisos">
+
+
+    <p-table #dt [value]="avisos" [scrollable]="true" scrollHeight="70vh" [filterDelay]="0"
+        [globalFilterFields]="['titulo', 'subtitulo']" selectionMode="single" [(selection)]="avisoSelecionado"
+        dataKey="id">
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" [(ngModel)]="filtroGlobal" (input)="applyGlobalFilter($event)"
+                        placeholder="Procurar" [ngStyle]="{'width':'80%'}">
+                </span>
+            </div>
+        </ng-template>
         <ng-template pTemplate="header">
             <tr>
                 <th>Título</th>
                 <th>Subtítulo</th>
-                <th>Data de Inclusão</th>
             </tr>
         </ng-template>
-        <ng-template let-aviso pTemplate="body">
-            <tr>
-                <td>{{ aviso.titulo }}</td>
-                <td>{{ aviso.subtitulo }}</td>
-                <td>{{ aviso.dtInclusao }}</td>
-                <!-- <td>
-                <button (click)="adicionarAviso(aviso)" pButton type="button" icon="pi pi-plus"></button>
-                <button (click)="excluirAviso(aviso.id)" pButton type="button" icon="pi pi-trash"></button>
-                <button (click)="atualizarAviso(aviso.id, aviso)" pButton type="button" icon="pi pi-refresh"></button>
-            </td> -->
+        <ng-template let-aviso pTemplate="body"  let-rowIndex="rowIndex">
+            <tr [pSelectableRow]="aviso" [pSelectableRowIndex]="rowIndex">
+
+                <td style="width:50vw">{{ aviso.titulo }}</td>
+                <td style="width:30vw">{{ aviso.subtitulo }}</td>
             </tr>
         </ng-template>
     </p-table>
