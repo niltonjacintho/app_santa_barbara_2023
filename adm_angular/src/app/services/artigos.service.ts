@@ -40,6 +40,10 @@ export class ArtigoService {
         return res;
     }
 
+    avisoIsValid(aviso:AvisoInterface): boolean{
+        return (aviso.titulo != '') && (aviso.subtitulo != '') && (aviso.conteudo != '');
+    }
+
     updateAviso(aviso: any) {
 
     }
