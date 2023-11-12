@@ -14,7 +14,9 @@ export class AvisosComponent implements OnInit {
   @ViewChild('dt') dataTable: Table | undefined;
   filtroGlobal: string = '';
   avisos: any[] = [];
+  grupos: any[] = [];
   avisoSelecionado: any = {};
+  mostrarDialog = false;
 
   constructor(private firestore: AngularFirestore) { }
 
@@ -32,6 +34,17 @@ export class AvisosComponent implements OnInit {
     }
   }
 
+
+
+  abrirDialog() {
+    this.mostrarDialog = true;
+  }
+
+  fecharDialog() {
+    this.mostrarDialog = false;
+  }
+
+
   getAvisos(): Observable<any[]> {
     return this.firestore.collection('artigos', ref => ref.where('grupo', '==', 'avisos'))
       .snapshotChanges()
@@ -43,12 +56,6 @@ export class AvisosComponent implements OnInit {
             if (data.dtInclusao != null) {
               data.dtInclusao = new Date(data.dtInclusao);
             }
-            // try {
-            //   
-            // } catch (error) {
-            //   data.dtInclusao = new Date('2099/01/1');
-            // }
-
             console.log(data.dtInclusao, id, new Date('2099/01901'));
             return { id, ...data };
           });
@@ -62,8 +69,8 @@ export class AvisosComponent implements OnInit {
   }
 
   // Método para atualizar um artigo existente
-  atualizarAviso(id: string, data: any): Promise<void> {
-    return this.firestore.collection('artigos').doc(id).update(data);
+  salvar(): Promise<void> {
+    return this.firestore.collection('artigos').doc(this.avisoSelecionado.id).update(this.avisoSelecionado);
   }
 
   // Método para excluir um artigo

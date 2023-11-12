@@ -7,6 +7,8 @@ import { MessagesModule } from 'primeng/messages';
 import { ToastModule } from 'primeng/toast';
 import { PasswordModule } from 'primeng/password';
 import { TableModule } from 'primeng/table';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { CalendarModule } from 'primeng/calendar';
 
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
@@ -26,6 +28,7 @@ import { AuthService } from './services/auth.service';
 import { HomeComponent } from './components/home/home.component';
 import { AvisosComponent } from './components/avisos/avisos.component';
 import { MessageService } from 'primeng/api';
+import { ArtigoService } from './services/artigos.service';
 
 
 @NgModule({
@@ -49,6 +52,8 @@ import { MessageService } from 'primeng/api';
     MenubarModule,
     ToastModule,
     TableModule,
+    InputTextareaModule,
+    CalendarModule,
     AngularFireModule.initializeApp({
       "projectId": "project-2297216869628270192",
       "appId": "1:999243580674:web:97bcb06337ef4d04352e1b",
@@ -63,7 +68,7 @@ import { MessageService } from 'primeng/api';
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore())
   ],
-  providers: [AuthService, MessageService],
+  providers: [AuthService, MessageService, ArtigoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

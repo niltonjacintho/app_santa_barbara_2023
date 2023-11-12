@@ -2,3 +2,21 @@
     background-color: #f0f0f0;
     /* Cor de fundo desejada para a linha selecionada */
 }
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-side {
+    display: flex;
+    align-items: center;
+    margin-right: auto; /* Para empurrar os elementos para a esquerda */
+}
+
+.right-side {
+    display: flex;
+}
+
+/* Estilize os ícones do PrimeNG conforme necessário */
