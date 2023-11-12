@@ -16,30 +16,12 @@
                     </span>
                 </div>
                 <div class="right-side">
-                    <p-button icon="pi pi-plus" severity="success"></p-button>
+                    <p-button icon="pi pi-plus" severity="success" (onClick)="novoAviso()"></p-button>
                     <p-button [style]="{'margin-left': '10px', 'margin-right': '10px'}" icon="pi pi-pencil"
                         severity="info"></p-button>
                     <p-button icon="pi pi-trash" severity="danger"></p-button>
                 </div>
             </div>
-
-            <!-- <div class="container">
-                <div style="align-items: start;flex: 4;">
-                    <p class="text-left">Texto</p>
-                    <span class="p-input-icon-left ml-auto">
-                        <i class="pi pi-search"></i>
-                        <input pInputText type="text" [(ngModel)]="filtroGlobal" (input)="applyGlobalFilter($event)"
-                            placeholder="Procurar" [ngStyle]="{'width':'80%'}">
-                    </span>
-                </div>
-                <div class="buttons">
-                    <button class="btn">Botão 1</button>
-                    <button class="btn" style="margin-right: 10px">Botão 2</button>
-                    <button class="btn">Botão 3</button>
-                </div>
-            </div> -->
-
-
 
         </ng-template>
         <ng-template pTemplate="header">
@@ -57,15 +39,50 @@
         </ng-template>
     </p-table>
 </div>
-<p-dialog [(ngModel)]="mostrarDialog" [modal]="true" [(visible)]="mostrarDialog">
-    <p-inputText label="Título" [(ngModel)]="avisoSelecionado.titulo" required />
-    <p-inputText label="Subtítulo" [(ngModel)]="avisoSelecionado.subtitulo" />
-    <textarea rows="5" cols="30" pInputTextarea [(ngModel)]="avisoSelecionado.texto"></textarea>
-    <p-calendar label="Data limite de exibição" [(ngModel)]="avisoSelecionado.dtLimiteExibicao" />
-    <p-selectOneMenu label="Grupo" [(ngModel)]="avisoSelecionado.grupo">
-        <option *ngFor="let grupo of grupos" [value]="grupo.id">
-            {{grupo.descricao}}
-        </option>
-    </p-selectOneMenu>
-    <p-button label="Salvar" (click)="salvar()" />
+<p-dialog header="Artigo para o APP" [modal]="true" [(visible)]="mostrarDialog"
+    [style]="{ 'width': '60vw', 'height':'70vw' }">
+    <!-- <form [formGroup]="avisoForm"> -->
+    <div [formGroup]="avisoForm" class="p-grid p-fluid">
+        <div class="p-col-12" style="padding-bottom: 35px;padding-top: 20px;">
+            <span class="p-float-label">
+                <input pInputText id="titulo" type="text" [(ngModel)]="avisoSelecionado.titulo" required="true">
+                <label for="titulo">Título</label>
+            </span>
+        </div>
+        <div class="p-col-12" style="padding-bottom: 35px;">
+            <span class="p-float-label">
+                <input pInputText id="subtitulo" type="text" [(ngModel)]="avisoSelecionado.subtitulo" required="true">
+                <label for="subtitulo">Subtítulo</label>
+            </span>
+        </div>
+        <div class="p-col-12" style="padding-bottom: 35px;">
+            <span class="p-float-label">
+                <p-calendar id="dtLimiteExibicao" [(ngModel)]="avisoSelecionado.dtLimiteExibicao"
+                    dateFormat="dd/mm/yy"></p-calendar>
+                <label for="dtLimiteExibicao">Data Limite de Exibição</label>
+            </span>
+        </div>
+        <div class="p-col-12" style="padding-bottom: 35px;">
+            <span class="p-float-label">
+                <textarea pInputTextarea rows="8" id="conteudo" [(ngModel)]="avisoSelecionado.conteudo"
+                    required="true"></textarea>
+                <label for="conteudo">Conteúdo</label>
+            </span>
+        </div>
+        <span class="p-float-label">
+            <div class="p-col-12" style="margin-bottom: 40px;">
+                <p-dropdown id="grupo" [options]="grupos" [(ngModel)]="avisoSelecionado.grupo"
+                    optionLabel="nome"></p-dropdown>
+                <label for="titulo">Grupo</label>
+            </div>
+        </span>
+    </div>
+    <!-- </form> -->
+    <p-footer>
+        <div style="display: flex; justify-content: space-between;">
+            <p-button type="button" label="Cancelar" (click)="fecharDialog()" severity="secondary"></p-button>
+            <p-button type="button" label="Salvar" (click)="salvar()" severity="success"></p-button>
+        </div>
+    </p-footer>
+    <!-- <p-button label="Salvar" (click)="salvar()" /> -->
 </p-dialog>

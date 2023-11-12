@@ -9,6 +9,7 @@ import { PasswordModule } from 'primeng/password';
 import { TableModule } from 'primeng/table';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
@@ -30,6 +31,8 @@ import { AvisosComponent } from './components/avisos/avisos.component';
 import { MessageService } from 'primeng/api';
 import { ArtigoService } from './services/artigos.service';
 
+import {  ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -42,6 +45,7 @@ import { ArtigoService } from './services/artigos.service';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     InputTextModule,
     DialogModule,
@@ -52,6 +56,7 @@ import { ArtigoService } from './services/artigos.service';
     MenubarModule,
     ToastModule,
     TableModule,
+    DropdownModule,
     InputTextareaModule,
     CalendarModule,
     AngularFireModule.initializeApp({

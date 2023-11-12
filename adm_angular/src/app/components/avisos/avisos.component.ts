@@ -4,6 +4,9 @@ import { AngularFirestore, DocumentChangeAction } from '@angular/fire/compat/fir
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AvisoInterface } from 'src/app/interfaces/artigos.interface';
+import { ArtigoService } from 'src/app/services/artigos.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-avisos',
@@ -12,17 +15,31 @@ import { map } from 'rxjs/operators';
 })
 export class AvisosComponent implements OnInit {
   @ViewChild('dt') dataTable: Table | undefined;
+  avisoForm!: FormGroup;
   filtroGlobal: string = '';
   avisos: any[] = [];
   grupos: any[] = [];
-  avisoSelecionado: any = {};
+  avisoSelecionado: AvisoInterface;
   mostrarDialog = false;
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private fb: FormBuilder, private firestore: AngularFirestore, private artigoService: ArtigoService) {
+    this.avisoSelecionado = artigoService.initAviso();
+  }
 
   ngOnInit() {
+    this.inicializarForm();
     this.getAvisos().subscribe((data: any[]) => {
       this.avisos = data;
+    });
+  }
+
+  inicializarForm() {
+    this.avisoForm = this.fb.group({
+      titulo: ['', Validators.required],
+      subtitulo: ['', Validators.required],
+      conteudo: ['', Validators.required],
+      dtLimiteExibicao: [''],
+      grupo: ['']
     });
   }
 
@@ -34,10 +51,14 @@ export class AvisosComponent implements OnInit {
     }
   }
 
+  novoAviso() {
+    this.avisoSelecionado = this.artigoService.initAviso();
+    this.show();
+  }
 
-
-  abrirDialog() {
-    this.mostrarDialog = true;
+  show() {
+    this.mostrarDialog = !this.mostrarDialog;
+    console.log(this.mostrarDialog, this.avisoSelecionado);
   }
 
   fecharDialog() {
@@ -64,8 +85,11 @@ export class AvisosComponent implements OnInit {
   }
 
   // Método para adicionar um novo artigo
-  adicionarAviso(artigo: any): Promise<any> {
-    return this.firestore.collection('artigos').add(artigo);
+  adicionarAviso(artigo: any) {
+    let res;
+    if (this.avisoForm.valid) {
+      res = this.firestore.collection('artigos').add(artigo);
+    }
   }
 
   // Método para atualizar um artigo existente
