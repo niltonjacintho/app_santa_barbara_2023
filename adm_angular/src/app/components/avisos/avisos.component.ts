@@ -2,11 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, DocumentChangeAction } from '@angular/fire/compat/firestore';
 import { Table } from 'primeng/table';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AvisoInterface } from 'src/app/interfaces/artigos.interface';
 import { ArtigoService } from 'src/app/services/artigos.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-avisos',
@@ -94,7 +95,13 @@ export class AvisosComponent implements OnInit {
 
   // Método para atualizar um artigo existente
   salvar(): Promise<void> {
-    return this.firestore.collection('artigos').doc(this.avisoSelecionado.id).update(this.avisoSelecionado);
+    if (this.artigoService.avisoIsValid(this.avisoSelecionado)) {
+      let id = uuidv4();
+      this.avisoSelecionado.id = this.avisoSelecionado.id == '' ? id : this.avisoSelecionado.id;
+      this.avisoSelecionado.grupo = 'avisos';
+      return this.firestore.collection('artigos').doc(this.avisoSelecionado.id).set(this.avisoSelecionado);
+    }
+    return Promise.reject("Campos obrigatórios não preenchidos");
   }
 
   // Método para excluir um artigo
