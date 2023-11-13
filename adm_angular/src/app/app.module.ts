@@ -31,7 +31,9 @@ import { AvisosComponent } from './components/avisos/avisos.component';
 import { MessageService } from 'primeng/api';
 import { ArtigoService } from './services/artigos.service';
 
-import {  ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { provideStorage, getStorage } from '@angular/fire/storage';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
 
 @NgModule({
@@ -69,9 +71,19 @@ import {  ReactiveFormsModule } from '@angular/forms';
       "messagingSenderId": "999243580674",
       "measurementId": "G-WDRBMW9B0L"
     }),
-    //provideFirebaseApp(() => initializeApp(environment.firebase)), 
+    provideFirebaseApp(() => initializeApp({
+      "projectId": "project-2297216869628270192",
+      "appId": "1:999243580674:web:97bcb06337ef4d04352e1b",
+      "databaseURL": "https://paroquia.firebaseio.com",
+      "storageBucket": "project-2297216869628270192.appspot.com",
+      "apiKey": "AIzaSyDikppRvC3xGB2Jikx_u_STV5kCGUYP51M",
+      "authDomain": "paroquia.firebaseapp.com",
+      "messagingSenderId": "999243580674",
+      "measurementId": "G-WDRBMW9B0L"
+    })),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage())
   ],
   providers: [AuthService, MessageService, ArtigoService],
   bootstrap: [AppComponent]

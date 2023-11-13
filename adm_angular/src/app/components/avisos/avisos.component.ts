@@ -21,7 +21,9 @@ export class AvisosComponent implements OnInit {
   avisos: any[] = [];
   grupos: any[] = [];
   avisoSelecionado: AvisoInterface;
+  grupoSelecionado: string | undefined;
   mostrarDialog = false;
+  imagemSelecionada: any;
 
   constructor(private fb: FormBuilder, private firestore: AngularFirestore, private artigoService: ArtigoService) {
     this.avisoSelecionado = artigoService.initAviso();
@@ -31,6 +33,11 @@ export class AvisosComponent implements OnInit {
     this.inicializarForm();
     this.getAvisos().subscribe((data: any[]) => {
       this.avisos = data;
+    });
+    this.artigoService.avisoGrupos$.subscribe((data) => {
+      // Use the received data here
+      console.log('GRUPOS ', data);
+      this.grupos = data;
     });
   }
 
@@ -52,10 +59,19 @@ export class AvisosComponent implements OnInit {
     }
   }
 
+  onFileSelected(event: any) {
+    this.imagemSelecionada = event;
+  }
+
   novoAviso() {
     this.avisoSelecionado = this.artigoService.initAviso();
     this.show();
   }
+
+  atualizarAviso() {
+    this.show();
+  }
+
 
   show() {
     this.mostrarDialog = !this.mostrarDialog;
@@ -85,21 +101,41 @@ export class AvisosComponent implements OnInit {
       );
   }
 
-  // Método para adicionar um novo artigo
-  adicionarAviso(artigo: any) {
-    let res;
-    if (this.avisoForm.valid) {
-      res = this.firestore.collection('artigos').add(artigo);
-    }
-  }
+  // // Método para adicionar um novo artigo
+  // async adicionarAviso(artigo: any) {
+  //   let res;
+  //   let imageid = '';
+  //   if (this.avisoForm.valid) {
+  //     res = await this.firestore.collection('artigos').add(artigo).then(() => {
+  //       const file: File = this.imagemSelecionada.target.files[0];
+  //       console.log('pegando o arqivo', file.name);
+  //       this.artigoService.uploadImagem(file).then((res) => {
+  //         imageid = res;
+  //       })
+  //     });
+
+  //     this.avisoSelecionado.imagem = imageid;
+  //     this.salvar();
+  //   }
+  // }
 
   // Método para atualizar um artigo existente
-  salvar(): Promise<void> {
+  salvar(): Promise<string> {
     if (this.artigoService.avisoIsValid(this.avisoSelecionado)) {
       let id = uuidv4();
+      let imageid = '';
       this.avisoSelecionado.id = this.avisoSelecionado.id == '' ? id : this.avisoSelecionado.id;
       this.avisoSelecionado.grupo = 'avisos';
-      return this.firestore.collection('artigos').doc(this.avisoSelecionado.id).set(this.avisoSelecionado);
+      this.avisoSelecionado.dtInclusao = new Date();
+      this.firestore.collection('artigos').doc(this.avisoSelecionado.id).set(this.avisoSelecionado).then(() => {
+        const file: File = this.imagemSelecionada.target.files[0];
+        console.log('pegando o arqivo', file.name);
+        const m = this.artigoService.uploadImagem('avisos', file);
+        console.log('MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM', m)
+      });
+      this.avisoSelecionado.imagem = imageid;
+      this.firestore.collection('artigos').doc(this.avisoSelecionado.id).set(this.avisoSelecionado);
+      return Promise.resolve('dados salvos')
     }
     return Promise.reject("Campos obrigatórios não preenchidos");
   }

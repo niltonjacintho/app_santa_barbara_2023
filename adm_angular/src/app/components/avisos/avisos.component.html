@@ -17,8 +17,8 @@
                 </div>
                 <div class="right-side">
                     <p-button icon="pi pi-plus" severity="success" (onClick)="novoAviso()"></p-button>
-                    <p-button [style]="{'margin-left': '10px', 'margin-right': '10px'}" icon="pi pi-pencil"
-                        severity="info"></p-button>
+                    <p-button (onClick)="atualizarAviso()" [style]="{'margin-left': '10px', 'margin-right': '10px'}"
+                        icon="pi pi-pencil" severity="info"></p-button>
                     <p-button icon="pi pi-trash" severity="danger"></p-button>
                 </div>
             </div>
@@ -72,10 +72,12 @@
         <span class="p-float-label">
             <div class="p-col-12" style="margin-bottom: 40px;">
                 <p-dropdown id="grupo" [options]="grupos" [(ngModel)]="avisoSelecionado.grupo"
-                    optionLabel="nome"></p-dropdown>
-                <label for="titulo">Grupo</label>
+                    optionLabel="titulo"></p-dropdown>
+                <label for="titulo" style="padding-left: 10px;"> Grupo</label>
             </div>
         </span>
+        <label for="upload" style="padding-left: 10px;"> Escolha uma imagem para o artigo</label>
+        <input pInputText id="upload" type="file" (change)="onFileSelected($event)" accept="image/*">
     </div>
     <!-- </form> -->
     <p-footer>
