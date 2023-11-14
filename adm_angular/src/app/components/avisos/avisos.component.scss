@@ -9,6 +9,12 @@
     align-items: center;
 }
 
+.container_multiplo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .left-side {
     display: flex;
     align-items: center;

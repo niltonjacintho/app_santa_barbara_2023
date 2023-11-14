@@ -10,6 +10,7 @@ import { TableModule } from 'primeng/table';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
@@ -60,6 +61,7 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
     TableModule,
     DropdownModule,
     InputTextareaModule,
+    InputSwitchModule,
     CalendarModule,
     AngularFireModule.initializeApp({
       "projectId": "project-2297216869628270192",
