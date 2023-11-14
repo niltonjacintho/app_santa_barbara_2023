@@ -69,17 +69,16 @@
                 <label for="conteudo">Conteúdo</label>
             </span>
         </div>
-        <span class="p-float-label">
-            <div class="p-col-12" style="margin-bottom: 40px;">
-                <p-dropdown id="grupo" [options]="grupos" [(ngModel)]="avisoSelecionado.grupo"
-                    optionLabel="titulo"></p-dropdown>
-                <label for="titulo" style="padding-left: 10px;"> Grupo</label>
-            </div>
-        </span>
-        <label for="upload" style="padding-left: 10px;"> Escolha uma imagem para o artigo</label>
-        <input pInputText id="upload" type="file" (change)="onFileSelected($event)" accept="image/*">
+        <div class="info">
+            <label for="upload" style="padding-left: 10px;"> Escolha uma imagem para o artigo</label>
+            <input pInputText id="upload" type="file" (change)="onFileSelected($event)" accept="image/*">
+        </div>
+
+        <div #divImage *ngIf="avisoSelecionado.imagem != ''">
+            <img src={{avisoSelecionado.imagem}} alt="Imagem do artigo">
+        </div>
+
     </div>
-    <!-- </form> -->
     <p-footer>
         <div style="display: flex; justify-content: space-between;">
             <p-button type="button" label="Cancelar" (click)="fecharDialog()" severity="secondary"></p-button>

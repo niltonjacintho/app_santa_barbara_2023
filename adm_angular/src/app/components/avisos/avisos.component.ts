@@ -69,13 +69,17 @@ export class AvisosComponent implements OnInit {
   }
 
   atualizarAviso() {
+    console.log('AVISO SELECIONADO', this.avisoSelecionado)
     this.show();
   }
 
+  tratar(event: any) {
+    console.log('event', event)
+  }
 
   show() {
     this.mostrarDialog = !this.mostrarDialog;
-    console.log(this.mostrarDialog, this.avisoSelecionado);
+
   }
 
   fecharDialog() {
@@ -89,49 +93,38 @@ export class AvisosComponent implements OnInit {
       .pipe(
         map((actions: DocumentChangeAction<any>[]) => {
           return actions.map(a => {
-            const data = a.payload.doc.data();
+            console.log(a.payload.doc.data())
+            const data: AvisoInterface = a.payload.doc.data();
             const id = a.payload.doc.id;
-            if (data.dtInclusao != null) {
-              data.dtInclusao = new Date(data.dtInclusao);
+            // console.log(data)
+            if (a.payload.doc.data().dtInclusao != null) {
+              data.dtInclusao = a.payload.doc.data().dtInclusao.toDate;
             }
-            console.log(data.dtInclusao, id, new Date('2099/01901'));
-            return { id, ...data };
+            if (a.payload.doc.data().dtLimiteExibicao != null) {
+              data.dtLimiteExibicao = a.payload.doc.data().dtLimiteExibicao.toDate()
+            }
+            return { ...data };
           });
         })
       );
   }
 
-  // // Método para adicionar um novo artigo
-  // async adicionarAviso(artigo: any) {
-  //   let res;
-  //   let imageid = '';
-  //   if (this.avisoForm.valid) {
-  //     res = await this.firestore.collection('artigos').add(artigo).then(() => {
-  //       const file: File = this.imagemSelecionada.target.files[0];
-  //       console.log('pegando o arqivo', file.name);
-  //       this.artigoService.uploadImagem(file).then((res) => {
-  //         imageid = res;
-  //       })
-  //     });
-
-  //     this.avisoSelecionado.imagem = imageid;
-  //     this.salvar();
-  //   }
-  // }
-
   // Método para atualizar um artigo existente
-  salvar(): Promise<string> {
+  async salvar(): Promise<string> {
     if (this.artigoService.avisoIsValid(this.avisoSelecionado)) {
       let id = uuidv4();
       let imageid = '';
       this.avisoSelecionado.id = this.avisoSelecionado.id == '' ? id : this.avisoSelecionado.id;
       this.avisoSelecionado.grupo = 'avisos';
       this.avisoSelecionado.dtInclusao = new Date();
-      this.firestore.collection('artigos').doc(this.avisoSelecionado.id).set(this.avisoSelecionado).then(() => {
+      await this.firestore.collection('artigos').doc(this.avisoSelecionado.id).set(this.avisoSelecionado).then(async () => {
         const file: File = this.imagemSelecionada.target.files[0];
-        console.log('pegando o arqivo', file.name);
-        const m = this.artigoService.uploadImagem('avisos', file);
-        console.log('MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM', m)
+        if (this.imagemSelecionada != null) {
+          const m = await this.artigoService.uploadImagem('avisos', file, this.avisoSelecionado).then((imgUrl) => {
+            console.log('RETORNEI COM A URL', imgUrl)
+          })
+          this.imagemSelecionada = null;
+        }
       });
       this.avisoSelecionado.imagem = imageid;
       this.firestore.collection('artigos').doc(this.avisoSelecionado.id).set(this.avisoSelecionado);

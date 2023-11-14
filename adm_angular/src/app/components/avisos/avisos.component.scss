@@ -12,7 +12,8 @@
 .left-side {
     display: flex;
     align-items: center;
-    margin-right: auto; /* Para empurrar os elementos para a esquerda */
+    margin-right: auto;
+    /* Para empurrar os elementos para a esquerda */
 }
 
 .right-side {
@@ -20,3 +21,13 @@
 }
 
 /* Estilize os ícones do PrimeNG conforme necessário */
+.image-upload {
+    display: flex;
+    justify-content: space-between;
+    width: 40vw;
+    height: 200px;
+}
+
+info {
+    margin-left: 50px;
+}
