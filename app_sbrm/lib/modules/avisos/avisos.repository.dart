@@ -8,9 +8,22 @@ import 'package:flutter/foundation.dart';
 class AvisoRepository extends ChangeNotifier {
   AvisoService avisoService = AvisoService();
   final List<AvisoInterface> _lista = [];
+  double _fontSize = 26;
+  double get fontSize => _fontSize;
+  set fontSize(value) => _fontSize = value;
+
   late AvisoInterface _avisoAtual;
   AvisoInterface get avisoAtual => _avisoAtual;
   set avisoAtual(value) => _avisoAtual = value;
+  incFontSize() {
+    _fontSize++;
+    notifyListeners();
+  }
+
+  decFontSize() {
+    _fontSize--;
+    notifyListeners();
+  }
 
   List<AvisoInterface> get lista => _lista;
 
@@ -20,9 +33,6 @@ class AvisoRepository extends ChangeNotifier {
     aviso.id = json['id'];
     aviso.autor = json['autor'];
     aviso.conteudo = json['conteudo'];
-    // aviso.dtInclusao = DateTime.fromMicrosecondsSinceEpoch(json['dtInclusao']);
-    // aviso.dtLimiteExibicao =
-    //     DateTime.fromMicrosecondsSinceEpoch(json['dtLimiteExibicao']);
     aviso.grupo = json['grupo'];
     aviso.imagem = json['imagem'];
     aviso.likes = json['likes'];

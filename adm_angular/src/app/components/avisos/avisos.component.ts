@@ -24,9 +24,21 @@ export class AvisosComponent implements OnInit {
   grupoSelecionado: string | undefined;
   mostrarDialog = false;
   imagemSelecionada: any;
+  selectedGrupo: any;
 
   constructor(private fb: FormBuilder, private firestore: AngularFirestore, private artigoService: ArtigoService) {
     this.avisoSelecionado = artigoService.initAviso();
+  }
+
+  onChange(e: any) {
+    console.log(e);
+    console.log(this.selectedGrupo)
+  }
+
+  onRowSelect(e: any) {
+    this.selectedGrupo = this.grupos.find((item) => {
+      return item.id == this.avisoSelecionado.grupo;
+    });
   }
 
   ngOnInit() {
@@ -38,6 +50,11 @@ export class AvisosComponent implements OnInit {
       // Use the received data here
       console.log('GRUPOS ', data);
       this.grupos = data;
+      this.selectedGrupo = this.grupos.find((item) => {
+        console.log('aviso selecionado no inicio', this.avisoSelecionado)
+        return item.id == this.avisoSelecionado.id;
+      });
+      console.log(this.selectedGrupo)
     });
   }
 
@@ -108,6 +125,14 @@ export class AvisosComponent implements OnInit {
         })
       );
   }
+
+  getGrupos() {
+    this.firestore.collection('grupos').valueChanges().subscribe((grupos: any[]) => {
+      this.grupos = grupos;
+      // this.avisoGruposSubject.next(grupos);
+    });
+  }
+
 
   // Método para atualizar um artigo existente
   async salvar(): Promise<string> {

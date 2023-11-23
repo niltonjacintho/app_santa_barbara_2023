@@ -2,7 +2,7 @@
 <div [ngStyle]="{'display':'flex', 'justify-content': 'center'}">
 
     <p-table #dt [value]="avisos" [scrollable]="true" scrollHeight="70vh" [filterDelay]="0"
-        [globalFilterFields]="['titulo', 'subtitulo']" selectionMode="single" [(selection)]="avisoSelecionado"
+        [globalFilterFields]="['titulo', 'subtitulo']" selectionMode="single" [(selection)]="avisoSelecionado" (onRowSelect)="onRowSelect($event)"
         dataKey="id">
         <ng-template pTemplate="caption">
 
@@ -56,21 +56,30 @@
             </span>
         </div>
         <div class="container">
-            <div class="p-col-8" style="padding-bottom: 35px;">
+            <div class="p-col-5" style="padding-bottom: 35px;">
                 <span class="p-float-label">
                     <p-calendar id="dtLimiteExibicao" [(ngModel)]="avisoSelecionado.dtLimiteExibicao"
                         dateFormat="dd/mm/yy"></p-calendar>
                     <label for="dtLimiteExibicao">Data Limite de Exibição</label>
                 </span>
             </div>
+            <div class="p-col-5" style="padding-bottom: 35px;">
+                <!-- <span class="p-float-label"> -->
+                <label for="ativo">Ativo</label>
 
-            <div class="p-col-4" style="padding-bottom: 35px;">
+                <p-dropdown [options]="grupos" [(ngModel)]="selectedGrupo" optionLabel="titulo"
+                    [showClear]="true" placeholder="Selecione o grupo" (onChange)="onChange($event)"></p-dropdown>
+
+                <!-- </span> -->
+            </div>
+            <div class="p-col-2" style="padding-bottom: 35px;">
                 <!-- <span class="p-float-label"> -->
                 <label for="ativo">Ativo</label>
                 <p-inputSwitch id="ativo" label="Remember Me" [(ngModel)]="avisoSelecionado.ativo"></p-inputSwitch>
 
                 <!-- </span> -->
             </div>
+
         </div>
         <div class="p-col-12" style="padding-bottom: 35px;">
             <span class="p-float-label">

@@ -55,7 +55,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.redAccent,
+      color: Color.fromARGB(255, 1, 0, 10),
     );
   }
 }
