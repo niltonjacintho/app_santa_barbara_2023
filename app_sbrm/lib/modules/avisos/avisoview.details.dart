@@ -18,7 +18,7 @@ class _AvisoviewDetailsState extends State<AvisoviewDetails> {
   @override
   Widget build(BuildContext context) {
     avisoRepository = Provider.of<AvisoRepository>(context);
-
+    // avisoRepository.initialize();
     return ChangeNotifierProvider<AvisoRepository>(
       create: (_) => AvisoRepository(),
       child: Consumer<AvisoRepository>(

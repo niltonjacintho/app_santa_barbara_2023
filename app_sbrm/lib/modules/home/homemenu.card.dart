@@ -1,3 +1,6 @@
+import 'package:app_sbrm/app/modules/agenda/views/agenda_view.dart';
+import 'package:app_sbrm/app/modules/mensagem_paroco/views/mensagem_paroco_view.dart';
+import 'package:app_sbrm/app/modules/pastorais/views/pastorais_view.dart';
 import 'package:app_sbrm/modules/avisos/avisos.view.dart';
 import 'package:app_sbrm/modules/home/homemenu.model.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +16,27 @@ class CatalogCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () => {
-        print(catalogItem.name),
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const AvisosView()),
-        ),
+        // ignore: avoid_print
+        switch (catalogItem.id) {
+          0 => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const AvisosView()),
+            ),
+          1 => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const MensagemParocoView()),
+            ),
+          2 => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const AgendaView()),
+            ),
+          3 => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const PastoraisView()),
+            ),
+          int() => null,
+        },
       },
       child: Card(
         color: Colors.transparent,
