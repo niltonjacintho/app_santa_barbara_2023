@@ -14,7 +14,7 @@ class MensagemParocoView extends GetView<MensagemParocoController> {
   Widget build(BuildContext context) {
     late AvisoRepository avisoRepository;
     avisoRepository = Provider.of<AvisoRepository>(context);
-    avisoRepository.recuperarAvisos(grupo: 'mensagem_paroco', limite: 1);
+    avisoRepository.recuperarAvisosGeral(grupo: 'mensagem_paroco', limite: 1);
     return ChangeNotifierProvider<AvisoRepository>(
       create: (_) => AvisoRepository(),
       child: Consumer<AvisoRepository>(
@@ -49,24 +49,20 @@ class MensagemParocoView extends GetView<MensagemParocoController> {
               ),
             ],
           ),
-          body: Expanded(
-            flex: 8,
-            child: Scrollbar(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(28.0),
-                  child: DropCapText(
-                    dropCapPosition: DropCapPosition.end,
-                    dropCap: DropCap(
-                        width: 400,
-                        height: 500,
-                        child:
-                            Image.asset('assets/images/paroco/padre_001.png')),
-                    avisoRepository.avisoAtual.conteudo!,
-                    style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontSize: model.fontSize,
-                    ),
+          body: Scrollbar(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(28.0),
+                child: DropCapText(
+                  dropCapPosition: DropCapPosition.end,
+                  dropCap: DropCap(
+                      width: 400,
+                      height: 500,
+                      child: Image.asset('assets/images/paroco/padre_001.png')),
+                  avisoRepository.avisoAtual.conteudo!,
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontSize: model.fontSize,
                   ),
                 ),
               ),
@@ -74,6 +70,7 @@ class MensagemParocoView extends GetView<MensagemParocoController> {
           ),
         ),
       ),
+      //  ),
     );
   }
 }

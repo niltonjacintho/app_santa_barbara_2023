@@ -3,6 +3,7 @@ export interface AvisoInterface {
     titulo: string;
     imagem: string;
     dtLimiteExibicao: Date;
+    data: Date;
     subtitulo: string;
     likes: number;
     autor: string;

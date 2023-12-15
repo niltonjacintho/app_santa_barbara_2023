@@ -62,10 +62,36 @@ class AvisoRepository extends ChangeNotifier {
     aviso.titulo = json['titulo'];
     aviso.video = json['video'];
     aviso.visualizacoes = json['visualizacoes'];
+    aviso.data = json['data'] != null
+        ? DateTime.fromMillisecondsSinceEpoch(json['data'].seconds * 1000)
+        : DateTime.now();
+    aviso.dtInclusao =
+        DateTime.fromMillisecondsSinceEpoch(json['dtInclusao'].seconds * 1000);
+    aviso.dtLimiteExibicao = DateTime.fromMillisecondsSinceEpoch(
+        json['dtLimiteExibicao'].seconds * 1000);
     return aviso;
   }
 
   Future<List<AvisoInterface>> recuperarAvisos(
+      {String grupo = 'avisos', int limite = 9999}) async {
+    final firestore = FirebaseFirestore.instance;
+    final query = firestore
+        .collection('artigos')
+        .where("grupo", isEqualTo: grupo)
+        .orderBy("data", descending: true)
+        .limit(limite)
+        .get();
+    final snapshot = await query.then((value) => value.docs);
+    final avisos = snapshot.map((doc) => fromJson(doc.data())).toList();
+    if ((limite == 1) && (avisos.isNotEmpty)) {
+      avisoAtual = avisos[0];
+    }
+    //notifyListeners();
+    print('AVISOS ${avisos[0].dtInclusao}');
+    return avisos;
+  }
+
+  Future<List<AvisoInterface>> recuperarAvisosGeral(
       {String grupo = 'avisos', int limite = 9999}) async {
     final firestore = FirebaseFirestore.instance;
     final query = firestore
@@ -79,7 +105,7 @@ class AvisoRepository extends ChangeNotifier {
     if ((limite == 1) && (avisos.isNotEmpty)) {
       avisoAtual = avisos[0];
     }
-    //notifyListeners();
+    notifyListeners();
     return avisos;
   }
 }

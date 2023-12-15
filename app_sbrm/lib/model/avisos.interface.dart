@@ -5,6 +5,7 @@ interface class AvisoInterface {
   String? conteudo = '';
   DateTime? dtInclusao;
   DateTime? dtLimiteExibicao;
+  DateTime? data;
   String? grupo = '';
   String? imagem = '';
   int? likes = 0;

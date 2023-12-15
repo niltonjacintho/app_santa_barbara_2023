@@ -1,5 +1,6 @@
 import 'package:app_sbrm/model/avisos.interface.dart';
 import 'package:app_sbrm/modules/avisos/avisos.repository.dart';
+import 'package:drop_cap_text/drop_cap_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -60,42 +61,32 @@ class _AvisoviewDetailsState extends State<AvisoviewDetails> {
                 fit: BoxFit.cover,
               ),
             ),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    flex: 5,
-                    child: Image.network(avisoRepository.avisoAtual.imagem!,
-                        height: 400, fit: BoxFit.scaleDown,
-                        errorBuilder: (context, error, stackTrace) {
-                      return Image.asset(
-                        'assets/images/default.jpg',
-                      );
-                    }),
-                  ),
-                  Expanded(
-                    flex: 8,
-                    child: Scrollbar(
-                      child: SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              SimpleRichText(
-                                avisoRepository.avisoAtual.conteudo!,
-                                style: TextStyle(
-                                    fontSize: model.fontSize,
-                                    color: Colors.black),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+            child: Scrollbar(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(28.0),
+                  child: DropCapText(
+                    dropCapPosition: DropCapPosition.end,
+                    dropCap: DropCap(
+                      width: 400,
+                      height: 500,
+                      child: Image.network(avisoRepository.avisoAtual.imagem!,
+                          height: 400, fit: BoxFit.scaleDown,
+                          errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          'assets/images/default.jpg',
+                        );
+                      }),
+                    ),
+                    avisoRepository.avisoAtual.conteudo!,
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      fontSize: model.fontSize,
                     ),
                   ),
-                  //),
-                ]),
+                ),
+              ),
+            ),
           ),
         ),
       ),

@@ -1,9 +1,9 @@
 <app-home></app-home>
 <div [ngStyle]="{'display':'flex', 'justify-content': 'center'}">
-
+    <p-toast></p-toast>
     <p-table #dt [value]="avisos" [scrollable]="true" scrollHeight="70vh" [filterDelay]="0"
-        [globalFilterFields]="['titulo', 'subtitulo']" selectionMode="single" [(selection)]="avisoSelecionado" (onRowSelect)="onRowSelect($event)"
-        dataKey="id">
+        [globalFilterFields]="['titulo', 'subtitulo', 'grupo']" selectionMode="single" [(selection)]="avisoSelecionado"
+        (onRowSelect)="onRowSelect($event)" dataKey="id">
         <ng-template pTemplate="caption">
 
             <div class="container">
@@ -17,6 +17,7 @@
                 </div>
                 <div class="right-side">
                     <p-button icon="pi pi-plus" severity="success" (onClick)="novoAviso()"></p-button>
+                    <p-button icon="pi pi-plus" severity="success" (onClick)="migrateData()"></p-button>
                     <p-button (onClick)="atualizarAviso()" [style]="{'margin-left': '10px', 'margin-right': '10px'}"
                         icon="pi pi-pencil" severity="info"></p-button>
                     <p-button icon="pi pi-trash" severity="danger"></p-button>
@@ -26,15 +27,21 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th>Título</th>
-                <th>Subtítulo</th>
+                <th pSortableColumn="titulo">Título</th>
+                <th pSortableColumn="subtitulo">Subtítulo</th>
+                <th pSortableColumn="grupo">Grupo</th>
+                <th pSortableColumn="data">Data</th>
+                <th pSortableColumn="dtInclusao">Inclusão</th>
             </tr>
         </ng-template>
         <ng-template let-aviso pTemplate="body" let-rowIndex="rowIndex">
             <tr [pSelectableRow]="aviso" [pSelectableRowIndex]="rowIndex">
 
-                <td style="width:50vw">{{ aviso.titulo }}</td>
-                <td style="width:30vw">{{ aviso.subtitulo }}</td>
+                <td style="width:40vw">{{ aviso.titulo }}</td>
+                <td style="width:25vw">{{ aviso.subtitulo }}</td>
+                <td style="width:25vw">{{ aviso.grupo }}</td>
+                <td style="width:25vw">{{ aviso.data | date: 'dd/MM/yyyy' }}</td>
+                <td style="width:25vw">{{ aviso.dtInclusao | date: 'dd/MM/yyyy' }}</td>
             </tr>
         </ng-template>
     </p-table>
@@ -58,6 +65,12 @@
         <div class="container">
             <div class="p-col-5" style="padding-bottom: 35px;">
                 <span class="p-float-label">
+                    <p-calendar id="data" [(ngModel)]="avisoSelecionado.data" dateFormat="dd/mm/yy"></p-calendar>
+                    <label for="data">Informe a data</label>
+                </span>
+            </div>
+            <div class="p-col-5" style="padding-bottom: 35px;">
+                <span class="p-float-label">
                     <p-calendar id="dtLimiteExibicao" [(ngModel)]="avisoSelecionado.dtLimiteExibicao"
                         dateFormat="dd/mm/yy"></p-calendar>
                     <label for="dtLimiteExibicao">Data Limite de Exibição</label>
@@ -65,9 +78,9 @@
             </div>
             <div class="p-col-5" style="padding-bottom: 35px;">
                 <!-- <span class="p-float-label"> -->
-                <label for="ativo">Ativo</label>
+                <label for="ativo">Grupo</label>
 
-                <p-dropdown [options]="grupos" [(ngModel)]="selectedGrupo" optionLabel="titulo"
+                <p-dropdown id="grupo" [options]="grupos" [(ngModel)]="selectedGrupo" optionLabel="titulo"
                     [showClear]="true" placeholder="Selecione o grupo" (onChange)="onChange($event)"></p-dropdown>
 
                 <!-- </span> -->

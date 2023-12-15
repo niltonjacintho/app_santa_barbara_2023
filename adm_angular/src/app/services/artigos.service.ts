@@ -28,6 +28,7 @@ export class ArtigoService {
             titulo: '',
             imagem: '',
             dtLimiteExibicao: new Date(),
+            data: new Date(),
             subtitulo: '',
             likes: 0,
             autor: '',
@@ -42,7 +43,7 @@ export class ArtigoService {
     }
 
     avisoIsValid(aviso: AvisoInterface): boolean {
-        return (aviso.titulo != '') && (aviso.subtitulo != '') && (aviso.conteudo != '');
+        return (aviso.titulo != '') && (aviso.subtitulo != '') && (aviso.grupo != '');
     }
 
     async uploadImagem(tipo: string, event: any, aviso: AvisoInterface): Promise<string> {
