@@ -7,9 +7,15 @@ import 'package:provider/provider.dart';
 class AgendaController extends GetxController {
   //TODO: Implement AgendaController
 
-  RxList<AvisoInterface> listaAgendas = new List<AvisoInterface>.empty().obs;
-
+  RxList<AvisoInterface> listaAgendas = <AvisoInterface>[].obs;
+  var selectedMes = 0.obs;
+  var x = ''.obs;
   final count = 0.obs;
+
+  setMes(int mes) {
+    selectedMes.value = mes;
+  }
+
   @override
   void onInit() {
     super.onInit();
@@ -25,14 +31,16 @@ class AgendaController extends GetxController {
     super.onClose();
   }
 
-  RxList<AvisoInterface> getData(BuildContext context) {
-    print('pegando valores');
+  RxList<AvisoInterface> getData(BuildContext context, int mes) {
+    print('pegando valores de agenda');
     late AvisoRepository avisoRepository;
     avisoRepository = Provider.of<AvisoRepository>(context);
     avisoRepository
-        .recuperarAvisos(grupo: 'agenda')
+        .recuperarAgenda(mes)
         .then((value) => listaAgendas.value = value);
-    print(listaAgendas[0].dtInclusao);
+    // print('LISTA AGENDAS RETORNADA ${listaAgendas[0].dtInclusao}');
+    x.value = 'teste';
+    listaAgendas.refresh();
     return listaAgendas;
   }
 

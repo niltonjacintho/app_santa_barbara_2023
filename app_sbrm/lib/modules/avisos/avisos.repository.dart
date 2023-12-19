@@ -72,13 +72,52 @@ class AvisoRepository extends ChangeNotifier {
     return aviso;
   }
 
+  DateTime getDatasMes(int mes, {bool inicio = false}) {
+    int ano = DateTime.now().year;
+    late DateTime data;
+    if (inicio) {
+      data = DateTime(ano, mes, 1);
+    } else {
+      switch (mes) {
+        case 2:
+          data = DateTime(ano, 2, 28);
+          break;
+        case 1 || 3 || 5 || 7 || 8 || 10 || 12:
+          data = DateTime(ano, mes, 31);
+        case 4 || 6 || 9 || 11:
+          data = DateTime(ano, mes, 30);
+        default:
+      }
+    }
+    return data;
+  }
+
+  Future<List<AvisoInterface>> recuperarAgenda(int mes) async {
+    print('get agenda data');
+    print(getDatasMes(mes, inicio: true));
+    print(getDatasMes(mes, inicio: false));
+    final firestore = FirebaseFirestore.instance;
+    final query = firestore
+        .collection('artigos')
+        .where("grupo", isEqualTo: 'agenda')
+        .where("data", isGreaterThanOrEqualTo: getDatasMes(mes, inicio: true))
+        .where("data", isLessThanOrEqualTo: getDatasMes(mes, inicio: false))
+        .orderBy("data", descending: false)
+        .get();
+    final snapshot = await query.then((value) => value.docs);
+    final avisos = snapshot.map((doc) => fromJson(doc.data())).toList();
+    //notifyListeners();
+    print('AVISOS ${avisos[0].dtInclusao}');
+    return avisos;
+  }
+
   Future<List<AvisoInterface>> recuperarAvisos(
       {String grupo = 'avisos', int limite = 9999}) async {
     final firestore = FirebaseFirestore.instance;
     final query = firestore
         .collection('artigos')
         .where("grupo", isEqualTo: grupo)
-        .orderBy("data", descending: true)
+        .orderBy("data", descending: false)
         .limit(limite)
         .get();
     final snapshot = await query.then((value) => value.docs);
