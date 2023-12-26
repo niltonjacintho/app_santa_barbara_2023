@@ -10,16 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AvisoRepository extends ChangeNotifier {
   AvisoService avisoService = AvisoService();
   final List<AvisoInterface> _lista = [];
+  List<AvisoInterface> avisos = List<AvisoInterface>.empty();
   double _fontSize = 26;
-  // String s = '';
-  // initialize() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   var value = prefs.getString('font_size') ?? '';
-  //   _fontSize = double.parse(value);
-  //   print('FONT SIZE $_fontSize Value $value  string $s');
-  //   notifyListeners();
-  // }
-
   double get fontSize => _fontSize;
   set fontSize(value) => _fontSize = value;
 
@@ -73,7 +65,8 @@ class AvisoRepository extends ChangeNotifier {
   }
 
   DateTime getDatasMes(int mes, {bool inicio = false}) {
-    int ano = DateTime.now().year;
+    int ano = 2024; //DateTime.now().year;
+    mes++;
     late DateTime data;
     if (inicio) {
       data = DateTime(ano, mes, 1);
@@ -93,22 +86,21 @@ class AvisoRepository extends ChangeNotifier {
   }
 
   Future<List<AvisoInterface>> recuperarAgenda(int mes) async {
-    print('get agenda data');
-    print(getDatasMes(mes, inicio: true));
-    print(getDatasMes(mes, inicio: false));
+    Timestamp inicio = Timestamp.fromDate(getDatasMes(mes, inicio: true));
+    Timestamp fim = Timestamp.fromDate(getDatasMes(mes, inicio: false));
     final firestore = FirebaseFirestore.instance;
     final query = firestore
         .collection('artigos')
         .where("grupo", isEqualTo: 'agenda')
-        .where("data", isGreaterThanOrEqualTo: getDatasMes(mes, inicio: true))
-        .where("data", isLessThanOrEqualTo: getDatasMes(mes, inicio: false))
+        .where("data", isGreaterThanOrEqualTo: inicio)
+        .where("data", isLessThanOrEqualTo: fim)
         .orderBy("data", descending: false)
         .get();
     final snapshot = await query.then((value) => value.docs);
-    final avisos = snapshot.map((doc) => fromJson(doc.data())).toList();
-    //notifyListeners();
-    print('AVISOS ${avisos[0].dtInclusao}');
-    return avisos;
+    final _avisos = snapshot.map((doc) => fromJson(doc.data())).toList();
+    avisos = _avisos;
+    notifyListeners();
+    return _avisos;
   }
 
   Future<List<AvisoInterface>> recuperarAvisos(
@@ -125,8 +117,6 @@ class AvisoRepository extends ChangeNotifier {
     if ((limite == 1) && (avisos.isNotEmpty)) {
       avisoAtual = avisos[0];
     }
-    //notifyListeners();
-    print('AVISOS ${avisos[0].dtInclusao}');
     return avisos;
   }
 

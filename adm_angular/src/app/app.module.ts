@@ -29,8 +29,10 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthService } from './services/auth.service';
 import { HomeComponent } from './components/home/home.component';
 import { AvisosComponent } from './components/avisos/avisos.component';
+import { ImportarAgendaComponent } from './components/importar/importarAgenda.component';
 import { MessageService } from 'primeng/api';
 import { ArtigoService } from './services/artigos.service';
+
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { provideStorage, getStorage } from '@angular/fire/storage';
@@ -42,7 +44,8 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
     AppComponent,
     LoginComponent,
     HomeComponent,
-    AvisosComponent
+    AvisosComponent,
+    ImportarAgendaComponent
   ],
   imports: [
     BrowserModule,

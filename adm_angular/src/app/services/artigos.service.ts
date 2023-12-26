@@ -80,6 +80,13 @@ export class ArtigoService {
             this.avisoGruposSubject.next(grupos);
         });
     }
+
+    isNumber(value: any): value is number {
+        const n: Number = Number(value);
+        console.log(typeof value, Number(value), !Number.isNaN(n))
+        return !Number.isNaN(n)
+    }
+
 }
 
 

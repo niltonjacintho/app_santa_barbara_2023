@@ -32,12 +32,13 @@ class AgendaController extends GetxController {
   }
 
   RxList<AvisoInterface> getData(BuildContext context, int mes) {
-    print('pegando valores de agenda');
+    print('pegando valores de agenda $mes');
     late AvisoRepository avisoRepository;
     avisoRepository = Provider.of<AvisoRepository>(context);
+    print('vai pegar os dados');
     avisoRepository
         .recuperarAgenda(mes)
-        .then((value) => listaAgendas.value = value);
+        .then((value) => {listaAgendas.value = value});
     // print('LISTA AGENDAS RETORNADA ${listaAgendas[0].dtInclusao}');
     x.value = 'teste';
     listaAgendas.refresh();

@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:app_sbrm/app/modules/paroquias/controllers/paroquias.repository.dart';
 import 'package:app_sbrm/modules/avisos/avisos.repository.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -16,9 +17,10 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   print('Passou ${Firebase.apps}');
-    runApp(
-      ChangeNotifierProvider(create: (context) => AvisoRepository(),
-      child: const MyApp()));
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) => AvisoRepository()),
+    ChangeNotifierProvider(create: (context) => ParoquiasRepository()),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

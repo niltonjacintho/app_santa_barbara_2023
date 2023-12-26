@@ -1,5 +1,6 @@
 import 'package:app_sbrm/app/modules/agenda/views/agenda_view.dart';
 import 'package:app_sbrm/app/modules/mensagem_paroco/views/mensagem_paroco_view.dart';
+import 'package:app_sbrm/app/modules/paroquias/views/paroquias_view.dart';
 import 'package:app_sbrm/app/modules/pastorais/views/pastorais_view.dart';
 import 'package:app_sbrm/modules/avisos/avisos.view.dart';
 import 'package:app_sbrm/modules/home/homemenu.model.dart';
@@ -29,11 +30,11 @@ class CatalogCard extends StatelessWidget {
             ),
           2 => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const AgendaView()),
+              MaterialPageRoute(builder: (context) => const ParoquiasView()),
             ),
           3 => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const PastoraisView()),
+              MaterialPageRoute(builder: (context) => const AgendaView()),
             ),
           int() => null,
         },

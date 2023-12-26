@@ -22,6 +22,11 @@ export class HomeComponent {
         icon: 'pi pi-fw pi-bookmark',
         routerLink: ['/avisos'] // Defina a rota para a página de produtos
       },
+      {
+        label: 'Importar Agenda',
+        icon: 'pi pi-fw pi-bookmark',
+        routerLink: ['/importar'] // Defina a rota para a página de produtos
+      },
       // Adicione mais itens conforme necessário
     ];
   }

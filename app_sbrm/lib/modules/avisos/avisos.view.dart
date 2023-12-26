@@ -2,9 +2,7 @@
 
 import 'package:app_sbrm/model/avisos.interface.dart';
 import 'package:app_sbrm/modules/avisos/avisos.repository.dart';
-import 'package:app_sbrm/modules/avisos/avisos.service.dart';
 import 'package:app_sbrm/modules/avisos/avisoview.details.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
