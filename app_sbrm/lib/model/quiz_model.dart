@@ -25,13 +25,18 @@ class QuizDb {
   List<Desafios>? desafios;
   BasePerguntas? basePerguntas;
 
-  QuizDb({required this.baseTopicos, required this.quiz, required this.desafios, required this.basePerguntas});
+  QuizDb(
+      {required this.baseTopicos,
+      required this.quiz,
+      required this.desafios,
+      required this.basePerguntas});
 
   QuizDb.fromJson(Map<String, dynamic> json) {
+    BaseTopicos b = BaseTopicos();
     if (json['baseTopicos'] != null) {
       baseTopicos = [];
       json['baseTopicos'].forEach((v) {
-        baseTopicos!.add(new BaseTopicos.fromJson(v));
+        baseTopicos!.add(b.fromJson(v));
       });
     }
     if (json['quiz'] != null) {
@@ -76,12 +81,14 @@ class BaseTopicos {
 
   get getIdBase => nome!.trim().replaceAll(' ', '').toLowerCase();
 
-  BaseTopicos({ this.id,  this.nome,  this.cor});
+  BaseTopicos({this.id, this.nome, this.cor});
 
-  BaseTopicos.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    nome = json['nome'];
-    cor = json['cor'];
+  fromJson(Map<String, dynamic> data) {
+    BaseTopicos base = BaseTopicos();
+    base.id = data['id'];
+    base.nome = data['nome'];
+    base.cor = data['cor'];
+    return base;
   }
 
   Map<String, dynamic> toJson() {
@@ -121,7 +128,7 @@ class Quiz {
     recomendacoes = json['recomendacoes'];
     qtdperguntas = json['qtdperguntas'];
     if (json['quizPerguntas'] != null) {
-      quizPerguntas =[];
+      quizPerguntas = [];
       json['quizPerguntas'].forEach((v) {
         quizPerguntas!.add(new QuizPerguntas.fromJson(v));
       });

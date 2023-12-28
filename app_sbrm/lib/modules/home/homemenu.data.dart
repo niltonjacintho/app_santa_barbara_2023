@@ -21,4 +21,9 @@ final List<MenuItemModel> demoData = [
     'assets/images/agenda.png',
     3,
   ),
+  MenuItemModel(
+    'Quiz',
+    'assets/images/quizlogo.png',
+    4,
+  ),
 ];

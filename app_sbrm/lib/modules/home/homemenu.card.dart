@@ -1,7 +1,7 @@
 import 'package:app_sbrm/app/modules/agenda/views/agenda_view.dart';
+import 'package:app_sbrm/app/modules/game/game.view.dart';
 import 'package:app_sbrm/app/modules/mensagem_paroco/views/mensagem_paroco_view.dart';
 import 'package:app_sbrm/app/modules/paroquias/views/paroquias_view.dart';
-import 'package:app_sbrm/app/modules/pastorais/views/pastorais_view.dart';
 import 'package:app_sbrm/modules/avisos/avisos.view.dart';
 import 'package:app_sbrm/modules/home/homemenu.model.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +35,10 @@ class CatalogCard extends StatelessWidget {
           3 => Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const AgendaView()),
+            ),
+          4 => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const GamesView()),
             ),
           int() => null,
         },

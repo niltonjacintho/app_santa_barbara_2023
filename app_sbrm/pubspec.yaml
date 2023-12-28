@@ -28,6 +28,9 @@ dependencies:
   z_grouped_list: ^1.0.8
   clickable_list_wheel_view: ^0.2.0
   material_text_fields: ^1.0.3
+  material_dialogs: ^1.1.4
+  google_maps_flutter: ^2.5.0
+  flutter_carousel_slider: ^1.1.0
 
 dev_dependencies:
   flutter_test:

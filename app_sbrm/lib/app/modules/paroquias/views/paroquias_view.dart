@@ -1,6 +1,10 @@
 import 'package:app_sbrm/app/modules/paroquias/controllers/paroquias.repository.dart';
+import 'package:app_sbrm/app/modules/paroquias/views/paroquias_mapa.dart';
 import 'package:app_sbrm/model/paroquias.model.dart';
 import 'package:flutter/material.dart';
+import 'package:material_dialogs/dialogs.dart';
+import 'package:material_dialogs/shared/types.dart';
+import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 import 'package:material_text_fields/material_text_fields.dart';
 import 'package:material_text_fields/theme/material_text_field_theme.dart';
 
@@ -103,10 +107,55 @@ class ParoquiasView extends StatelessWidget {
                     ButtonBar(
                       children: [
                         TextButton(
-                            onPressed: () {}, child: const Text('Capelas')),
-                        TextButton(onPressed: () {}, child: const Text('Mapa')),
+                            onPressed: () => {
+                                  Dialogs.materialDialog(
+                                    title: "Capelas da paróquia ${item.nome!}",
+                                    color: const Color.fromARGB(
+                                        255, 144, 147, 192),
+                                    customView: item.capelas!.length > 2
+                                        ? capelaslist(context, item)
+                                        : const Text(
+                                            'Esta paróquia não possui capelas',
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                    customViewPosition:
+                                        CustomViewPosition.BEFORE_MESSAGE,
+                                    context: context,
+                                    dialogWidth: true ? 0.8 : null,
+                                    onClose: (value) =>
+                                        print("returned value is '$value'"),
+                                    actions: [
+                                      Visibility(
+                                        visible: item.capelas!.length > 2,
+                                        child: IconsOutlineButton(
+                                          onPressed: () {},
+                                          text: 'Voltar',
+                                          iconData: Icons.cancel_outlined,
+                                          textStyle: const TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 23, 70, 4)),
+                                          iconColor: Color.fromARGB(
+                                              255, 206, 233, 200),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                },
+                            child: const Text(
+                              'Capelas',
+                              style: TextStyle(fontSize: 15),
+                            )),
                         TextButton(
-                            onPressed: () {}, child: const Text('detalhes')),
+                            onPressed: () {
+                              print('pressed');
+                              paroquiaRepository.paroquiaAtual = item;
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const ParoquiasMap()),
+                              );
+                            },
+                            child: const Text('Mapa')),
                       ],
                     ),
                   ],
@@ -117,5 +166,57 @@ class ParoquiasView extends StatelessWidget {
         ),
       ],
     );
+  }
+
+//
+  Widget capelaslist(BuildContext context, ParoquiaInterface paroquia) {
+    print('entrou ');
+    List<CapelasInterface>? c = [];
+    print(paroquia.capelas);
+    for (var i = 0; i < paroquia.capelas!.length; i++) {
+      if (i > 1) {
+        c.add(paroquia.capelas![i]);
+      }
+    }
+    paroquia.capelas = c;
+    print(paroquia.capelas);
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView.builder(
+          itemCount: paroquia.capelas!.length,
+          itemBuilder: (context, index) {
+            CapelasInterface item = paroquia.capelas![index];
+            return Card(
+                elevation: 12,
+                color: Color.fromARGB(255, 229, 247, 215),
+                child: Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item.nome!,
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        item.endereco!.trim() + item.endereco2!.trim(),
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        item.telefone!,
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                ));
+          },
+        ),
+      ),
+    );
+    // ]);
   }
 }
