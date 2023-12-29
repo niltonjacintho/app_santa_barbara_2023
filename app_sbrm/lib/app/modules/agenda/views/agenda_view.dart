@@ -49,6 +49,14 @@ class AgendaView extends GetView<AgendaController> {
           style: TextStyle(
               fontWeight: FontWeight.w900, color: Colors.white, fontSize: 30),
         ),
+        leading: IconButton(
+          color: Colors.black,
+          icon: const Icon(Icons.arrow_back_ios),
+          iconSize: 20.0,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         backgroundColor:
             Colors.redAccent, // Theme.of(context).colorScheme.inversePrimary,
         centerTitle: true,

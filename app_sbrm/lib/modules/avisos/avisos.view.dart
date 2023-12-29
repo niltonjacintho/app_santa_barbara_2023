@@ -27,6 +27,14 @@ class AvisosView extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Avisos paroquiais'),
+          leading: IconButton(
+            color: Colors.black,
+            icon: const Icon(Icons.arrow_back_ios),
+            iconSize: 20.0,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
         body: MyListView(),
       ),

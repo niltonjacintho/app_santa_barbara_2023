@@ -1,4 +1,4 @@
-import 'package:app_sbrm/app/modules/game/game.perguntas.dart';
+import 'package:app_sbrm/app/modules/game/game.perguntas.view.dart';
 import 'package:app_sbrm/app/modules/game/game.repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_slider/carousel_slider.dart';
@@ -14,10 +14,11 @@ class GamesView extends StatefulWidget {
 class _GamesViewState extends State<GamesView> {
   late GameRepository gameRepository;
   CarouselSliderController sliderController = CarouselSliderController();
+
   @override
   Widget build(BuildContext context) {
     gameRepository = Provider.of<GameRepository>(context);
-    gameRepository.getTopicos();
+    // gameRepository.getTopicos();
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -55,7 +56,7 @@ class _GamesViewState extends State<GamesView> {
                     height: 250,
                   ),
                   Expanded(
-                    child: Container(
+                    child: SizedBox(
                       width: 400,
                       child: CarouselSlider.builder(
                         unlimitedMode: true,
@@ -63,7 +64,8 @@ class _GamesViewState extends State<GamesView> {
                         slideBuilder: (index) {
                           return GestureDetector(
                             onTap: () => {
-                              gameRepository.topicoEscolhido = index,
+                              gameRepository.setTopico(index),
+                              gameRepository.getQuiz(),
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(

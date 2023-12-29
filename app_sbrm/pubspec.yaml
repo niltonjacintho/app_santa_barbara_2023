@@ -31,6 +31,9 @@ dependencies:
   material_dialogs: ^1.1.4
   google_maps_flutter: ^2.5.0
   flutter_carousel_slider: ^1.1.0
+  custom_radio_grouped_button: ^2.2.1
+  google_fonts: ^4.0.4
+  emoji_alert: ^1.1.0
 
 dev_dependencies:
   flutter_test:

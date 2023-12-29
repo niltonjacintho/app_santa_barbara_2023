@@ -32,6 +32,7 @@ class QuizDb {
       required this.basePerguntas});
 
   QuizDb.fromJson(Map<String, dynamic> json) {
+    BasePerguntas p = BasePerguntas();
     BaseTopicos b = BaseTopicos();
     if (json['baseTopicos'] != null) {
       baseTopicos = [];
@@ -48,27 +49,27 @@ class QuizDb {
     if (json['desafios'] != null) {
       desafios = [];
       json['desafios'].forEach((v) {
-        desafios!.add(new Desafios.fromJson(v));
+        desafios!.add(Desafios.fromJson(v));
       });
     }
     basePerguntas = json['basePerguntas'] != null
-        ? new BasePerguntas.fromJson(json['basePerguntas'])
+        ? p.fromJson(json['basePerguntas'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.baseTopicos != null) {
-      data['baseTopicos'] = this.baseTopicos!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (baseTopicos != null) {
+      data['baseTopicos'] = baseTopicos!.map((v) => v.toJson()).toList();
     }
-    if (this.quiz != null) {
-      data['quiz'] = this.quiz!.map((v) => v.toJson()).toList();
+    if (quiz != null) {
+      data['quiz'] = quiz!.map((v) => v.toJson()).toList();
     }
-    if (this.desafios != null) {
-      data['desafios'] = this.desafios!.map((v) => v.toJson()).toList();
+    if (desafios != null) {
+      data['desafios'] = desafios!.map((v) => v.toJson()).toList();
     }
-    if (this.basePerguntas != null) {
-      data['basePerguntas'] = this.basePerguntas!.toJson();
+    if (basePerguntas != null) {
+      data['basePerguntas'] = basePerguntas!.toJson();
     }
     return data;
   }
@@ -265,16 +266,19 @@ class BasePerguntas {
   BasePerguntas(
       {this.id, this.idTopico, this.pergunta, this.perguntasRespostas});
 
-  BasePerguntas.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    idTopico = json['idTopico'];
-    pergunta = json['pergunta'];
+  BasePerguntas fromJson(Map<String, dynamic> json) {
+    BasePerguntas p = BasePerguntas();
+    p.id = json['id'];
+    p.idTopico = json['idTopico'];
+    p.pergunta = json['pergunta'];
     if (json['perguntasRespostas'] != null) {
-      perguntasRespostas = [];
+      p.perguntasRespostas = [];
       json['perguntasRespostas'].forEach((v) {
-        perguntasRespostas!.add(new PerguntasRespostas.fromJson(v));
+        PerguntasRespostas r = PerguntasRespostas();
+        p.perguntasRespostas!.add(r.fromJson(v));
       });
     }
+    return p;
   }
 
   Map<String, dynamic> toJson() {
@@ -299,11 +303,13 @@ class PerguntasRespostas {
   PerguntasRespostas(
       {this.id, this.sequencia, this.respostacerta, this.respostatexto});
 
-  PerguntasRespostas.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    sequencia = json['sequencia'];
-    respostacerta = json['respostacerta'];
-    respostatexto = json['respostatexto'];
+  PerguntasRespostas fromJson(Map<String, dynamic> json) {
+    PerguntasRespostas r = PerguntasRespostas();
+    r.id = json['id'];
+    r.sequencia = json['sequencia'];
+    r.respostacerta = json['respostacerta'];
+    r.respostatexto = json['respostatexto'];
+    return r;
   }
 
   Map<String, dynamic> toJson() {
