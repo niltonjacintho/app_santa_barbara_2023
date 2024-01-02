@@ -2,12 +2,9 @@ import 'package:app_sbrm/model/avisos.interface.dart';
 import 'package:app_sbrm/modules/avisos/avisos.repository.dart';
 import 'package:app_sbrm/modules/avisos/avisoview.details.dart';
 import 'package:flutter/material.dart';
-import 'package:clickable_list_wheel_view/clickable_list_wheel_widget.dart';
-import 'package:clickable_list_wheel_view/measure_size.dart';
 import 'package:get/get.dart';
 import 'package:grock/grock.dart';
 import 'package:provider/provider.dart';
-import 'package:z_grouped_list/z_grouped_list.dart';
 import '../controllers/agenda_controller.dart';
 
 class AgendaView extends GetView<AgendaController> {
@@ -40,8 +37,6 @@ class AgendaView extends GetView<AgendaController> {
           child: Text(meses[i]),
         ),
     ];
-    int mesId = 0;
-    String? _selectedMes = "1";
     return Scaffold(
       appBar: AppBar(
         title: const Text(

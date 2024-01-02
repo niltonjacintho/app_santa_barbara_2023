@@ -9,23 +9,14 @@ class QuizRankModel {
   String? topico;
 
   QuizRankModel(
-      {String id='',
-      DateTime? data,
-      String email='',
-      String nome='',
-      int acertos = 0,
-      int erros = 0,
-      double pontos = 0,
-      String topico=''}) {
-    this.id = id;
-    this.data = data;
-    this.email = email;
-    this.nome = nome;
-    this.acertos = acertos;
-    this.erros = erros;
-    this.pontos = pontos;
-    this.topico = topico;
-  }
+      {String this.id='',
+      this.data,
+      String this.email='',
+      String this.nome='',
+      int this.acertos = 0,
+      int this.erros = 0,
+      double this.pontos = 0,
+      String this.topico=''});
 
   QuizRankModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -39,15 +30,15 @@ class QuizRankModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['topico'] = this.topico;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['topico'] = topico;
     data['data'] = this.data;
-    data['email'] = this.email;
-    data['nome'] = this.nome;
-    data['acertos'] = this.acertos;
-    data['erros'] = this.erros;
-    data['pontos'] = this.pontos;
+    data['email'] = email;
+    data['nome'] = nome;
+    data['acertos'] = acertos;
+    data['erros'] = erros;
+    data['pontos'] = pontos;
     return data;
   }
 }

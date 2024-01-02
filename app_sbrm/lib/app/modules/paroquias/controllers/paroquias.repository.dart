@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:app_sbrm/model/paroquias.model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

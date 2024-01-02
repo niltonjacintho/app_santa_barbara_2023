@@ -1,10 +1,9 @@
 import 'package:app_sbrm/app/modules/game/game.repository.dart';
-import 'package:app_sbrm/model/quiz_model.dart';
-import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
+import 'package:app_sbrm/app/modules/game/gamePodio.view.dart';
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:emoji_alert/arrays.dart';
 import 'package:emoji_alert/emoji_alert.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +16,7 @@ class GamePerguntas extends StatefulWidget {
 
 class _GamePerguntasState extends State<GamePerguntas> {
   late GameRepository gameRepository;
+  final CountDownController _controller = CountDownController();
   @override
   Widget build(BuildContext context) {
     gameRepository = Provider.of<GameRepository>(context);
@@ -89,19 +89,6 @@ class _GamePerguntasState extends State<GamePerguntas> {
                   const SizedBox(
                     height: 20,
                   ),
-                  // Center(
-                  //   child: Text(
-                  //     gameRepository.perguntaAtual.pergunta != null
-                  //         ? gameRepository.perguntaAtual.pergunta!
-                  //         : '',
-                  //     style: GoogleFonts.sevillana(
-                  //         textStyle: const TextStyle(
-                  //             fontSize: 40,
-                  //             fontWeight: FontWeight.bold,
-                  //             color: Colors.amber)),
-                  //     textAlign: TextAlign.center,
-                  //   ),
-                  // ),
                   montar_perguntas(context),
                   // montarConfirmacao(context),
                 ],
@@ -114,6 +101,9 @@ class _GamePerguntasState extends State<GamePerguntas> {
   }
 
   Widget montar_perguntas(BuildContext context) {
+    _controller.reset();
+    _controller.restart();
+    
     return Column(
       children: [
         Padding(
@@ -125,77 +115,145 @@ class _GamePerguntasState extends State<GamePerguntas> {
                   : '',
               style: GoogleFonts.pangolin(
                   textStyle: const TextStyle(
-                      fontSize: 50,
+                      fontSize: 40,
                       fontWeight: FontWeight.bold,
-                      color: Colors.amber)),
+                      color: Color.fromARGB(255, 252, 251, 250))),
               textAlign: TextAlign.center,
             ),
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 60, right: 60, bottom: 8),
-          child: CustomRadioButton(
-            height: 80,
-            elevation: 5,
-            defaultSelected: '',
-            absoluteZeroSpacing: false,
-            unSelectedColor: Theme.of(context).canvasColor,
-            buttonLables: gameRepository.getButtonLabels(),
-            buttonValues: gameRepository.getButtonValues(),
-            buttonTextStyle: const ButtonTextStyle(
-                selectedColor: Colors.white,
-                unSelectedColor: Colors.black,
-                textStyle: TextStyle(
-                  fontSize: 25,
-                )),
-            radioButtonValue: (value) {
-              EmojiAlert(
-                alertTitle: Text(
-                  gameRepository.acertou(value) ? "PARABÉNS!!" : "Xii.. errou",
-                  style: GoogleFonts.yatraOne(
-                      textStyle: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 30)),
-                ),
-                description: Column(
-                  children: [
-                    Text(
-                      gameRepository.acertou(value)
-                          ? "Nota-se que você lê a Biblia e estuda hein!! Vamos em frente"
-                          : "Desanima não!! A próxima pergunta você acerta! Vamos em frente",
-                      style: GoogleFonts.handlee(
-                        textStyle: const TextStyle(
-                            color: Color.fromARGB(255, 145, 2, 2),
-                            fontSize: 25),
+          child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: gameRepository.perguntaAtual.perguntasRespostas!.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: GestureDetector(
+                  onTap: () => {
+                    EmojiAlert(
+                      alertTitle: Text(
+                        gameRepository.acertou(index)
+                            ? "PARABÉNS!!"
+                            : "Xii.. errou",
+                        style: GoogleFonts.yatraOne(
+                            textStyle: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 30)),
                       ),
-                      textAlign: TextAlign.center,
+                      description: Column(
+                        children: [
+                          Text(
+                            gameRepository.acertou(index)
+                                ? "Nota-se que você lê a Biblia e estuda hein!! Vamos em frente"
+                                : "Desanima não!! A próxima pergunta você acerta! Vamos em frente",
+                            style: GoogleFonts.handlee(
+                              textStyle: const TextStyle(
+                                  color: Color.fromARGB(255, 145, 2, 2),
+                                  fontSize: 25),
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                      enableMainButton: true,
+                      cornerRadiusType: CORNER_RADIUS_TYPES.TOP_ONLY,
+                      mainButtonColor: Colors.green,
+                      mainButtonText: const Text("Save"),
+                      onMainButtonPressed: () {
+                        if (gameRepository.proximaPergunta()) {
+                          gameRepository
+                              .gravarPontos(int.parse(_controller.getTime()!));
+                          montar_perguntas(context);
+                        } else {
+                          gameRepository.salvarRank();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const GamePodio()));
+                        }
+                        //gameRepository.perguntaAtual.perguntasRespostas= PerguntasRespostas();
+                        Navigator.of(context, rootNavigator: true).pop();
+                      },
+                      cancelable: false,
+                      emojiType: gameRepository.acertou(index)
+                          ? EMOJI_TYPE.SMILE
+                          : EMOJI_TYPE.SCARED,
+                      width: 400,
+                      height: gameRepository.acertou(index) ? 400 : 400,
+                    ).displayAlert(context)
+                  },
+                  child: Card(
+                    elevation: 8,
+                    child: SizedBox(
+                      height: 120,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text(
+                            gameRepository.perguntaAtual
+                                .perguntasRespostas![index].respostatexto!,
+                            style: GoogleFonts.lato(
+                                textStyle: const TextStyle(
+                              fontSize: 30,
+                            )),
+                          ),
+                        ),
+                      ),
                     ),
-                  ],
+                  ),
                 ),
-                enableMainButton: true,
-                cornerRadiusType: CORNER_RADIUS_TYPES.TOP_ONLY,
-                mainButtonColor: Colors.green,
-                mainButtonText: const Text("Save"),
-                onMainButtonPressed: () {
-                  if (gameRepository.proximaPergunta()) {
-                    montar_perguntas(context);
-                  }
-                  value = '';
-                  Navigator.of(context, rootNavigator: true).pop();
-                },
-                cancelable: false,
-                emojiType: gameRepository.acertou(value)
-                    ? EMOJI_TYPE.SMILE
-                    : EMOJI_TYPE.SCARED,
-                width: 400,
-                height: gameRepository.acertou(value) ? 400 : 400,
-              ).displayAlert(context);
+              );
             },
-            horizontal: true,
-            padding: 5,
-            selectedColor: Theme.of(context).colorScheme.secondary,
           ),
         ),
+        timer(context),
       ],
+    );
+  }
+
+  Widget timer(BuildContext context) {
+    return CircularCountDownTimer(
+      duration: 30,
+      initialDuration: 0,
+      controller: _controller,
+      width: MediaQuery.of(context).size.width / 5,
+      height: MediaQuery.of(context).size.height / 5,
+      ringColor: Colors.grey[300]!,
+      ringGradient: null,
+      fillColor: Colors.purpleAccent[100]!,
+      fillGradient: null,
+      backgroundColor: Colors.purple[500],
+      backgroundGradient: null,
+      strokeWidth: 10.0,
+      strokeCap: StrokeCap.round,
+      textStyle: const TextStyle(
+          fontSize: 23.0, color: Colors.white, fontWeight: FontWeight.bold),
+      textFormat: CountdownTextFormat.S,
+      isReverse: true,
+      isReverseAnimation: true,
+      isTimerTextShown: true,
+      autoStart: true,
+      onStart: () {
+        debugPrint('Countdown Started');
+      },
+      onComplete: () {
+        if (gameRepository.proximaPergunta()) {
+          montar_perguntas(context);
+        }
+      },
+      onChange: (String timeStamp) {
+        debugPrint('Countdown Changed $timeStamp');
+      },
+      timeFormatterFunction: (defaultFormatterFunction, duration) {
+        if (duration.inSeconds == 0) {
+          return "Próxima!!";
+        } else {
+          return Function.apply(defaultFormatterFunction, [duration]);
+        }
+      },
     );
   }
 }

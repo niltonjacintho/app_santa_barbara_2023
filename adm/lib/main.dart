@@ -1,5 +1,4 @@
 import 'package:adm/firebase_options.dart';
-import 'package:adm/modules/avisos/avisos.list.dart';
 import 'package:adm/modules/home/home.view.dart';
 import 'package:adm/modules/login/login.view.dart';
 import 'package:firebase_core/firebase_core.dart';

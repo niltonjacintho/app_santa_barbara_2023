@@ -69,7 +69,7 @@ class AvisosLista extends StatelessWidget {
     ArtigosModel artigosModel = ArtigosModel();
     return Obx(
       () => ListView.builder(
-        itemCount: avisoService.entradas.length ?? 0,
+        itemCount: avisoService.entradas.length,
         shrinkWrap: true,
         physics: const ScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {

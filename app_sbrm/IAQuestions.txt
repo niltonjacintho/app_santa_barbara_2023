@@ -1,0 +1,22 @@
+gerar massa de dados de um quiz em json contendo 3 perguntas (id: gerar um uuid, nome = PERGUNTA GERADA, cor = null) sobre a Vida de Dom Bosco com 3 respostas (topico: ID UUIDA PERGUNTA, idTopico= ID SA PERGUNTA; pergunta=TEXTO DA PERGUNTA GERADO; perguntasRespostas = LISTA DAS RESPOSTAS) sendo que as respostas são:
+ String? id;
+ int? sequencia;
+ bool? respostacerta;
+ String? respostatexto;
+
+exibir todas as perguntas no resultado json
+
+
+
+
+gerar massa de dados de um quiz contendo 30 perguntas sobre a Vida de Dom Bosco com 3 respostas cada uma marcando a que esta correta
+
+
+gerar massa de dados de um quiz sobre a vida de São João Bosco em insert SQL para tables  contendo 30 perguntas (tbPergunta (id: gerar um uuid, nome = PERGUNTA GERADA, cor = null)) com 3 respostas ((tbPerguntas (topico: ID UUIDA PERGUNTA, idTopico= ID SA PERGUNTA; pergunta=TEXTO DA PERGUNTA GERADO; perguntasRespostas = (tbRespostas (id; idPergunta, sequencia, respostacerta, respostatexto;)) 
+
+
+gerar massa de dados de um quiz em json sobre a vida e obra de Dom Bosco contendo 3 perguntas (id: gerar um uuid, nome = PERGUNTA GERADA, cor = null) e com 3 respostas (topico: ID UUIDA PERGUNTA, idTopico= ID SA PERGUNTA; pergunta=TEXTO DA PERGUNTA GERADO; perguntasRespostas = LISTA DAS RESPOSTAS) sendo que as respostas são:
+ String? id;
+ int? sequencia;
+ bool? respostacerta;
+ String? respostatexto;

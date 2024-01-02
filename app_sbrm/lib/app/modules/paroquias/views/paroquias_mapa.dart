@@ -1,15 +1,8 @@
 import 'package:app_sbrm/app/modules/paroquias/controllers/paroquias.repository.dart';
 import 'package:app_sbrm/model/paroquias.model.dart';
-import 'package:app_sbrm/modules/avisos/avisos.repository.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:grock/grock.dart';
-import 'package:material_dialogs/dialogs.dart';
-import 'package:material_dialogs/shared/types.dart';
-import 'package:material_dialogs/widgets/buttons/icon_button.dart';
-import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
-import 'package:material_text_fields/material_text_fields.dart';
-import 'package:material_text_fields/theme/material_text_field_theme.dart';
 
 import 'package:provider/provider.dart';
 
