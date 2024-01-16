@@ -1,8 +1,8 @@
 // ignore_for_file: unused_local_variable
 
-import 'package:app_sbrm/model/avisos.interface.dart';
-import 'package:app_sbrm/modules/avisos/avisos.repository.dart';
-import 'package:app_sbrm/modules/avisos/avisoview.details.dart';
+import 'package:santa_barbara/model/avisos.interface.dart';
+import 'package:santa_barbara/modules/avisos/avisos.repository.dart';
+import 'package:santa_barbara/modules/avisos/avisoview.details.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

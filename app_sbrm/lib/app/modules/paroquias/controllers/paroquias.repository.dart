@@ -1,5 +1,4 @@
-
-import 'package:app_sbrm/model/paroquias.model.dart';
+import 'package:santa_barbara/model/paroquias.model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -24,9 +23,9 @@ class ParoquiasRepository extends ChangeNotifier {
       final firestore = FirebaseFirestore.instance;
       final query = firestore.collection('paroquias').get();
       final snapshot = await query.then((value) => value.docs);
-      final List paroquias =
+      final  paroquias =
           snapshot.map((doc) => paroquiaAtual.fromJson(doc.data())).toList();
-      lista = paroquias as List<ParoquiaInterface>;
+      lista = paroquias;
       lista_original = paroquias;
       first = false;
       notifyListeners();

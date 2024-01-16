@@ -1,10 +1,8 @@
-import 'package:app_sbrm/model/avisos.interface.dart';
-import 'package:app_sbrm/modules/avisos/avisos.repository.dart';
+import 'package:santa_barbara/model/avisos.interface.dart';
+import 'package:santa_barbara/modules/avisos/avisos.repository.dart';
 import 'package:drop_cap_text/drop_cap_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_rich_text/simple_rich_text.dart';
 
 class AvisoviewDetails extends StatefulWidget {
   const AvisoviewDetails({super.key});

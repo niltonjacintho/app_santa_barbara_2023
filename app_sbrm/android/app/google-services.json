@@ -52,6 +52,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "999243580674-5kh7k24385ig7ue8p8u0idjlvnsnrcje.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.app_sbrm",
+            "certificate_hash": "9f8c197aff37adde37583a468ffc5eb8f88d2ae7"
+          }
+        },
+        {
           "client_id": "999243580674-mgp4rm839m00f87p4m0m08utgoka9gnq.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -118,11 +126,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "999243580674-adp1ef2eckbjm8eobmg1q21g7fdg1jin.apps.googleusercontent.com",
+          "client_id": "999243580674-l4nq6if68ui27cijscgm6etekvdfhgvv.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.santabarbararm.org.app2021",
-            "certificate_hash": "8c4127e561a6f2724c4718ec9db16936c760c9b5"
+            "certificate_hash": "9f8c197aff37adde37583a468ffc5eb8f88d2ae7"
           }
         },
         {

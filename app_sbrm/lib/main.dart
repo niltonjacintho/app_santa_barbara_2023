@@ -1,16 +1,15 @@
 // ignore_for_file: avoid_print
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:app_sbrm/app/modules/game/game.repository.dart';
-import 'package:app_sbrm/app/modules/paroquias/controllers/paroquias.repository.dart';
-import 'package:app_sbrm/modules/avisos/avisos.repository.dart';
+import 'package:santa_barbara/app/modules/game/game.repository.dart';
+import 'package:santa_barbara/app/modules/paroquias/controllers/paroquias.repository.dart';
+import 'package:santa_barbara/modules/auth/auth.view.dart';
+import 'package:santa_barbara/modules/avisos/avisos.repository.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
-
-import 'modules/home/home.view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +21,7 @@ Future<void> main() async {
     ChangeNotifierProvider(create: (context) => AvisoRepository()),
     ChangeNotifierProvider(create: (context) => ParoquiasRepository()),
     ChangeNotifierProvider(create: (context) => GameRepository()),
-  ], child: const MyApp()));
+  ], child: const MyApp())); //const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -44,7 +43,7 @@ class MyApp extends StatelessWidget {
               alignment: Alignment.center,
             ),
           ),
-          nextScreen: const HomeView(),
+          nextScreen: const LoginScreen(),
           splashTransition: SplashTransition.fadeTransition,
           splashIconSize: (MediaQuery.of(context).size.height - 50),
           pageTransitionType: PageTransitionType.fade,
@@ -59,7 +58,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color.fromARGB(255, 1, 0, 10),
+      color: const Color.fromARGB(255, 1, 0, 10),
     );
   }
 }

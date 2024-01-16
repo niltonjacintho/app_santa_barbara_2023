@@ -30,13 +30,13 @@ class OpcoesMenu {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['image'] = this.image;
-    data['titulo'] = this.titulo;
-    data['destino'] = this.destino;
-    data['grupo'] = this.grupo;
-    data['ordem'] = this.ordem;
-    data['subtitulo'] = this.subtitulo;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['image'] = image;
+    data['titulo'] = titulo;
+    data['destino'] = destino;
+    data['grupo'] = grupo;
+    data['ordem'] = ordem;
+    data['subtitulo'] = subtitulo;
     return data;
   }
 }

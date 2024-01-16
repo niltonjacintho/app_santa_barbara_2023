@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'dart:collection';
 
-import 'package:app_sbrm/model/avisos.interface.dart';
-import 'package:app_sbrm/modules/avisos/avisos.service.dart';
+import 'package:santa_barbara/model/avisos.interface.dart';
+import 'package:santa_barbara/modules/avisos/avisos.service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,7 +14,7 @@ class AvisoRepository extends ChangeNotifier {
   double get fontSize => _fontSize;
   set fontSize(value) => _fontSize = value;
 
-  late AvisoInterface _avisoAtual = new AvisoInterface();
+  late AvisoInterface _avisoAtual = AvisoInterface();
   AvisoInterface get avisoAtual => _avisoAtual;
   set avisoAtual(value) => _avisoAtual = value;
 
@@ -97,10 +96,10 @@ class AvisoRepository extends ChangeNotifier {
         .orderBy("data", descending: false)
         .get();
     final snapshot = await query.then((value) => value.docs);
-    final _avisos = snapshot.map((doc) => fromJson(doc.data())).toList();
-    avisos = _avisos;
+    var avisos = snapshot.map((doc) => fromJson(doc.data())).toList();
+    avisos = avisos;
     notifyListeners();
-    return _avisos;
+    return avisos;
   }
 
   Future<List<AvisoInterface>> recuperarAvisos(

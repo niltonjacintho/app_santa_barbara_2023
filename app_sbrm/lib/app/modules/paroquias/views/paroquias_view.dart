@@ -1,6 +1,6 @@
-import 'package:app_sbrm/app/modules/paroquias/controllers/paroquias.repository.dart';
-import 'package:app_sbrm/app/modules/paroquias/views/paroquias_mapa.dart';
-import 'package:app_sbrm/model/paroquias.model.dart';
+import 'package:santa_barbara/app/modules/paroquias/controllers/paroquias.repository.dart';
+import 'package:santa_barbara/app/modules/paroquias/views/paroquias_mapa.dart';
+import 'package:santa_barbara/model/paroquias.model.dart';
 import 'package:flutter/material.dart';
 import 'package:material_dialogs/dialogs.dart';
 import 'package:material_dialogs/shared/types.dart';
@@ -142,7 +142,7 @@ class ParoquiasView extends StatelessWidget {
                                           textStyle: const TextStyle(
                                               color: Color.fromARGB(
                                                   255, 23, 70, 4)),
-                                          iconColor: Color.fromARGB(
+                                          iconColor: const Color.fromARGB(
                                               255, 206, 233, 200),
                                         ),
                                       ),
@@ -197,7 +197,7 @@ class ParoquiasView extends StatelessWidget {
             CapelasInterface item = paroquia.capelas![index];
             return Card(
                 elevation: 12,
-                color: Color.fromARGB(255, 229, 247, 215),
+                color: const Color.fromARGB(255, 229, 247, 215),
                 child: Padding(
                   padding: const EdgeInsets.all(18.0),
                   child: Column(

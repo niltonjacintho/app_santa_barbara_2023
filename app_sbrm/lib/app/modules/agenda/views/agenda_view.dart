@@ -1,14 +1,14 @@
-import 'package:app_sbrm/model/avisos.interface.dart';
-import 'package:app_sbrm/modules/avisos/avisos.repository.dart';
-import 'package:app_sbrm/modules/avisos/avisoview.details.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:grock/grock.dart';
 import 'package:provider/provider.dart';
+import 'package:santa_barbara/model/avisos.interface.dart';
+import 'package:santa_barbara/modules/avisos/avisos.repository.dart';
+import 'package:santa_barbara/modules/avisos/avisoview.details.dart';
 import '../controllers/agenda_controller.dart';
 
 class AgendaView extends GetView<AgendaController> {
-  const AgendaView({Key? key}) : super(key: key);
+  const AgendaView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class AgendaView extends GetView<AgendaController> {
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: DropdownButton(
-                style: TextStyle(fontSize: 30, color: Colors.black),
+                style: const TextStyle(fontSize: 30, color: Colors.black),
                 isExpanded: true,
                 hint: const Text(
                     'Selecione um mês'), // Not necessary for Option 1
@@ -90,9 +90,9 @@ class AgendaView extends GetView<AgendaController> {
                         minVerticalPadding: 0,
                         contentPadding: EdgeInsets.zero,
                         visualDensity:
-                            VisualDensity(horizontal: 0, vertical: 4),
+                            const VisualDensity(horizontal: 0, vertical: 4),
                         leading: Container(
-                          color: Color.fromARGB(255, 110, 10, 2),
+                          color: const Color.fromARGB(255, 110, 10, 2),
                           width: 100,
                           child: Center(
                             child: Text(
@@ -104,7 +104,7 @@ class AgendaView extends GetView<AgendaController> {
                             ),
                           ),
                         ),
-                        trailing: item.conteudo.isNotEmpty
+                        trailing: item.conteudo!.isNotEmpty
                             ? ElevatedButton(
                                 child: const Text('Detalhes'),
                                 onPressed: () {

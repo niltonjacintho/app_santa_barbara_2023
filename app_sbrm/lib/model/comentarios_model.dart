@@ -12,10 +12,10 @@ class ComentariosModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['usuario'] = this.usuario;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['usuario'] = usuario;
     data['data'] = this.data;
-    data['texto'] = this.texto;
+    data['texto'] = texto;
     return data;
   }
 }

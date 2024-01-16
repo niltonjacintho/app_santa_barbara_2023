@@ -1,4 +1,4 @@
-import 'package:app_sbrm/modules/avisos/avisos.repository.dart';
+import 'package:santa_barbara/modules/avisos/avisos.repository.dart';
 import 'package:drop_cap_text/drop_cap_text.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import '../controllers/mensagem_paroco_controller.dart';
 
 class MensagemParocoView extends GetView<MensagemParocoController> {
-  const MensagemParocoView({Key? key}) : super(key: key);
+  const MensagemParocoView({super.key});
 
   @override
   Widget build(BuildContext context) {

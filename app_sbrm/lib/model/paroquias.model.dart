@@ -1,4 +1,3 @@
-import 'package:grock/grock.dart';
 
 class ParoquiaInterface {
   String? id;
@@ -32,13 +31,12 @@ class ParoquiaInterface {
 
   ParoquiaInterface fromJson(Map<String, dynamic> json) {
     CapelasInterface ci = CapelasInterface();
-    ParoquiaInterface p = new ParoquiaInterface();
+    ParoquiaInterface p = ParoquiaInterface();
     p.id = json['id'];
     p.nome = json['nome'] ?? '';
     p.forania = json['forania'] ?? '';
     p.nascimento = json['nascimento'];
     p.paroco = json['paroco'] ?? '';
-    ;
     p.vigario = json['vigario'] ?? '';
     p.diacono = json['diacono'] ?? '';
     p.endereco = json['endereco'] ?? '';
@@ -66,7 +64,7 @@ class ParoquiaInterface {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['nome'] = nome;
     data['forania'] = forania;
@@ -114,7 +112,7 @@ class CapelasInterface {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['nome'] = nome;
     data['endereco'] = endereco;
     data['endereco2'] = endereco2;

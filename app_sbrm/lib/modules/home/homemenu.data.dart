@@ -1,4 +1,4 @@
-import 'package:app_sbrm/modules/home/homemenu.model.dart';
+import 'package:santa_barbara/modules/home/homemenu.model.dart';
 
 final List<MenuItemModel> demoData = [
   MenuItemModel(

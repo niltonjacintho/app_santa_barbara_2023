@@ -1,11 +1,12 @@
-import 'package:app_sbrm/app/modules/game/game.repository.dart';
-import 'package:app_sbrm/app/modules/game/gamePodio.view.dart';
+import 'package:santa_barbara/app/modules/game/game.repository.dart';
+import 'package:santa_barbara/app/modules/game/gamePodio.view.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:emoji_alert/arrays.dart';
 import 'package:emoji_alert/emoji_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:santa_barbara/app/modules/game/game.repository.dart';
 
 class GamePerguntas extends StatefulWidget {
   const GamePerguntas({super.key});
@@ -57,37 +58,22 @@ class _GamePerguntasState extends State<GamePerguntas> {
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: UnconstrainedBox(
-                      child: Container(
-                        width: 600,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 39, 8, 4),
-                          borderRadius: BorderRadius.circular(40),
-                          boxShadow: [
-                            BoxShadow(
-                                color: const Color.fromARGB(255, 143, 97, 96)
-                                    .withOpacity(0.5),
-                                offset: const Offset(0, 25),
-                                blurRadius: 3,
-                                spreadRadius: -10)
-                          ],
-                        ),
-                        child: Center(
-                          child: Text(
-                            gameRepository
-                                .letters[gameRepository.topicoEscolhido],
-                            style: const TextStyle(
-                              fontSize: 30,
-                              color: Colors.amber,
-                            ),
-                            textAlign: TextAlign.center,
+                      child: Center(
+                        child: Text(
+                          'Tema: ${gameRepository.letters[gameRepository.topicoEscolhido]}',
+                          style: const TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.amber,
                           ),
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
                   ),
+                  //   ),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   montar_perguntas(context),
                   // montarConfirmacao(context),
@@ -103,7 +89,7 @@ class _GamePerguntasState extends State<GamePerguntas> {
   Widget montar_perguntas(BuildContext context) {
     _controller.reset();
     _controller.restart();
-    
+
     return Column(
       children: [
         Padding(
@@ -115,7 +101,7 @@ class _GamePerguntasState extends State<GamePerguntas> {
                   : '',
               style: GoogleFonts.pangolin(
                   textStyle: const TextStyle(
-                      fontSize: 40,
+                      fontSize: 25,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 252, 251, 250))),
               textAlign: TextAlign.center,
@@ -163,18 +149,19 @@ class _GamePerguntasState extends State<GamePerguntas> {
                       mainButtonText: const Text("Save"),
                       onMainButtonPressed: () {
                         if (gameRepository.proximaPergunta()) {
-                          gameRepository
-                              .gravarPontos(int.parse(_controller.getTime()!));
+                          gameRepository.gravarPontos(
+                              int.parse(_controller.getTime()!), index);
                           montar_perguntas(context);
+                          Navigator.of(context, rootNavigator: true).pop();
                         } else {
                           gameRepository.salvarRank();
+                          Navigator.of(context, rootNavigator: true).pop();
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => const GamePodio()));
                         }
                         //gameRepository.perguntaAtual.perguntasRespostas= PerguntasRespostas();
-                        Navigator.of(context, rootNavigator: true).pop();
                       },
                       cancelable: false,
                       emojiType: gameRepository.acertou(index)
@@ -187,18 +174,21 @@ class _GamePerguntasState extends State<GamePerguntas> {
                   child: Card(
                     elevation: 8,
                     child: SizedBox(
-                      height: 120,
+                      height: 80,
+                      width: 100,
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20),
-                          child: Text(
-                            gameRepository.perguntaAtual
-                                .perguntasRespostas![index].respostatexto!,
-                            style: GoogleFonts.lato(
-                                textStyle: const TextStyle(
-                              fontSize: 30,
-                            )),
+                          child: FittedBox(
+                            child: Text(
+                              gameRepository.perguntaAtual
+                                  .perguntasRespostas![index].respostatexto!,
+                              style: GoogleFonts.oswald(
+                                  textStyle: const TextStyle(
+                                fontSize: 20,
+                              )),
+                            ),
                           ),
                         ),
                       ),
@@ -219,8 +209,8 @@ class _GamePerguntasState extends State<GamePerguntas> {
       duration: 30,
       initialDuration: 0,
       controller: _controller,
-      width: MediaQuery.of(context).size.width / 5,
-      height: MediaQuery.of(context).size.height / 5,
+      width: MediaQuery.of(context).size.width / 4,
+      height: MediaQuery.of(context).size.height / 4,
       ringColor: Colors.grey[300]!,
       ringGradient: null,
       fillColor: Colors.purpleAccent[100]!,
@@ -240,16 +230,16 @@ class _GamePerguntasState extends State<GamePerguntas> {
         debugPrint('Countdown Started');
       },
       onComplete: () {
-        if (gameRepository.proximaPergunta()) {
-          montar_perguntas(context);
-        }
+        // if (gameRepository.proximaPergunta()) {
+        //   montar_perguntas(context);
+        // }
       },
       onChange: (String timeStamp) {
         debugPrint('Countdown Changed $timeStamp');
       },
       timeFormatterFunction: (defaultFormatterFunction, duration) {
         if (duration.inSeconds == 0) {
-          return "Próxima!!";
+          return "Vamos";
         } else {
           return Function.apply(defaultFormatterFunction, [duration]);
         }

@@ -8,15 +8,15 @@ class OracoesModel {
       grupo = [];
       
       json['grupo'].forEach((v) {
-        grupo!.add(new Grupo.fromJson(v));
+        grupo!.add(Grupo.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.grupo != null) {
-      data['grupo'] = this.grupo!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (grupo != null) {
+      data['grupo'] = grupo!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -37,18 +37,18 @@ class Grupo {
     if (json['oracoes'] != null) {
       oracoes =[];
       json['oracoes'].forEach((v) {
-        oracoes!.add(new Oracoes.fromJson(v));
+        oracoes!.add(Oracoes.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['nome'] = this.nome;
-    data['url'] = this.url;
-    if (this.oracoes != null) {
-      data['oracoes'] = this.oracoes!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['nome'] = nome;
+    data['url'] = url;
+    if (oracoes != null) {
+      data['oracoes'] = oracoes!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -68,10 +68,10 @@ class Oracoes {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['titulo'] = this.titulo;
-    data['texto'] = this.texto;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['titulo'] = titulo;
+    data['texto'] = texto;
     return data;
   }
 }

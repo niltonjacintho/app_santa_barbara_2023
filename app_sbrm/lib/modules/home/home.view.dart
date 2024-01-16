@@ -1,14 +1,15 @@
 // ignore_for_file: unnecessary_null_comparison, avoid_print
 
-import 'package:app_sbrm/modules/auth/auth.service.dart';
-import 'package:app_sbrm/modules/avisos/avisos.view.dart';
-import 'package:app_sbrm/modules/home/homemenu.card.dart';
-import 'package:app_sbrm/modules/home/homemenu.data.dart';
+import 'package:santa_barbara/modules/auth/auth.service.dart';
+import 'package:santa_barbara/modules/avisos/avisos.view.dart';
+import 'package:santa_barbara/modules/home/homemenu.card.dart';
+import 'package:santa_barbara/modules/home/homemenu.data.dart';
 import 'package:flexible_grid_view/flexible_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_boom_menu_new/flutter_boom_menu_new.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -20,6 +21,7 @@ class HomeView extends StatefulWidget {
 class _HomeState extends State<HomeView> {
   ScrollController? scrollController;
   bool scrollVisible = true;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   @override
   void initState() {

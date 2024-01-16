@@ -36,17 +36,17 @@ class VelaModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     data['data'] = this.data;
-    data['intensao'] = this.intensao;
-    data['minutosrestantes'] = this.minutosrestantes;
-    data['destinatario'] = this.destinatario;
-    data['solicitanteemail'] = this.solicitanteemail;
-    data['solicitantenome'] = this.solicitantenome;
-    data['texto'] = this.texto;
-    data['dataInclusao'] = this.dataInclusao;
-    data['dataAlteracao'] = this.dataAlteracao;
+    data['intensao'] = intensao;
+    data['minutosrestantes'] = minutosrestantes;
+    data['destinatario'] = destinatario;
+    data['solicitanteemail'] = solicitanteemail;
+    data['solicitantenome'] = solicitantenome;
+    data['texto'] = texto;
+    data['dataInclusao'] = dataInclusao;
+    data['dataAlteracao'] = dataAlteracao;
     return data;
   }
 }

@@ -1,10 +1,10 @@
-import 'package:app_sbrm/app/modules/agenda/views/agenda_view.dart';
-import 'package:app_sbrm/app/modules/game/game.repository.dart';
-import 'package:app_sbrm/app/modules/game/game.view.dart';
-import 'package:app_sbrm/app/modules/mensagem_paroco/views/mensagem_paroco_view.dart';
-import 'package:app_sbrm/app/modules/paroquias/views/paroquias_view.dart';
-import 'package:app_sbrm/modules/avisos/avisos.view.dart';
-import 'package:app_sbrm/modules/home/homemenu.model.dart';
+import 'package:santa_barbara/app/modules/agenda/views/agenda_view.dart';
+import 'package:santa_barbara/app/modules/game/game.repository.dart';
+import 'package:santa_barbara/app/modules/game/game.view.dart';
+import 'package:santa_barbara/app/modules/mensagem_paroco/views/mensagem_paroco_view.dart';
+import 'package:santa_barbara/app/modules/paroquias/views/paroquias_view.dart';
+import 'package:santa_barbara/modules/avisos/avisos.view.dart';
+import 'package:santa_barbara/modules/home/homemenu.model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

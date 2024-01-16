@@ -1,5 +1,5 @@
-import 'package:app_sbrm/app/modules/game/game.perguntas.view.dart';
-import 'package:app_sbrm/app/modules/game/game.repository.dart';
+import 'package:santa_barbara/app/modules/game/game.perguntas.view.dart';
+import 'package:santa_barbara/app/modules/game/game.repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';

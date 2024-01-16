@@ -7,13 +7,13 @@ class QuizDB {
 
   QuizDB.fromJson(Map<String, dynamic> json) {
     quizDb =
-        json['quizDb'] != null ? new QuizDb.fromJson(json['quizDb']) : null;
+        json['quizDb'] != null ? QuizDb.fromJson(json['quizDb']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.quizDb != null) {
-      data['quizDb'] = this.quizDb!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (quizDb != null) {
+      data['quizDb'] = quizDb!.toJson();
     }
     return data;
   }
@@ -43,7 +43,7 @@ class QuizDb {
     if (json['quiz'] != null) {
       quiz = [];
       json['quiz'].forEach((v) {
-        quiz!.add(new Quiz.fromJson(v));
+        quiz!.add(Quiz.fromJson(v));
       });
     }
     if (json['desafios'] != null) {
@@ -58,7 +58,7 @@ class QuizDb {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (baseTopicos != null) {
       data['baseTopicos'] = baseTopicos!.map((v) => v.toJson()).toList();
     }
@@ -93,10 +93,10 @@ class BaseTopicos {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['nome'] = this.nome;
-    data['cor'] = this.cor;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['nome'] = nome;
+    data['cor'] = cor;
     return data;
   }
 }
@@ -123,7 +123,7 @@ class Quiz {
     if (json['quizTopico'] != null) {
       quizTopicos = [];
       json['quizTopico'].forEach((v) {
-        quizTopicos!.add(new QuizTopico.fromJson(v));
+        quizTopicos!.add(QuizTopico.fromJson(v));
       });
     }
     recomendacoes = json['recomendacoes'];
@@ -131,23 +131,23 @@ class Quiz {
     if (json['quizPerguntas'] != null) {
       quizPerguntas = [];
       json['quizPerguntas'].forEach((v) {
-        quizPerguntas!.add(new QuizPerguntas.fromJson(v));
+        quizPerguntas!.add(QuizPerguntas.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['titulo'] = this.titulo;
-    if (this.quizTopicos != null) {
-      data['quizTopico'] = this.quizTopicos!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['titulo'] = titulo;
+    if (quizTopicos != null) {
+      data['quizTopico'] = quizTopicos!.map((v) => v.toJson()).toList();
     }
-    data['recomendacoes'] = this.recomendacoes;
-    data['qtdperguntas'] = this.qtdperguntas;
-    if (this.quizPerguntas != null) {
+    data['recomendacoes'] = recomendacoes;
+    data['qtdperguntas'] = qtdperguntas;
+    if (quizPerguntas != null) {
       data['quizPerguntas'] =
-          this.quizPerguntas!.map((v) => v.toJson()).toList();
+          quizPerguntas!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -163,8 +163,8 @@ class QuizTopico {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['idTopico'] = this.idTopico;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['idTopico'] = idTopico;
     return data;
   }
 }
@@ -179,8 +179,8 @@ class QuizPerguntas {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     return data;
   }
 }
@@ -216,23 +216,23 @@ class Desafios {
     if (json['desafioPerguntas'] != null) {
       desafioPerguntas = [];
       json['desafioPerguntas'].forEach((v) {
-        desafioPerguntas!.add(new DesafioPerguntas.fromJson(v));
+        desafioPerguntas!.add(DesafioPerguntas.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['idQuiz'] = this.idQuiz;
-    data['finalizado'] = this.finalizado;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['idQuiz'] = idQuiz;
+    data['finalizado'] = finalizado;
     data['data'] = this.data;
-    data['email'] = this.email;
-    data['acertos'] = this.acertos;
-    data['tempo'] = this.tempo;
-    if (this.desafioPerguntas != null) {
+    data['email'] = email;
+    data['acertos'] = acertos;
+    data['tempo'] = tempo;
+    if (desafioPerguntas != null) {
       data['desafioPerguntas'] =
-          this.desafioPerguntas!.map((v) => v.toJson()).toList();
+          desafioPerguntas!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -250,9 +250,9 @@ class DesafioPerguntas {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['acertou'] = this.acertou;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['acertou'] = acertou;
     return data;
   }
 }
@@ -282,13 +282,13 @@ class BasePerguntas {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['idTopico'] = this.idTopico;
-    data['pergunta'] = this.pergunta;
-    if (this.perguntasRespostas != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['idTopico'] = idTopico;
+    data['pergunta'] = pergunta;
+    if (perguntasRespostas != null) {
       data['perguntasRespostas'] =
-          this.perguntasRespostas!.map((v) => v.toJson()).toList();
+          perguntasRespostas!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -313,11 +313,11 @@ class PerguntasRespostas {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['sequencia'] = this.sequencia;
-    data['respostacerta'] = this.respostacerta;
-    data['respostatexto'] = this.respostatexto;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['sequencia'] = sequencia;
+    data['respostacerta'] = respostacerta;
+    data['respostatexto'] = respostatexto;
     return data;
   }
 }

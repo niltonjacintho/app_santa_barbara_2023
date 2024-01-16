@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:santa_barbara/modules/home/home.view.dart';
 
 import '../modules/agenda/bindings/agenda_binding.dart';
 import '../modules/agenda/views/agenda_view.dart';
@@ -22,6 +23,11 @@ class AppPages {
       name: _Paths.AGENDA,
       page: () => const AgendaView(),
       binding: AgendaBinding(),
+    ),
+    GetPage(
+      name: _Paths.HOME,
+      page: () => const HomeView(),
+      // binding: HomeBinding(),
     ),
   ];
 }

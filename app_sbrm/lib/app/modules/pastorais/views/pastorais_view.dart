@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../controllers/pastorais_controller.dart';
 
 class PastoraisView extends GetView<PastoraisController> {
-  const PastoraisView({Key? key}) : super(key: key);
+  const PastoraisView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,5 +1,4 @@
-import 'package:app_sbrm/model/avisos.interface.dart';
-import 'package:app_sbrm/model/comentarios_model.dart';
+import 'package:santa_barbara/model/avisos.interface.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AvisoService {

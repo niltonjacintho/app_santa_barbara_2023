@@ -1,8 +1,8 @@
-import 'package:app_sbrm/model/avisos.interface.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:app_sbrm/modules/avisos/avisos.repository.dart';
 import 'package:provider/provider.dart';
+import 'package:santa_barbara/model/avisos.interface.dart';
+import 'package:santa_barbara/modules/avisos/avisos.repository.dart';
 
 class AgendaController extends GetxController {
   //TODO: Implement AgendaController
@@ -16,20 +16,8 @@ class AgendaController extends GetxController {
     selectedMes.value = mes;
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   RxList<AvisoInterface> getData(BuildContext context, int mes) {
     print('pegando valores de agenda $mes');

@@ -1,3 +1,5 @@
+import 'package:santa_barbara/model/quiz_model.dart';
+
 class QuizRankModel {
   String? id;
   DateTime? data;
@@ -9,24 +11,26 @@ class QuizRankModel {
   String? topico;
 
   QuizRankModel(
-      {String this.id='',
+      {String this.id = '',
       this.data,
-      String this.email='',
-      String this.nome='',
+      String this.email = '',
+      String this.nome = '',
       int this.acertos = 0,
       int this.erros = 0,
       double this.pontos = 0,
-      String this.topico=''});
+      String this.topico = ''});
 
-  QuizRankModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    topico = json['topico'];
-    data = json['data'];
-    email = json['email'];
-    nome = json['nome'];
-    acertos = json['acertos'];
-    erros = json['erros'];
-    pontos = json['pontos'];
+  QuizRankModel fromJson(Map<String, dynamic> json) {
+    QuizRankModel base = QuizRankModel();
+    base.id = json['id'];
+    base.topico = json['topico'];
+    base.data = json['data'];
+    base.email = json['email'];
+    base.nome = json['nome'];
+    base.acertos = json['acertos'];
+    base.erros = json['erros'];
+    base.pontos = json['pontos'];
+    return base;
   }
 
   Map<String, dynamic> toJson() {

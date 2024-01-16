@@ -17,11 +17,11 @@ class Grupos {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['titulo'] = this.titulo;
-    data['value'] = this.value;
-    data['cor'] = this.cor;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['titulo'] = titulo;
+    data['value'] = value;
+    data['cor'] = cor;
     return data;
   }
 }

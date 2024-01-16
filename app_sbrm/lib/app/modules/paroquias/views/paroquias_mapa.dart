@@ -1,8 +1,7 @@
-import 'package:app_sbrm/app/modules/paroquias/controllers/paroquias.repository.dart';
-import 'package:app_sbrm/model/paroquias.model.dart';
+import 'package:santa_barbara/app/modules/paroquias/controllers/paroquias.repository.dart';
+import 'package:santa_barbara/model/paroquias.model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:grock/grock.dart';
 
 import 'package:provider/provider.dart';
 
@@ -31,17 +30,17 @@ class _ParoquiasMapState extends State<ParoquiasMap> {
     paroquiaRepository = Provider.of<ParoquiasRepository>(context);
     for (var i = 1; i < paroquiaRepository.paroquiaAtual.capelas!.length; i++) {
       CapelasInterface element = paroquiaRepository.paroquiaAtual.capelas![i];
-      if (element.lat.isNotEmpty && element.long.isNotEmpty) {
+      if (element.lat != null && element.long != null) {
         LatLng position = LatLng(element.lat!, element.long!);
         String prefixo = i > 2 ? 'Capela: ' : 'Matriz: ';
         String nome =
-            element.nome.isNotEmpty ? element.nome! : 'Nome não informasdo';
+            element.nome!.isNotEmpty ? element.nome! : 'Nome não informasdo';
         final Marker m = Marker(
           markerId: MarkerId(element.long.toString()),
           position: position,
           infoWindow: InfoWindow(
               title: prefixo + nome,
-              snippet: element.telefone.isNotEmpty
+              snippet: element.telefone!.isNotEmpty
                   ? element.telefone
                   : 'sem telefone'),
         );
@@ -50,7 +49,7 @@ class _ParoquiasMapState extends State<ParoquiasMap> {
         });
       }
     }
-    final LatLng _center = LatLng(paroquiaRepository.paroquiaAtual.lat!,
+    final LatLng center = LatLng(paroquiaRepository.paroquiaAtual.lat!,
         paroquiaRepository.paroquiaAtual.long!);
     return MaterialApp(
       home: Scaffold(
@@ -58,7 +57,7 @@ class _ParoquiasMapState extends State<ParoquiasMap> {
           title: const Text("Mapa da paróquia e capelas"),
           leading: IconButton(
             color: Colors.black,
-            icon: Icon(Icons.arrow_back_ios),
+            icon: const Icon(Icons.arrow_back_ios),
             iconSize: 20.0,
             onPressed: () {
               Navigator.pop(context);
@@ -71,7 +70,7 @@ class _ParoquiasMapState extends State<ParoquiasMap> {
           onMapCreated: _onMapCreated,
           markers: markers,
           initialCameraPosition: CameraPosition(
-            target: _center,
+            target: center,
             zoom: 16.0,
           ),
         ),

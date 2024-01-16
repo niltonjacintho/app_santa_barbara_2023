@@ -1,4 +1,4 @@
-import 'package:app_sbrm/model/comentarios_model.dart';
+import 'package:santa_barbara/model/comentarios_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ArtigosModel {
