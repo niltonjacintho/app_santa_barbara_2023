@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:santa_barbara/app/modules/game/game.perguntas.view.dart';
 import 'package:santa_barbara/app/modules/game/game.repository.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class _GamesViewState extends State<GamesView> {
             icon: const Icon(Icons.arrow_back_ios),
             iconSize: 20.0,
             onPressed: () {
-              Navigator.pop(context);
+              GoRouter.of(context).go('/home');
             },
           ),
         ),

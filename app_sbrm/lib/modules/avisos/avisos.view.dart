@@ -1,9 +1,8 @@
-// ignore_for_file: unused_local_variable
+// ignore_for_file: unused_local_variable, must_be_immutable
 
+import 'package:go_router/go_router.dart';
 import 'package:santa_barbara/model/avisos.interface.dart';
 import 'package:santa_barbara/modules/avisos/avisos.repository.dart';
-import 'package:santa_barbara/modules/avisos/avisoview.details.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sticky_grouped_list/sticky_grouped_list.dart';
@@ -32,7 +31,7 @@ class AvisosView extends StatelessWidget {
             icon: const Icon(Icons.arrow_back_ios),
             iconSize: 20.0,
             onPressed: () {
-              Navigator.pop(context);
+              GoRouter.of(context).go('/home');
             },
           ),
         ),
@@ -78,11 +77,7 @@ class MyListView extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () => {
                         avisoRepository.avisoAtual = aviso,
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const AvisoviewDetails()),
-                        ),
+                        GoRouter.of(context).go('/avisodetails'),
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),

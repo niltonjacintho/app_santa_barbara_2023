@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:santa_barbara/app/modules/game/game.repository.dart';
 import 'package:santa_barbara/app/modules/game/gamePodio.view.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
@@ -157,11 +158,12 @@ class _GamePerguntasState extends State<GamePerguntas> {
                           Navigator.of(context, rootNavigator: true).pop();
                         } else {
                           gameRepository.salvarRank(userRepository.usuario);
-                          Navigator.of(context, rootNavigator: true).pop();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const GamePodio()));
+                          GoRouter.of(context).go('/gamepodio');
+                          // Navigator.of(context, rootNavigator: true).pop();
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => const GamePodio()));
                         }
                         //gameRepository.perguntaAtual.perguntasRespostas= PerguntasRespostas();
                       },

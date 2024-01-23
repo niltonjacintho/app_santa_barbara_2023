@@ -127,7 +127,7 @@ class GameRepository extends ChangeNotifier {
     quiz.erros = basePontos.erros;
     quiz.data = DateTime.now();
     quiz.id = uuid.v4();
-    quiz.pontos = basePontos.pontos + basePontos.acertos;
+    quiz.pontos = basePontos.pontos;
     quiz.email = usuario.email;
     quiz.nome = usuario.nome;
     quiz.topico = topicoAtual.id;
@@ -164,8 +164,6 @@ class GameRepository extends ChangeNotifier {
   }
 
   crossUpdate() {
-    print('entrei no update');
     crossState = !crossState;
-    //notifyListeners();
   }
 }

@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:santa_barbara/model/avisos.interface.dart';
 import 'package:santa_barbara/modules/avisos/avisos.repository.dart';
@@ -49,7 +49,7 @@ class AgendaView extends GetView<AgendaController> {
           icon: const Icon(Icons.arrow_back_ios),
           iconSize: 20.0,
           onPressed: () {
-            Navigator.pop(context);
+            GoRouter.of(context).go('/home');
           },
         ),
         backgroundColor:

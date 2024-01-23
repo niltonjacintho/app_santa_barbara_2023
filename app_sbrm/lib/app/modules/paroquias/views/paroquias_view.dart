@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:santa_barbara/app/modules/paroquias/controllers/paroquias.repository.dart';
 import 'package:santa_barbara/app/modules/paroquias/views/paroquias_mapa.dart';
 import 'package:santa_barbara/model/paroquias.model.dart';
@@ -32,7 +33,7 @@ class ParoquiasView extends StatelessWidget {
             icon: const Icon(Icons.arrow_back_ios),
             iconSize: 20.0,
             onPressed: () {
-              Navigator.pop(context);
+              GoRouter.of(context).go('/home');
             },
           ),
         ),

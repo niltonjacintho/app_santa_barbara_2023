@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:santa_barbara/model/avisos.interface.dart';
 import 'package:santa_barbara/modules/avisos/avisos.repository.dart';
 import 'package:drop_cap_text/drop_cap_text.dart';
@@ -32,6 +33,14 @@ class _AvisoviewDetailsState extends State<AvisoviewDetails> {
                 decoration: TextDecoration.none,
               ),
             ),
+            leading: IconButton(
+              color: Colors.black,
+              icon: const Icon(Icons.arrow_back_ios),
+              iconSize: 20.0,
+              onPressed: () {
+                GoRouter.of(context).go('/home');
+              },
+            ),
             actions: <Widget>[
               IconButton(
                 onPressed: () {
@@ -52,34 +61,36 @@ class _AvisoviewDetailsState extends State<AvisoviewDetails> {
               ),
             ],
           ),
-          body: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/fundo.jpg"),
-                fit: BoxFit.cover,
+          body: SizedBox.expand(
+            child: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/fundo.jpg"),
+                  fit: BoxFit.fill,
+                ),
               ),
-            ),
-            child: Scrollbar(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(28.0),
-                  child: DropCapText(
-                    dropCapPosition: DropCapPosition.end,
-                    dropCap: DropCap(
-                      width: 400,
-                      height: 500,
-                      child: Image.network(avisoRepository.avisoAtual.imagem!,
-                          height: 400, fit: BoxFit.scaleDown,
-                          errorBuilder: (context, error, stackTrace) {
-                        return Image.asset(
-                          'assets/images/default.jpg',
-                        );
-                      }),
-                    ),
-                    avisoRepository.avisoAtual.conteudo!,
-                    style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontSize: model.fontSize,
+              child: Scrollbar(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(28.0),
+                    child: DropCapText(
+                      dropCapPosition: DropCapPosition.end,
+                      dropCap: DropCap(
+                        width: MediaQuery.of(context).size.width * 0.92,
+                        height: 500,
+                        child: Image.network(avisoRepository.avisoAtual.imagem!,
+                            height: 400, fit: BoxFit.scaleDown,
+                            errorBuilder: (context, error, stackTrace) {
+                          return Image.asset(
+                            'assets/images/default.jpg',
+                          );
+                        }),
+                      ),
+                      avisoRepository.avisoAtual.conteudo!,
+                      style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontSize: model.fontSize,
+                      ),
                     ),
                   ),
                 ),

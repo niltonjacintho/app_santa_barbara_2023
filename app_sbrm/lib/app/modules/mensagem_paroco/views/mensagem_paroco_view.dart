@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:santa_barbara/modules/avisos/avisos.repository.dart';
 import 'package:drop_cap_text/drop_cap_text.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,14 @@ class MensagemParocoView extends GetView<MensagemParocoController> {
                 color: Colors.black,
                 decoration: TextDecoration.none,
               ),
+            ),
+            leading: IconButton(
+              color: Colors.black,
+              icon: const Icon(Icons.arrow_back_ios),
+              iconSize: 20.0,
+              onPressed: () {
+                GoRouter.of(context).go('/home');
+              },
             ),
             actions: <Widget>[
               IconButton(

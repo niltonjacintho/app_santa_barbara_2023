@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:santa_barbara/app/modules/game/game.repository.dart';
 import 'package:santa_barbara/model/quizRank_model.dart';
@@ -108,14 +109,24 @@ class _GamePodioState extends State<GamePodio> {
                           );
                         }),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                        '/',
-                        (route) => false,
-                      );
-                    },
-                    child: const Text('Back to Home'),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        textStyle: const TextStyle(fontSize: 20),
+                        elevation: 10,
+                        shadowColor: const Color(0x00000018),
+                        fixedSize: const Size(200, 60),
+                        backgroundColor:
+                            Colors.black, // background (button) color
+                        foregroundColor:
+                            Colors.white, // foreground (text) color
+                      ),
+                      onPressed: () {
+                        GoRouter.of(context).go('/home');
+                      },
+                      child: const Text('Voltar'),
+                    ),
                   )
                 ],
               ),
@@ -143,9 +154,9 @@ class _GamePodioState extends State<GamePodio> {
               '${gameRepository.basePontos.pontos} pontos',
               style: const TextStyle(fontSize: 50),
             ),
-            Text(
-              'MUITO BEM!!!   ${gameRepository.crossState ? 1 : 2}',
-              style: const TextStyle(fontSize: 30),
+            const Text(
+              'MUITO BEM!!!',
+              style: TextStyle(fontSize: 30),
             ),
           ],
         ),
