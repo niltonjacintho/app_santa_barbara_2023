@@ -1,4 +1,3 @@
-import 'package:santa_barbara/model/quiz_model.dart';
 
 class QuizRankModel {
   String? id;
@@ -21,10 +20,12 @@ class QuizRankModel {
       String this.topico = ''});
 
   QuizRankModel fromJson(Map<String, dynamic> json) {
+    DateTime d = DateTime.fromMillisecondsSinceEpoch(
+        json['data'].millisecondsSinceEpoch);
     QuizRankModel base = QuizRankModel();
     base.id = json['id'];
     base.topico = json['topico'];
-    base.data = json['data'];
+    base.data = d;
     base.email = json['email'];
     base.nome = json['nome'];
     base.acertos = json['acertos'];
@@ -45,4 +46,6 @@ class QuizRankModel {
     data['pontos'] = pontos;
     return data;
   }
+
+  int pontosTotais() {return acertos! - erros!;}
 }

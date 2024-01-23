@@ -3,6 +3,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:santa_barbara/app/modules/game/game.repository.dart';
 import 'package:santa_barbara/app/modules/paroquias/controllers/paroquias.repository.dart';
+import 'package:santa_barbara/modules/auth/auth.repository.dart';
 import 'package:santa_barbara/modules/auth/auth.view.dart';
 import 'package:santa_barbara/modules/avisos/avisos.repository.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ Future<void> main() async {
     ChangeNotifierProvider(create: (context) => AvisoRepository()),
     ChangeNotifierProvider(create: (context) => ParoquiasRepository()),
     ChangeNotifierProvider(create: (context) => GameRepository()),
+    ChangeNotifierProvider(create: (context) => UserRepository()),
   ], child: const MyApp())); //const MyApp()));
 }
 

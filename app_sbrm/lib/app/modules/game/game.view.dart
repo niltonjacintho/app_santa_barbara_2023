@@ -3,6 +3,7 @@ import 'package:santa_barbara/app/modules/game/game.repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
+import 'package:santa_barbara/modules/auth/auth.repository.dart';
 
 class GamesView extends StatefulWidget {
   const GamesView({super.key});
@@ -13,11 +14,13 @@ class GamesView extends StatefulWidget {
 
 class _GamesViewState extends State<GamesView> {
   late GameRepository gameRepository;
+  late UserRepository userRepository;
   CarouselSliderController sliderController = CarouselSliderController();
 
   @override
   Widget build(BuildContext context) {
     gameRepository = Provider.of<GameRepository>(context);
+    userRepository = Provider.of<UserRepository>(context);
     // gameRepository.getTopicos();
 
     return MaterialApp(
@@ -28,7 +31,7 @@ class _GamesViewState extends State<GamesView> {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Quiz'),
+          title: Text('Hora de jogar ${userRepository.usuario.nome}'),
           leading: IconButton(
             color: Colors.black,
             icon: const Icon(Icons.arrow_back_ios),

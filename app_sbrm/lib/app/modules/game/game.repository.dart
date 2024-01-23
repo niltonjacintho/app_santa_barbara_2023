@@ -6,6 +6,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:santa_barbara/model/quiz_model.dart';
+import 'package:santa_barbara/model/user_model.dart';
+import 'package:santa_barbara/modules/auth/auth.repository.dart';
 import 'package:uuid/uuid.dart';
 
 class BasePontos {
@@ -15,6 +17,8 @@ class BasePontos {
 }
 
 class GameRepository extends ChangeNotifier {
+  late UserRepository userRepository;
+  bool crossState = false;
   BaseTopicos topicoAtual = BaseTopicos();
   BasePerguntas perguntaAtual = BasePerguntas();
   BasePontos basePontos = BasePontos();
@@ -57,7 +61,7 @@ class GameRepository extends ChangeNotifier {
   }
 
   bool proximaPergunta() {
-    if (idPerguntaAtual + 1 > listPerguntas.length) {
+    if (idPerguntaAtual >= listPerguntas.length - 1) {
       return false;
     } else {
       idPerguntaAtual++;
@@ -103,28 +107,6 @@ class GameRepository extends ChangeNotifier {
     return set.toList();
   }
 
-  // List<String> getButtonLabels() {
-  //   List<String> a = [];
-
-  //   if (perguntaAtual.perguntasRespostas != null) {
-  //     for (var element in perguntaAtual.perguntasRespostas!) {
-  //       a.add(element.respostatexto!.substring(2));
-  //     }
-  //   }
-  //   return a;
-  // }
-
-  // List<String> getButtonValues() {
-  //   List<String> a = [];
-  //   if (perguntaAtual.perguntasRespostas != null) {
-  //     for (var i = 0; i < perguntaAtual.perguntasRespostas!.length; i++) {
-  //       a.add(((idPerguntaAtual * 10 + i).toString()));
-  //     }
-  //     print(a);
-  //   }
-  //   return a;
-  // }
-
   acertou(int pos) {
     return (perguntaAtual.perguntasRespostas![pos].respostacerta!);
   }
@@ -139,34 +121,51 @@ class GameRepository extends ChangeNotifier {
     }
   }
 
-  salvarRank() async {
+  salvarRank(UserModel usuario) async {
     QuizRankModel quiz = QuizRankModel();
     quiz.acertos = basePontos.acertos;
     quiz.erros = basePontos.erros;
     quiz.data = DateTime.now();
     quiz.id = uuid.v4();
     quiz.pontos = basePontos.pontos + basePontos.acertos;
-    quiz.email = 'incluir ainda';
-    quiz.nome = 'incluir apos o auth';
+    quiz.email = usuario.email;
+    quiz.nome = usuario.nome;
     quiz.topico = topicoAtual.id;
 
     final firestore = FirebaseFirestore.instance;
     firestore.collection('quizrank').add(quiz.toJson());
-    basePontos = BasePontos();
   }
 
-  getWinners() async {
+  getWinners({int pontos = 0}) async {
     final firestore = FirebaseFirestore.instance;
     final query = firestore
         .collection('quizrank')
-        .where("idTopico", isEqualTo: topicoAtual.id)
+        .where("topico", isEqualTo: topicoAtual.id)
         .orderBy('pontos', descending: true)
         .limit(3)
         .get();
     final snapshot = await query.then((value) => value.docs);
-    final  q = QuizRankModel();
-    final  top =
-        snapshot.map((doc) => q.fromJson(doc.data())).toList();
+    final q = QuizRankModel();
+    final top = snapshot.map((doc) => q.fromJson(doc.data())).toList();
     listRank = top;
+    return listRank;
+  }
+
+  getPosition(int pontos) async {
+    final firestore = FirebaseFirestore.instance;
+    final query = firestore
+        .collection('quizrank')
+        .where("pontos", isGreaterThan: pontos)
+        .get();
+    final snapshot = await query.then((value) => value.docs);
+    final q = QuizRankModel();
+    final qtd = snapshot.map((doc) => q.fromJson(doc.data())).toList().length;
+    return qtd + 1;
+  }
+
+  crossUpdate() {
+    print('entrei no update');
+    crossState = !crossState;
+    //notifyListeners();
   }
 }

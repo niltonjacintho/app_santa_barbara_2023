@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
+import 'package:santa_barbara/modules/auth/auth.repository.dart';
 import 'package:santa_barbara/modules/home/home.view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,6 +16,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+  late UserRepository userRepository;
+
   SharedPreferences? prefs;
 
   @override
@@ -31,6 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
           await _googleSignIn.signInSilently(suppressErrors: false);
 
       if (account != null) {
+        userRepository.usuarioFromAccount(account);
         //MaterialPageRoute(builder: (context) => const HomeView());
         Navigator.push(
           context,
@@ -47,6 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
       GoogleSignInAccount? account = await _googleSignIn.signIn();
       if (account != null) {
         // Save token
+        userRepository.usuarioFromAccount(account);
         await prefs!
             .setString('token', (await account.authentication).accessToken!);
 
@@ -66,6 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    userRepository = Provider.of<UserRepository>(context);
     return Scaffold(
       body: Center(
         child: ElevatedButton(

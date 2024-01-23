@@ -6,7 +6,7 @@ import 'package:emoji_alert/emoji_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:santa_barbara/app/modules/game/game.repository.dart';
+import 'package:santa_barbara/modules/auth/auth.repository.dart';
 
 class GamePerguntas extends StatefulWidget {
   const GamePerguntas({super.key});
@@ -17,10 +17,12 @@ class GamePerguntas extends StatefulWidget {
 
 class _GamePerguntasState extends State<GamePerguntas> {
   late GameRepository gameRepository;
+  late UserRepository userRepository;
   final CountDownController _controller = CountDownController();
   @override
   Widget build(BuildContext context) {
     gameRepository = Provider.of<GameRepository>(context);
+    userRepository = Provider.of<UserRepository>(context);
     // gameRepository.getQuiz();
 
     return MaterialApp(
@@ -148,13 +150,13 @@ class _GamePerguntasState extends State<GamePerguntas> {
                       mainButtonColor: Colors.green,
                       mainButtonText: const Text("Save"),
                       onMainButtonPressed: () {
+                        gameRepository.gravarPontos(
+                            int.parse(_controller.getTime()!), index);
                         if (gameRepository.proximaPergunta()) {
-                          gameRepository.gravarPontos(
-                              int.parse(_controller.getTime()!), index);
                           montar_perguntas(context);
                           Navigator.of(context, rootNavigator: true).pop();
                         } else {
-                          gameRepository.salvarRank();
+                          gameRepository.salvarRank(userRepository.usuario);
                           Navigator.of(context, rootNavigator: true).pop();
                           Navigator.push(
                               context,
