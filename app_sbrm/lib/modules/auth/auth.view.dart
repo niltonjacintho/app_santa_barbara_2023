@@ -1,10 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:santa_barbara/modules/auth/auth.repository.dart';
-import 'package:santa_barbara/modules/home/home.view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -17,7 +18,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
   late UserRepository userRepository;
-
   SharedPreferences? prefs;
 
   @override
@@ -36,37 +36,25 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (account != null) {
         userRepository.usuarioFromAccount(account);
-        //MaterialPageRoute(builder: (context) => const HomeView());
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomeView(),
-          ),
-        );
+        GoRouter.of(context).go('/home');
       }
     }
   }
 
   Future<void> _handleSignIn() async {
     try {
-      GoogleSignInAccount? account = await _googleSignIn.signIn();
+      final GoogleSignInAccount? account = await _googleSignIn.signIn();
       if (account != null) {
-        // Save token
         userRepository.usuarioFromAccount(account);
         await prefs!
             .setString('token', (await account.authentication).accessToken!);
-
-        // Navigate to home screen
-        //MaterialPageRoute(builder: (context) => const HomeView());
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomeView(),
-          ),
-        );
+        GoRouter.of(context).go('/home');
       }
+      // else {
+      //   GoRouter.of(context).go('/agenda');
+      // }
     } catch (error) {
-      print('ERRRRRROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO $error');
+      // GoRouter.of(context).go('/mensagemparoco');
     }
   }
 
@@ -74,10 +62,26 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     userRepository = Provider.of<UserRepository>(context);
     return Scaffold(
+      backgroundColor: Colors.blue,
       body: Center(
-        child: ElevatedButton(
-          onPressed: _handleSignIn,
-          child: const Text('Sign in with Google'),
+        child: GestureDetector(
+          onTap: _handleSignIn,
+          child: AvatarGlow(
+            startDelay: const Duration(milliseconds: 1000),
+            glowColor: Colors.white,
+            glowShape: BoxShape.circle,
+            animate: true,
+            curve: Curves.fastOutSlowIn,
+            child: const Material(
+              elevation: 8.0,
+              shape: CircleBorder(),
+              color: Colors.transparent,
+              child: CircleAvatar(
+                backgroundImage: AssetImage('assets/images/google.png'),
+                radius: 50.0,
+              ),
+            ),
+          ),
         ),
       ),
     );

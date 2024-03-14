@@ -21,6 +21,7 @@
     "@angular/router": "^16.1.0",
     "firebase": "^10.6.0",
     "moment": "^2.29.4",
+    "netlify-cli": "^17.15.2",
     "primeicons": "^6.0.1",
     "primeng": "^16.7.2",
     "rxjs": "~7.8.0",

@@ -9,7 +9,7 @@ import { ArtigoService } from 'src/app/services/artigos.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
 import { MessageService } from 'primeng/api';
-import * as moment from 'moment';
+import moment from 'moment';
 import { getDocs } from 'firebase/firestore';
 
 @Component({

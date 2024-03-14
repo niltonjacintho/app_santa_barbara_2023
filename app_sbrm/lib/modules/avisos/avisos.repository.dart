@@ -85,8 +85,12 @@ class AvisoRepository extends ChangeNotifier {
   }
 
   Future<List<AvisoInterface>> recuperarAgenda(int mes) async {
-    Timestamp inicio = Timestamp.fromDate(getDatasMes(mes, inicio: true));
-    Timestamp fim = Timestamp.fromDate(getDatasMes(mes, inicio: false));
+    // Timestamp inicio = Timestamp.fromDate(getDatasMes(mes, inicio: true));
+    // Timestamp fim = Timestamp.fromDate(getDatasMes(mes, inicio: false));
+    var inicio = getDatasMes(mes, inicio: true);
+    var fim = getDatasMes(mes, inicio: false);
+
+
     final firestore = FirebaseFirestore.instance;
     final query = firestore
         .collection('artigos')
@@ -96,8 +100,8 @@ class AvisoRepository extends ChangeNotifier {
         .orderBy("data", descending: false)
         .get();
     final snapshot = await query.then((value) => value.docs);
-    var avisos = snapshot.map((doc) => fromJson(doc.data())).toList();
-    avisos = avisos;
+    var av = snapshot.map((doc) => fromJson(doc.data())).toList();
+    avisos = av;
     notifyListeners();
     return avisos;
   }

@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBZPONCMu1ivn11B2Gy1WS4HNGF54pR-Gk',
-    appId: '1:999243580674:android:147eda8f295bd6ac352e1b',
+    appId: '1:999243580674:android:801b602c345a15ae352e1b',
     messagingSenderId: '999243580674',
     projectId: 'project-2297216869628270192',
     databaseURL: 'https://paroquia.firebaseio.com',
