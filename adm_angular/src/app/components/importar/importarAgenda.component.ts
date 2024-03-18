@@ -19,36 +19,52 @@ export class ImportarAgendaComponent {
   async importExcelAgenda() {
     let list: AvisoInterface[] = [];
     let d = new Date();
-    const meses = ['janeiro', 'fevereiro', 'marco', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro']
+    const meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro']
     let anoBase = -1;
     let mes = -1;
-    let lastField1 = '';
+    let lastField1 = null;
     for (let index = 0; index < agenda.length; index++) {
       const element = agenda[index];
-      const mesEncontrado = meses.indexOf(element.field1.split(' ')[0].toLowerCase());
-      mesEncontrado != -1 ? mes = mesEncontrado : mes = mes;
-      mesEncontrado != -1 ? anoBase = parseInt(element.field1.split(' ')[1]) : anoBase = anoBase;
 
+      var f1: string = String(element["2024 (Versão 01 - 04/03/2024)"])
+      const mesEncontrado = meses.indexOf(f1!.split(' ')[0].toLowerCase());
+      mesEncontrado != -1 ? mes = mesEncontrado : mes = mes;
+      mesEncontrado != -1 ? anoBase = parseInt(f1!.split(' ')[1]) : anoBase = anoBase;
+      if (mes > 0) {
+        console.log('pause aqui')
+      }
+      if (element.column_2 == 'CRAS') {
+        console.log('F1 ', typeof f1, f1 == 'null', f1, 'lastfield', lastField1, 'Element', element);
+      }
       if (mes != -1) {
-        if (this.artigoService.isNumber(element.field1)) {
-          element.field1 = element.field1 == '' ? lastField1 : element.field1;
+        if (f1 == 'null') {
+          if (lastField1 != null) {
+            f1 = lastField1;
+          }
+
+        }
+        if (element.column_2 == 'CRAS') {
+          console.log('APÓS TRATAR ==> F1 ', f1, f1 == null, lastField1 != null, 'lastfield', lastField1, 'Element', element);
+        }
+        if (this.artigoService.isNumber(f1)) {
+
           const aviso: AvisoInterface = this.artigoService.initAviso();
           aviso.autor = 'Importação';
-          aviso.titulo = element.field3;
-          aviso.subtitulo = 'Resposável: ' + element.field4;
+          aviso.titulo = element.column_2!;
+          aviso.subtitulo = 'Resposável: ' + element.column_3;
           aviso.grupo = 'agenda';
-          aviso.data = new Date(anoBase, mes, Number(element.field1))
+          aviso.data = new Date(anoBase, mes, Number(f1))
           aviso.dtInclusao = new Date();
-          aviso.conteudo = 'Pastoral ou Movimento: ' + element.field4 + '\n Local: ' + element.field6 + '\n Horário: ' + element.field5
+          aviso.conteudo = '\nPastoral ou Movimento: ' + element.column_3 + '\n Local: ' + element.column_5 + '\n Horário: ' + element.column_4 + '\n Observação: ' + element.column_7;
           aviso.id = uuidv4();
           await this.firestore.collection('artigos').doc(aviso.id).set(aviso).then(async () => {
           });
 
 
           list.push(aviso);
-          lastField1 = element.field1 == '' ? lastField1 : element.field1;
+          lastField1 = f1 == null ? lastField1 : f1;
         } else {
-          console.log(element.field1)
+          // console.log(element.field1)
         }
         // if ((element.field1.trim().length > 0) && (meseswerCase().indexOf(element.field1.toLowerCase()) != -1)) {
         //   mes++
@@ -56,7 +72,7 @@ export class ImportarAgendaComponent {
         // }
       }
     }
-    console.log(list)
+    console.log(list.length, list)
   }
   // trocar field1 para
 

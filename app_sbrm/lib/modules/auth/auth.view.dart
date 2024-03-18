@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
       //   GoRouter.of(context).go('/agenda');
       // }
     } catch (error) {
-      // GoRouter.of(context).go('/mensagemparoco');
+      GoRouter.of(context).go('/mensagemparoco');
     }
   }
 
@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: GestureDetector(
           onTap: _handleSignIn,
           child: AvatarGlow(
-            startDelay: const Duration(milliseconds: 1000),
+            startDelay: const Duration(milliseconds: 100),
             glowColor: Colors.white,
             glowShape: BoxShape.circle,
             animate: true,
