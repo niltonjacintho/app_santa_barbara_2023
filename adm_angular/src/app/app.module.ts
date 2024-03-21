@@ -37,6 +37,8 @@ import { ArtigoService } from './services/artigos.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { ImportarParoquiasComponent } from './components/importar-paroquias/importar-paroquias.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -45,7 +47,8 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
     LoginComponent,
     HomeComponent,
     AvisosComponent,
-    ImportarAgendaComponent
+    ImportarAgendaComponent,
+    ImportarParoquiasComponent
   ],
   imports: [
     BrowserModule,
@@ -66,6 +69,7 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
     InputTextareaModule,
     InputSwitchModule,
     CalendarModule,
+    HttpClientModule,
     AngularFireModule.initializeApp({
       "projectId": "project-2297216869628270192",
       "appId": "1:999243580674:web:97bcb06337ef4d04352e1b",

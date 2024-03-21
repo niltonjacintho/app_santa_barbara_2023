@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { AvisosComponent } from './components/avisos/avisos.component';
 import { ImportarAgendaComponent } from './components/importar/importarAgenda.component';
+import { ImportarParoquiasComponent } from './components/importar-paroquias/importar-paroquias.component';
 
 
 const routes: Routes = [
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'avisos', component: AvisosComponent },
   { path: 'importar', component: ImportarAgendaComponent },
+  { path: 'ImportarParoquias', component: ImportarParoquiasComponent },
 ];
 
 @NgModule({

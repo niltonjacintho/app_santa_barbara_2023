@@ -27,6 +27,11 @@ export class HomeComponent {
         icon: 'pi pi-fw pi-bookmark',
         routerLink: ['/importar'] // Defina a rota para a página de produtos
       },
+      {
+        label: 'Importar Paroquias',
+        icon: 'pi pi-fw pi-bookmark',
+        routerLink: ['/ImportarParoquias'] // Defina a rota para a página de produtos
+      },      
       // Adicione mais itens conforme necessário
     ];
   }
