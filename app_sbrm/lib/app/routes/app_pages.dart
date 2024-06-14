@@ -5,6 +5,8 @@ import '../modules/agenda/bindings/agenda_binding.dart';
 import '../modules/agenda/views/agenda_view.dart';
 import '../modules/pastorais/bindings/pastorais_binding.dart';
 import '../modules/pastorais/views/pastorais_view.dart';
+import '../modules/photo/bindings/photo_binding.dart';
+import '../modules/photo/views/photo_view.dart';
 import '../modules/velario/bindings/velario_binding.dart';
 import '../modules/velario/views/velario_view.dart';
 
@@ -42,6 +44,11 @@ class AppPages {
           binding: VelarioBinding(),
         ),
       ],
+    ),
+    GetPage(
+      name: _Paths.PHOTO,
+      page: () => const PhotoView(),
+      binding: PhotoBinding(),
     ),
   ];
 }
