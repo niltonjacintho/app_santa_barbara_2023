@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:santa_barbara/modules/avisos/avisos.repository.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -11,6 +12,7 @@ class PhotoShowView extends GetView<PhotoShowController> {
   const PhotoShowView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    bool isLoading = true;
     late AvisoRepository avisoRepository;
     avisoRepository = Provider.of<AvisoRepository>(context);
     WebViewController controller = WebViewController()
@@ -22,7 +24,9 @@ class PhotoShowView extends GetView<PhotoShowController> {
             // Update loading bar.
           },
           onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
+          onPageFinished: (String url) {
+            isLoading = false;
+          },
           onHttpError: (HttpResponseError error) {},
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
@@ -36,11 +40,27 @@ class PhotoShowView extends GetView<PhotoShowController> {
       ..loadRequest(Uri.parse(avisoRepository.avisoAtual.conteudo!));
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('PhotoShowView'),
-        centerTitle: true,
-      ),
-      body: WebViewWidget(controller: controller),
-    );
+        appBar: AppBar(
+          title: const Text('Album de fotos'),
+          leading: IconButton(
+            color: Colors.black,
+            icon: const Icon(Icons.arrow_back_ios),
+            iconSize: 20.0,
+            onPressed: () {
+              GoRouter.of(context).go('/photos');
+            },
+          ),
+          centerTitle: true,
+        ),
+        body: Stack(
+          children: [
+            WebViewWidget(controller: controller),
+            isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : const Stack(),
+          ],
+        ));
   }
 }

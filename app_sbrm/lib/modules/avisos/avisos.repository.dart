@@ -111,6 +111,8 @@ class AvisoRepository extends ChangeNotifier {
     final query = firestore
         .collection('artigos')
         .where("grupo", isEqualTo: grupo)
+        .where("ativo", isEqualTo: true)
+        .where("dtLimiteExibicao", isGreaterThanOrEqualTo: DateTime.now())
         .orderBy("data", descending: true)
         .limit(limite)
         .get();

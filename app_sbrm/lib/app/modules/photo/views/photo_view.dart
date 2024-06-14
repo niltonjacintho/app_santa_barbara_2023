@@ -39,11 +39,23 @@ class PhotosList extends StatelessWidget {
 
   PhotosList({super.key});
 
+  getDados(BuildContext context) async {
+    var x = await avisoRepository.recuperarAvisos(grupo: 'photos');
+    List<AvisoInterface> result = [];
+    x.forEach((aviso) {
+      if (Uri.parse(aviso.conteudo!).isAbsolute) {
+        result.add(aviso);
+      }
+    });
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
     avisoRepository = Provider.of<AvisoRepository>(context);
     return FutureBuilder(
-      future: avisoRepository.recuperarAvisos(grupo: 'photos'),
+      future: getDados(
+          context), // avisoRepository.recuperarAvisos(grupo: 'photos'),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -69,7 +81,10 @@ class PhotosList extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () => {
                         avisoRepository.avisoAtual = aviso,
-                        GoRouter.of(context).go('/photoshow'),
+                        if (Uri.parse(aviso.conteudo!.trim()).isAbsolute)
+                          {
+                            GoRouter.of(context).go('/photoshow'),
+                          }
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
