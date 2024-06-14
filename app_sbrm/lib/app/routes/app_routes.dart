@@ -8,6 +8,7 @@ abstract class Routes {
   static const HOME = _Paths.HOME;
   static const VELARIO = _Paths.VELARIO;
   static const PHOTO = _Paths.PHOTO;
+  static const PHOTO_SHOW = _Paths.PHOTO_SHOW;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const VELARIO = '/velario';
   static const HOME = '/home';
   static const PHOTO = '/photo';
+  static const PHOTO_SHOW = '/photo-show';
 }
