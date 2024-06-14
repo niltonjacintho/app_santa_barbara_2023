@@ -90,7 +90,6 @@ class AvisoRepository extends ChangeNotifier {
     var inicio = getDatasMes(mes, inicio: true);
     var fim = getDatasMes(mes, inicio: false);
 
-
     final firestore = FirebaseFirestore.instance;
     final query = firestore
         .collection('artigos')
@@ -112,7 +111,7 @@ class AvisoRepository extends ChangeNotifier {
     final query = firestore
         .collection('artigos')
         .where("grupo", isEqualTo: grupo)
-        .orderBy("data", descending: false)
+        .orderBy("data", descending: true)
         .limit(limite)
         .get();
     final snapshot = await query.then((value) => value.docs);

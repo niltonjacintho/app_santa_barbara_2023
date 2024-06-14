@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:santa_barbara/model/avisos.interface.dart';
 import 'package:santa_barbara/modules/avisos/avisos.repository.dart';
-import 'package:drop_cap_text/drop_cap_text.dart';
+// import 'package:drop_cap_text/drop_cap_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -73,26 +73,27 @@ class _AvisoviewDetailsState extends State<AvisoviewDetails> {
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(28.0),
-                    child: DropCapText(
-                      dropCapPosition: DropCapPosition.end,
-                      dropCap: DropCap(
-                        width: MediaQuery.of(context).size.width * 0.92,
-                        height: 500,
-                        child: Image.network(avisoRepository.avisoAtual.imagem!,
-                            height: 400, fit: BoxFit.scaleDown,
-                            errorBuilder: (context, error, stackTrace) {
-                          return Image.asset(
-                            'assets/images/default.jpg',
-                          );
-                        }),
-                      ),
-                      avisoRepository.avisoAtual.conteudo!,
-                      style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontSize: model.fontSize,
-                      ),
-                    ),
-                  ),
+                    child: Text('111')
+                  //   DropCapText(
+                  //     dropCapPosition: DropCapPosition.end,
+                  //     dropCap: DropCap(
+                  //       width: MediaQuery.of(context).size.width * 0.92,
+                  //       height: 500,
+                  //       child: Image.network(avisoRepository.avisoAtual.imagem!,
+                  //           height: 400, fit: BoxFit.scaleDown,
+                  //           errorBuilder: (context, error, stackTrace) {
+                  //         return Image.asset(
+                  //           'assets/images/default.jpg',
+                  //         );
+                  //       }),
+                  //     ),
+                  //     avisoRepository.avisoAtual.conteudo!,
+                  //     style: TextStyle(
+                  //       fontStyle: FontStyle.italic,
+                  //       fontSize: model.fontSize,
+                  //     ),
+                  //   ),
+                   ),
                 ),
               ),
             ),

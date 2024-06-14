@@ -10,6 +10,9 @@ import 'package:santa_barbara/app/modules/game/gamePodio.view.dart';
 import 'package:santa_barbara/app/modules/mensagem_paroco/views/mensagem_paroco_view.dart';
 import 'package:santa_barbara/app/modules/paroquias/controllers/paroquias.repository.dart';
 import 'package:santa_barbara/app/modules/paroquias/views/paroquias_view.dart';
+import 'package:santa_barbara/app/modules/photo/views/photo_view.dart';
+import 'package:santa_barbara/app/modules/photoShow/views/photo_show_view.dart';
+import 'package:santa_barbara/app/modules/velario/views/velario_view.dart';
 import 'package:santa_barbara/modules/auth/auth.repository.dart';
 import 'package:santa_barbara/modules/auth/auth.view.dart';
 import 'package:santa_barbara/modules/avisos/avisos.repository.dart';
@@ -87,6 +90,21 @@ final GoRouter _router = GoRouter(
         path: '/avisodetails',
         builder: (BuildContext context, GoRouterState state) {
           return const AvisoviewDetails();
+        }),
+    GoRoute(
+        path: '/velario',
+        builder: (BuildContext context, GoRouterState state) {
+          return const VelarioView();
+        }),
+    GoRoute(
+        path: '/photos',
+        builder: (BuildContext context, GoRouterState state) {
+          return const PhotoView();
+        }),
+    GoRoute(
+        path: '/photoshow',
+        builder: (BuildContext context, GoRouterState state) {
+          return const PhotoShowView();
         })
   ],
 );

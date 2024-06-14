@@ -26,4 +26,14 @@ final List<MenuItemModel> demoData = [
     'assets/images/quizlogo.png',
     4,
   ),
+  MenuItemModel(
+    'Velário',
+    'assets/images/velaHome.jpg',
+    5,
+  ),
+  MenuItemModel(
+    'Fotos',
+    'assets/images/fotoHome.jpg',
+    6,
+  ),  
 ];

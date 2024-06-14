@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:santa_barbara/modules/avisos/avisos.repository.dart';
-import 'package:drop_cap_text/drop_cap_text.dart';
+// import 'package:drop_cap_text/drop_cap_text.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -62,18 +62,19 @@ class MensagemParocoView extends GetView<MensagemParocoController> {
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(28.0),
-                child: DropCapText(
-                  dropCapPosition: DropCapPosition.end,
-                  dropCap: DropCap(
-                      width: 400,
-                      height: 500,
-                      child: Image.asset('assets/images/paroco/padre_001.png')),
-                  avisoRepository.avisoAtual.conteudo!,
-                  style: TextStyle(
-                    fontStyle: FontStyle.italic,
-                    fontSize: model.fontSize,
-                  ),
-                ),
+                child: Text('111')
+                // DropCapText(
+                //   dropCapPosition: DropCapPosition.end,
+                //   dropCap: DropCap(
+                //       width: 400,
+                //       height: 500,
+                //       child: Image.asset('assets/images/paroco/padre_001.png')),
+                //   avisoRepository.avisoAtual.conteudo!,
+                //   style: TextStyle(
+                //     fontStyle: FontStyle.italic,
+                //     fontSize: model.fontSize,
+                //   ),
+                // ),
               ),
             ),
           ),

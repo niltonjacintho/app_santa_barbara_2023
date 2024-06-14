@@ -51,7 +51,7 @@ android {
         applicationId "com.favillajacintho.app_sbrm"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -64,14 +64,14 @@ android {
                     keyPassword "paroquia!"
                 }
     }
-    signingConfigs {
-       release {
-           keyAlias keystoreProperties['keyAlias']
-           keyPassword keystoreProperties['keyPassword']
-           storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-           storePassword keystoreProperties['storePassword']
-       }
-    }
+    // signingConfigs {
+    //    release {
+    //        keyAlias keystoreProperties['keyAlias']
+    //        keyPassword keystoreProperties['keyPassword']
+    //        storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+    //        storePassword keystoreProperties['storePassword']
+    //    }
+    // }
     buildTypes {
        release {
            signingConfig signingConfigs.release
@@ -87,4 +87,5 @@ flutter {
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:32.4.0')
     implementation "androidx.activity:activity:1.6.0-alpha05"
+    implementation 'com.android.support:multidex:1.0.3'
 }
