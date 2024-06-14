@@ -93,7 +93,12 @@ final GoRouter _router = GoRouter(
         path: '/velario',
         builder: (BuildContext context, GoRouterState state) {
           return const VelarioView();
-        })
+        }),
+    GoRoute(
+        path: '/photos',
+        builder: (BuildContext context, GoRouterState state) {
+          return const VelarioView();
+        })        
   ],
 );
 

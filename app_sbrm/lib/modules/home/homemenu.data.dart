@@ -31,4 +31,9 @@ final List<MenuItemModel> demoData = [
     'assets/images/velaHome.jpg',
     5,
   ),
+  MenuItemModel(
+    'Fotos',
+    'assets/images/fotoHome.jpg',
+    6,
+  ),  
 ];

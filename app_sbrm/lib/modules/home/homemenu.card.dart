@@ -28,6 +28,7 @@ class CatalogCard extends StatelessWidget {
               GoRouter.of(context).go('/games'),
             },
           5 => GoRouter.of(context).go('/velario'),
+          6 => GoRouter.of(context).go('/photos'),
           int() => throw UnimplementedError(),
         },
       },
