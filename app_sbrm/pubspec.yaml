@@ -49,6 +49,7 @@ dependencies:
   # floating_bottom_navigation_bar: ^1.5.2
   sz_fancy_bottom_navigation: ^0.2.1
   webview_flutter: ^4.8.0
+  flutter_form_builder: ^9.3.0
 
 dev_dependencies:
   flutter_test:
