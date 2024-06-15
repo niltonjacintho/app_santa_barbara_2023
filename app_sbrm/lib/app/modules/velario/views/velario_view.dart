@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -59,17 +60,53 @@ class VelarioView extends GetView<VelarioController> {
   }
 
   Future<void> _dialogBuilder(BuildContext context) {
+    final formKey = GlobalKey<FormBuilderState>();
+    final intencaoKey = GlobalKey<FormBuilderFieldState>();
+    final destinatarioKey = GlobalKey<FormBuilderFieldState>();
+    final textoKey = GlobalKey<FormBuilderFieldState>();
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Basic dialog title'),
-          content: const Text(
-            'A dialog is a type of modal window that\n'
-            'appears in front of app content to\n'
-            'provide critical information, or prompt\n'
-            'for a decision to be made.',
+          content: FormBuilder(
+            key: formKey,
+            child: Column(
+              children: [
+                FormBuilderTextField(
+                  key: destinatarioKey,
+                  name: 'destinatario',
+                  decoration: const InputDecoration(labelText: 'Para quem será esta vela?'),
+                ),
+                                FormBuilderTextField(
+                  key: intencaoKey,
+                  name: 'intencao',
+                  decoration: const InputDecoration(labelText: 'QUal a intenção desta vela'),
+                ),
+                const SizedBox(height: 10),
+                MaterialButton(
+                  color: Theme.of(context).colorScheme.secondary,
+                  onPressed: () {
+                    // Validate and save the form values
+                    formKey.currentState?.saveAndValidate();
+                    debugPrint(formKey.currentState?.value.toString());
+
+                    // On another side, can access all field values without saving form with instantValues
+                    formKey.currentState?.validate();
+                    debugPrint(formKey.currentState?.instantValue.toString());
+                  },
+                  child: const Text('Login'),
+                )
+              ],
+            ),
           ),
+
+          // const Text(
+          //   'A dialog is a type of modal window that\n'
+          //   'appears in front of app content to\n'
+          //   'provide critical information, or prompt\n'
+          //   'for a decision to be made.',
+          // ),
           actions: <Widget>[
             TextButton(
               style: TextButton.styleFrom(

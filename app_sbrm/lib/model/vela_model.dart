@@ -1,7 +1,7 @@
 class VelaModel {
   String? id;
   DateTime? data;
-  String? intensao;
+  String? intencao;
   int? minutosrestantes;
   String? destinatario;
   String? solicitanteemail;
@@ -13,7 +13,7 @@ class VelaModel {
   VelaModel(
       {this.id,
       this.data,
-      this.intensao,
+      this.intencao,
       this.minutosrestantes,
       this.destinatario,
       this.solicitanteemail,
@@ -25,7 +25,7 @@ class VelaModel {
   VelaModel.fromJson(Map<String, dynamic> json) {
     id = json["id"];
     data = json['data'];
-    intensao = json['intensao'];
+    intencao = json['intencao'];
     minutosrestantes = json['minutosrestantes'];
     destinatario = json['destinatario'];
     solicitanteemail = json['solicitanteemail'];
@@ -39,7 +39,7 @@ class VelaModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['data'] = this.data;
-    data['intensao'] = intensao;
+    data['intencao'] = intencao;
     data['minutosrestantes'] = minutosrestantes;
     data['destinatario'] = destinatario;
     data['solicitanteemail'] = solicitanteemail;
