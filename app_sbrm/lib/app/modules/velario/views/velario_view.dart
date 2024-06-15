@@ -68,51 +68,45 @@ class VelarioView extends GetView<VelarioController> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Basic dialog title'),
-          content: FormBuilder(
-            key: formKey,
-            child: Column(
-              children: [
-                FormBuilderTextField(
-                  key: destinatarioKey,
-                  name: 'destinatario',
-                  decoration: const InputDecoration(labelText: 'Para quem será esta vela?'),
-                ),
-                                FormBuilderTextField(
-                  key: intencaoKey,
-                  name: 'intencao',
-                  decoration: const InputDecoration(labelText: 'QUal a intenção desta vela'),
-                ),
-                const SizedBox(height: 10),
-                MaterialButton(
-                  color: Theme.of(context).colorScheme.secondary,
-                  onPressed: () {
-                    // Validate and save the form values
-                    formKey.currentState?.saveAndValidate();
-                    debugPrint(formKey.currentState?.value.toString());
-
-                    // On another side, can access all field values without saving form with instantValues
-                    formKey.currentState?.validate();
-                    debugPrint(formKey.currentState?.instantValue.toString());
-                  },
-                  child: const Text('Login'),
-                )
-              ],
+          title: const Text('Acenda a vela!'),
+          insetPadding:
+              const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          elevation: 10,
+          backgroundColor: const Color.fromARGB(255, 223, 218, 205),
+          content: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: FormBuilder(
+              key: formKey,
+              child: Column(
+                children: [
+                  FormBuilderTextField(
+                    key: destinatarioKey,
+                    name: 'destinatario',
+                    decoration: const InputDecoration(
+                        labelText: 'Para quem será esta vela?'),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  FormBuilderTextField(
+                    key: intencaoKey,
+                    name: 'intencao',
+                    maxLines: 3,
+                    decoration: const InputDecoration(
+                        labelText: 'Qual a intenção desta vela'),
+                  ),
+                  const SizedBox(height: 10),
+                ],
+              ),
             ),
           ),
-
-          // const Text(
-          //   'A dialog is a type of modal window that\n'
-          //   'appears in front of app content to\n'
-          //   'provide critical information, or prompt\n'
-          //   'for a decision to be made.',
-          // ),
           actions: <Widget>[
             TextButton(
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child: const Text('Disable'),
+              child: const Text('Sair'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -121,7 +115,7 @@ class VelarioView extends GetView<VelarioController> {
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child: const Text('Enable'),
+              child: const Text('Acender'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
