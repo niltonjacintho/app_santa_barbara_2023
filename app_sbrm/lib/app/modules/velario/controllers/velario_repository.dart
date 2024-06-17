@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:santa_barbara/app/modules/velario/vela.Interface.dart';
+import 'package:santa_barbara/modules/auth/auth.repository.dart';
 
-class AvisoRepository extends ChangeNotifier {
+class VelarioRepository extends ChangeNotifier {
   List<VelaInterface> velas = [];
   VelaInterface vela = VelaInterface();
+  
 
   double _fontSize = 26;
   double get fontSize => _fontSize;
@@ -40,5 +42,20 @@ class AvisoRepository extends ChangeNotifier {
     velas = av as List<VelaInterface>;
     notifyListeners();
     return velas;
+  }
+
+  Future<void> acenderVela(VelaInterface vela) async {
+    UserRepository userRepository = UserRepository();
+    VelaInterface vela = VelaInterface();
+    vela.data = DateTime.now();
+    vela.dataInclusao = DateTime.now();
+    vela.solicitanteemail = userRepository.usuario.email;
+    vela.solicitantenome = userRepository.usuario.nome;
+    final firestore = FirebaseFirestore.instance;
+    final docRef = firestore
+        .collection('velas')
+        .doc(vela.id ?? ''); // Use o ID da vela, se existir, ou gere um novo
+
+    await docRef.set(vela as Map<String, dynamic>);
   }
 }

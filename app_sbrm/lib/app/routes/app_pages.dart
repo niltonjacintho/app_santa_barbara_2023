@@ -7,6 +7,8 @@ import '../modules/pastorais/bindings/pastorais_binding.dart';
 import '../modules/pastorais/views/pastorais_view.dart';
 import '../modules/photo/bindings/photo_binding.dart';
 import '../modules/photo/views/photo_view.dart';
+import '../modules/photoLista/bindings/photo_lista_binding.dart';
+import '../modules/photoLista/views/photo_lista_view.dart';
 import '../modules/photoShow/bindings/photo_show_binding.dart';
 import '../modules/photoShow/views/photo_show_view.dart';
 import '../modules/velario/bindings/velario_binding.dart';
@@ -56,6 +58,11 @@ class AppPages {
       name: _Paths.PHOTO_SHOW,
       page: () => const PhotoShowView(),
       binding: PhotoShowBinding(),
+    ),
+    GetPage(
+      name: _Paths.PHOTO_LISTA,
+      page: () => const PhotoListaView(),
+      binding: PhotoListaBinding(),
     ),
   ];
 }

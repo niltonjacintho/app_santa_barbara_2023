@@ -3,6 +3,9 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:santa_barbara/app/modules/velario/controllers/velario_repository.dart';
+import 'package:santa_barbara/app/modules/velario/vela.Interface.dart';
 import 'package:sz_fancy_bottom_navigation/sz_fancy_bottom_navigation.dart';
 
 import '../controllers/velario_controller.dart';
@@ -63,7 +66,9 @@ class VelarioView extends GetView<VelarioController> {
     final formKey = GlobalKey<FormBuilderState>();
     final intencaoKey = GlobalKey<FormBuilderFieldState>();
     final destinatarioKey = GlobalKey<FormBuilderFieldState>();
-    final textoKey = GlobalKey<FormBuilderFieldState>();
+    // final textoKey = GlobalKey<FormBuilderFieldState>();
+    VelarioRepository velarioRepository = VelarioRepository();
+    VelaInterface vela = VelaInterface();
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -85,6 +90,7 @@ class VelarioView extends GetView<VelarioController> {
                     name: 'destinatario',
                     decoration: const InputDecoration(
                         labelText: 'Para quem será esta vela?'),
+                    onSaved: (value) => vela.destinatario = value,
                   ),
                   const SizedBox(
                     height: 10,
@@ -95,6 +101,7 @@ class VelarioView extends GetView<VelarioController> {
                     maxLines: 3,
                     decoration: const InputDecoration(
                         labelText: 'Qual a intenção desta vela'),
+                    onSaved: (value) => vela.intencao = value,
                   ),
                   const SizedBox(height: 10),
                 ],
@@ -116,7 +123,8 @@ class VelarioView extends GetView<VelarioController> {
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
               child: const Text('Acender'),
-              onPressed: () {
+              onPressed: () async {
+                await velarioRepository.acenderVela(vela);
                 Navigator.of(context).pop();
               },
             ),
