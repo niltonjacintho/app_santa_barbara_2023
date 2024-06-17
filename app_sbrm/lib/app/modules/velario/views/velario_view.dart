@@ -124,7 +124,8 @@ class VelarioView extends GetView<VelarioController> {
               ),
               child: const Text('Acender'),
               onPressed: () async {
-                await velarioRepository.acenderVela(vela);
+                formKey.currentState?.save();
+                await velarioRepository.acenderVela(vela, context);
                 Navigator.of(context).pop();
               },
             ),
