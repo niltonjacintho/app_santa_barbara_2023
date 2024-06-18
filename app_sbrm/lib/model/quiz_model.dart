@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class QuizDB {
   QuizDb? quizDb;
@@ -76,11 +77,11 @@ class QuizDb {
 }
 
 class BaseTopicos {
-  String? id = '';
-  String? nome = '';
+  String? id = ' ';
+  Text? nome = Text('teste');
   Color? cor;
 
-  get getIdBase => nome!.trim().replaceAll(' ', '').toLowerCase();
+  get getIdBase => nome!.data!.trim().replaceAll(' ', '').toLowerCase();
 
   BaseTopicos({this.id, this.nome, this.cor});
 
@@ -95,7 +96,7 @@ class BaseTopicos {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    data['nome'] = nome;
+    data['nome'] = nome!.data;
     data['cor'] = cor;
     return data;
   }

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:santa_barbara/app/modules/velario/vela.Interface.dart';
+import 'package:santa_barbara/model/quiz_model.dart';
 import 'package:santa_barbara/modules/auth/auth.repository.dart';
 import 'package:uuid/uuid.dart';
 
@@ -13,9 +14,19 @@ class VelarioRepository extends ChangeNotifier {
   double get fontSize => _fontSize;
   set fontSize(value) => _fontSize = value;
 
-  late VelaInterface velaAtual = VelaInterface();
-  VelaInterface get avisoAtual => velaAtual;
-  set avisoAtual(value) => velaAtual = value;
+  late VelaInterface _velaAtual = VelaInterface();
+  VelaInterface get velaAtual => _velaAtual;
+  set velaAtual(value) => _velaAtual = value;
+
+  List<BaseTopicos> _letters = [BaseTopicos()];
+  List<BaseTopicos> get slideItens => _letters;
+  set slideItens(value) => _letters = value;
+
+  List<BaseTopicos> get letters => _letters;
+
+  set letters(List<BaseTopicos> value) {
+    _letters = value;
+  }
 
   var uuid = Uuid();
   late UserRepository userRepository;
@@ -37,6 +48,7 @@ class VelarioRepository extends ChangeNotifier {
   }
 
   fromJson(Map<String, dynamic> json) {
+    VelaInterface vela = VelaInterface();
     vela.id = json["id"];
     vela.data = json['data'];
     vela.intencao = json['intencao'];
@@ -45,7 +57,8 @@ class VelarioRepository extends ChangeNotifier {
     vela.solicitanteemail = json['solicitanteemail'];
     vela.solicitantenome = json['solicitantenome'];
     vela.texto = json['texto'];
-    vela.dataInclusao = json['dataAlteracao'];
+    vela.dataInclusao = json['dataAlteracao'].toDate();
+    return vela;
   }
 
   Future<List<VelaInterface>> recuperarVelasAcesas(bool somenteAcesas) async {
@@ -60,6 +73,25 @@ class VelarioRepository extends ChangeNotifier {
     velas = av as List<VelaInterface>;
     notifyListeners();
     return velas;
+  }
+
+  getVelas() async {
+    List<BaseTopicos> l = [];
+    final firestore = FirebaseFirestore.instance;
+    final query = firestore.collection('velas').get();
+    final snapshot = await query.then((value) => value.docs);
+    List<Color> colors = [];
+    final List vs = snapshot.map((doc) => fromJson(doc.data())).toList();
+    _letters = [];
+    for (VelaInterface element in vs) {
+      BaseTopicos b = BaseTopicos();
+      b.cor = Colors.black12;
+      b.nome = Text(element.destinatario!);
+      b.id = element.id;
+
+      _letters.add(b);
+    }
+    notifyListeners();
   }
 
   Future<void> acenderVela(VelaInterface vela, BuildContext context) async {

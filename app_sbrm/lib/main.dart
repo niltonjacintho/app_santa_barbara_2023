@@ -13,6 +13,7 @@ import 'package:santa_barbara/app/modules/paroquias/views/paroquias_view.dart';
 import 'package:santa_barbara/app/modules/photo/views/photo_view.dart';
 import 'package:santa_barbara/app/modules/photoShow/views/photo_show_view.dart';
 import 'package:santa_barbara/app/modules/velario/views/velario_view.dart';
+import 'package:santa_barbara/app/modules/velarioLista/views/velario_lista_view.dart';
 import 'package:santa_barbara/modules/auth/auth.repository.dart';
 import 'package:santa_barbara/modules/auth/auth.view.dart';
 import 'package:santa_barbara/modules/avisos/avisos.repository.dart';
@@ -105,6 +106,11 @@ final GoRouter _router = GoRouter(
         path: '/photoshow',
         builder: (BuildContext context, GoRouterState state) {
           return const PhotoShowView();
+        }),
+    GoRoute(
+        path: '/velaslista',
+        builder: (BuildContext context, GoRouterState state) {
+          return const VelarioListaView();
         })
   ],
 );

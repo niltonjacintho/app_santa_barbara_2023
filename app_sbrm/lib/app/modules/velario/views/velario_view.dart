@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_carousel_slider/carousel_slider.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import 'package:get/get.dart';
@@ -10,55 +11,72 @@ import 'package:sz_fancy_bottom_navigation/sz_fancy_bottom_navigation.dart';
 
 import '../controllers/velario_controller.dart';
 
-class VelarioView extends GetView<VelarioController> {
+class VelarioView extends StatefulWidget {
   const VelarioView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(0, 0, 0, 0),
-        title: const Text(
-          'Bem vindo ao nosso Velário',
-          style: TextStyle(color: Colors.white, fontSize: 35),
-        ),
-        centerTitle: true,
-      ),
-      extendBody: true,
-      bottomNavigationBar: FancyBottomNavigation(
-          barBackgroundColor: const Color.fromARGB(255, 143, 8, 8),
-          circleColor: const Color.fromARGB(243, 243, 241, 0),
-          textColor: const Color.fromARGB(250, 248, 248, 246),
-          tabs: [
-            TabData(iconData: Icons.home, title: "Voltar"),
-            TabData(
-                iconData: Icons.wb_incandescent_outlined,
-                title: "Acender Vela"),
-            TabData(iconData: Icons.list_outlined, title: "Velas acesas"),
-            TabData(
-                iconData: Icons.local_fire_department_outlined,
-                title: "Suas Velas"),
-          ],
-          onTabChangedListener: (position) {
-            switch (position.toString()) {
-              case '0':
-                GoRouter.of(context).go('/home');
-              case '1':
-                _dialogBuilder(context);
+  State<VelarioView> createState() => _VelarioViewState();
+}
 
-              default:
-                print(position);
-            }
-          }),
-      body: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/gifs/velaAcesa.gif"),
-              fit: BoxFit.cover,
-            ),
+class _VelarioViewState extends State<VelarioView> {
+// class VelarioView extends GetView<VelarioController> {
+  // const VelarioView({super.key});
+  late VelarioRepository velarioRepository;
+
+  @override
+  Widget build(BuildContext context) {
+    //late VelarioRepository velarioRepository;
+    //velarioRepository = Provider.of<VelarioRepository>(context);
+    return Provider(
+      create: (_) => VelarioRepository,
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(0, 0, 0, 0),
+          title: const Text(
+            'Bem vindo ao nosso Velário',
+            style: TextStyle(color: Colors.white, fontSize: 35),
           ),
-          child: null),
+          centerTitle: true,
+        ),
+        extendBody: true,
+        bottomNavigationBar: FancyBottomNavigation(
+            barBackgroundColor: const Color.fromARGB(255, 143, 8, 8),
+            circleColor: const Color.fromARGB(243, 243, 241, 0),
+            textColor: const Color.fromARGB(250, 248, 248, 246),
+            tabs: [
+              TabData(iconData: Icons.home, title: "Voltar"),
+              TabData(
+                  iconData: Icons.wb_incandescent_outlined,
+                  title: "Acender Vela"),
+              TabData(iconData: Icons.list_outlined, title: "Velas acesas"),
+              TabData(
+                  iconData: Icons.local_fire_department_outlined,
+                  title: "Suas Velas"),
+            ],
+            onTabChangedListener: (position) {
+              switch (position.toString()) {
+                case '0':
+                  GoRouter.of(context).go('/home');
+                case '1':
+                  _dialogBuilder(context);
+                case '2':
+                  //context.watch<VelarioRepository>().getVelas();
+
+                  _mostrarVelasAcesas(context);
+                default:
+                  print(position);
+              }
+            }),
+        body: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/gifs/velaAcesa.gif"),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: null),
+      ),
     );
   }
 
@@ -126,6 +144,108 @@ class VelarioView extends GetView<VelarioController> {
               onPressed: () async {
                 formKey.currentState?.save();
                 await velarioRepository.acenderVela(vela, context);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _mostrarVelasAcesas(BuildContext context) async {
+    final formKey = GlobalKey<FormBuilderState>();
+    final intencaoKey = GlobalKey<FormBuilderFieldState>();
+    final destinatarioKey = GlobalKey<FormBuilderFieldState>();
+
+    CarouselSliderController sliderController = CarouselSliderController();
+
+    // final textoKey = GlobalKey<FormBuilderFieldState>();
+    // VelarioRepository velarioRepository = VelarioRepository();
+
+    VelaInterface vela = VelaInterface();
+    VelarioRepository velarioRepository = VelarioRepository();
+    await velarioRepository.getVelas();
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            'Velas acesas!',
+            style: TextStyle(color: Colors.green),
+          ),
+          insetPadding:
+              const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          elevation: 10,
+          backgroundColor: Color.fromARGB(255, 41, 30, 1),
+          content: ChangeNotifierProvider<VelarioRepository>(
+            create: (_) => VelarioRepository(),
+            child: Consumer<VelarioRepository>(
+              builder: (context, model, child) => Column(
+                children: [
+                  // const SizedBox(
+                  //   height: 250,
+                  // ),
+                  Expanded(
+                    child: SizedBox(
+                      width: 600,
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        child: CarouselSlider.builder(
+                          unlimitedMode: true,
+                          controller: sliderController,
+                          slideBuilder: (index) {
+                            return GestureDetector(
+                              onTap: () => {null},
+                              child: Container(
+                                width: 200,
+                                alignment: Alignment.center,
+                                color: Colors.amber,
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      velarioRepository
+                                          .slideItens[index].nome!.data!,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                          fontSize: 30, color: Colors.white),
+                                    ),
+                                    Text(
+                                      velarioRepository
+                                          .slideItens[index].nome!.data!,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                          fontSize: 30, color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                          slideTransform: const CubeTransform(),
+                          slideIndicator: CircularSlideIndicator(
+                            padding: const EdgeInsets.only(bottom: 32),
+                            indicatorBorderColor: Colors.black,
+                          ),
+                          itemCount: velarioRepository.slideItens.length,
+                          initialPage: 0,
+                          enableAutoSlider: false,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Sair'),
+              onPressed: () {
                 Navigator.of(context).pop();
               },
             ),

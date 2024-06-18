@@ -13,6 +13,8 @@ import '../modules/photoShow/bindings/photo_show_binding.dart';
 import '../modules/photoShow/views/photo_show_view.dart';
 import '../modules/velario/bindings/velario_binding.dart';
 import '../modules/velario/views/velario_view.dart';
+import '../modules/velarioLista/bindings/velario_lista_binding.dart';
+import '../modules/velarioLista/views/velario_lista_view.dart';
 
 part 'app_routes.dart';
 
@@ -63,6 +65,11 @@ class AppPages {
       name: _Paths.PHOTO_LISTA,
       page: () => const PhotoListaView(),
       binding: PhotoListaBinding(),
+    ),
+    GetPage(
+      name: _Paths.VELARIO_LISTA,
+      page: () => const VelarioListaView(),
+      binding: VelarioListaBinding(),
     ),
   ];
 }
