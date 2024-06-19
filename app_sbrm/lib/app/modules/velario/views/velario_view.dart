@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_carousel_slider/carousel_slider.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart'; // for date format
+import 'package:intl/date_symbol_data_local.dart'; // for other locales
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:santa_barbara/app/modules/velario/controllers/velario_repository.dart';
@@ -30,9 +33,9 @@ class _VelarioViewState extends State<VelarioView> {
     return Provider(
       create: (_) => VelarioRepository,
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: const Color.fromARGB(255, 51, 4, 4),
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(0, 0, 0, 0),
+          backgroundColor: const Color.fromARGB(0, 49, 1, 1),
           title: const Text(
             'Bem vindo ao nosso Velário',
             style: TextStyle(color: Colors.white, fontSize: 35),
@@ -169,16 +172,16 @@ class _VelarioViewState extends State<VelarioView> {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text(
-            'Velas acesas!',
-            style: TextStyle(color: Colors.green),
-          ),
-          insetPadding:
-              const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-          elevation: 10,
-          backgroundColor: Color.fromARGB(255, 41, 30, 1),
-          content: ChangeNotifierProvider<VelarioRepository>(
+        return Container(
+          // title: const Text(
+          //   'Velas acesas!',
+          //   style: TextStyle(color: Colors.green),
+          // ),
+          // insetPadding:
+          //     const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          //elevation: 10,
+          // backgroundColor: Color.fromARGB(255, 41, 30, 1),
+          child: ChangeNotifierProvider<VelarioRepository>(
             create: (_) => VelarioRepository(),
             child: Consumer<VelarioRepository>(
               builder: (context, model, child) => Column(
@@ -188,50 +191,80 @@ class _VelarioViewState extends State<VelarioView> {
                   // ),
                   Expanded(
                     child: SizedBox(
-                      width: 600,
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
-                        child: CarouselSlider.builder(
-                          unlimitedMode: true,
-                          controller: sliderController,
-                          slideBuilder: (index) {
-                            return GestureDetector(
-                              onTap: () => {null},
-                              child: Container(
-                                width: 200,
-                                alignment: Alignment.center,
-                                color: Colors.amber,
-                                child: Column(
+                      width: MediaQuery.of(context).size.width - 60,
+                      height: MediaQuery.of(context).size.height - 150,
+                      child: CarouselSlider.builder(
+                        enableAutoSlider: true,
+                        unlimitedMode: true,
+                        controller: sliderController,
+                        slideBuilder: (index) {
+                          return GestureDetector(
+                            onTap: () => {null},
+                            child: Container(
+                              width: 200,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.yellow),
+                                image: const DecorationImage(
+                                  image: AssetImage("assets/gifs/vela2.gif"),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 20),
+                                child: Stack(
                                   children: [
-                                    Text(
-                                      velarioRepository
-                                          .slideItens[index].nome!.data!,
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                          fontSize: 30, color: Colors.white),
+                                    const Positioned(
+                                      top: 10,
+                                      child: Text(
+                                        'Vela acesa para:',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.normal,
+                                            decoration: TextDecoration.none,
+                                            color: Colors.white),
+                                      ),
                                     ),
-                                    Text(
-                                      velarioRepository
-                                          .slideItens[index].nome!.data!,
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                          fontSize: 30, color: Colors.white),
+                                    Positioned(
+                                      top: 40,
+                                      child: Text(
+                                        velarioRepository
+                                            .slideItens[index].destinatario!,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                            fontSize: 28,
+                                            decoration: TextDecoration.none,
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      bottom: 40,
+                                      child: Text(
+                                        (DateFormat("dd/MM 'as' hh:mm").format(
+                                            velarioRepository.slideItens[index]
+                                                .dataInclusao!)),
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.white,
+                                          decoration: TextDecoration.none,
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
-                            );
-                          },
-                          slideTransform: const CubeTransform(),
-                          slideIndicator: CircularSlideIndicator(
-                            padding: const EdgeInsets.only(bottom: 32),
-                            indicatorBorderColor: Colors.black,
-                          ),
-                          itemCount: velarioRepository.slideItens.length,
-                          initialPage: 0,
-                          enableAutoSlider: false,
+                            ),
+                          );
+                        },
+                        slideTransform: const CubeTransform(),
+                        slideIndicator: CircularSlideIndicator(
+                          padding: const EdgeInsets.only(bottom: 32),
+                          indicatorBorderColor: Colors.black,
                         ),
+                        itemCount: velarioRepository.slideItens.length,
+                        initialPage: 0,
                       ),
                     ),
                   ),
@@ -239,17 +272,17 @@ class _VelarioViewState extends State<VelarioView> {
               ),
             ),
           ),
-          actions: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('Sair'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+          // actions: <Widget>[
+          //   TextButton(
+          //     style: TextButton.styleFrom(
+          //       textStyle: Theme.of(context).textTheme.labelLarge,
+          //     ),
+          //     child: const Text('Sair'),
+          //     onPressed: () {
+          //       Navigator.of(context).pop();
+          //     },
+          //   ),
+          // ],
         );
       },
     );

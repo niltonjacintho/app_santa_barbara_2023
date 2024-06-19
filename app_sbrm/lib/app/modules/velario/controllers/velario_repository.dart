@@ -19,8 +19,9 @@ class VelarioRepository extends ChangeNotifier {
   set velaAtual(value) => _velaAtual = value;
 
   List<BaseTopicos> _letters = [BaseTopicos()];
-  List<BaseTopicos> get slideItens => _letters;
-  set slideItens(value) => _letters = value;
+  List<VelaInterface> _slideItens = [];
+  List<VelaInterface> get slideItens => _slideItens;
+  set slideItens(value) => _slideItens = value;
 
   List<BaseTopicos> get letters => _letters;
 
@@ -82,14 +83,9 @@ class VelarioRepository extends ChangeNotifier {
     final snapshot = await query.then((value) => value.docs);
     List<Color> colors = [];
     final List vs = snapshot.map((doc) => fromJson(doc.data())).toList();
-    _letters = [];
+    _slideItens = [];
     for (VelaInterface element in vs) {
-      BaseTopicos b = BaseTopicos();
-      b.cor = Colors.black12;
-      b.nome = Text(element.destinatario!);
-      b.id = element.id;
-
-      _letters.add(b);
+      _slideItens.add(element);
     }
     notifyListeners();
   }
