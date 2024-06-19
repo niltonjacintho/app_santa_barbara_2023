@@ -239,11 +239,23 @@ class _VelarioViewState extends State<VelarioView> {
                                       ),
                                     ),
                                     Positioned(
-                                      bottom: 40,
+                                      bottom: 80,
                                       child: Text(
                                         (DateFormat("dd/MM 'as' hh:mm").format(
                                             velarioRepository.slideItens[index]
                                                 .dataInclusao!)),
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.white,
+                                          decoration: TextDecoration.none,
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      bottom: 50,
+                                      child: Text(
+                                        'Acesa por mais: ${velarioRepository.slideItens[index].tempoRestante()}',
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
                                           fontSize: 20,

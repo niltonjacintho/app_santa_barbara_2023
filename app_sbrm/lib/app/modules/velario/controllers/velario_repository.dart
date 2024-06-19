@@ -9,6 +9,7 @@ import 'package:uuid/uuid.dart';
 class VelarioRepository extends ChangeNotifier {
   List<VelaInterface> velas = [];
   VelaInterface vela = VelaInterface();
+  ConfigVela configVela = ConfigVela();
 
   double _fontSize = 26;
   double get fontSize => _fontSize;
@@ -79,13 +80,23 @@ class VelarioRepository extends ChangeNotifier {
   getVelas() async {
     List<BaseTopicos> l = [];
     final firestore = FirebaseFirestore.instance;
-    final query = firestore.collection('velas').get();
+    final query = firestore
+        .collection('velas')
+        .where("dataInclusao",
+            isGreaterThanOrEqualTo:
+                DateTime.now().subtract(const Duration(days: 2)))
+        .get();
     final snapshot = await query.then((value) => value.docs);
     List<Color> colors = [];
     final List vs = snapshot.map((doc) => fromJson(doc.data())).toList();
     _slideItens = [];
     for (VelaInterface element in vs) {
-      _slideItens.add(element);
+      Duration difference = DateTime.now().difference(element.dataInclusao!);
+      int minutes = difference.inMinutes;
+      if (minutes <= configVela.duracaoMinutos) {
+        element.minutosrestantes = configVela.minutosRestantes(minutes);
+        _slideItens.add(element);
+      }
     }
     notifyListeners();
   }
