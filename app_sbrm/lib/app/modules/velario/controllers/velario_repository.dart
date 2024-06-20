@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:santa_barbara/app/modules/velario/vela.Interface.dart';
-import 'package:santa_barbara/model/quiz_model.dart';
 import 'package:santa_barbara/modules/auth/auth.repository.dart';
 import 'package:uuid/uuid.dart';
 
@@ -19,18 +18,18 @@ class VelarioRepository extends ChangeNotifier {
   VelaInterface get velaAtual => _velaAtual;
   set velaAtual(value) => _velaAtual = value;
 
-  List<BaseTopicos> _letters = [BaseTopicos()];
+  // List<BaseTopicos> _letters = [BaseTopicos()];
   List<VelaInterface> _slideItens = [];
   List<VelaInterface> get slideItens => _slideItens;
   set slideItens(value) => _slideItens = value;
 
-  List<BaseTopicos> get letters => _letters;
+  // List<BaseTopicos> get letters => _letters;
 
-  set letters(List<BaseTopicos> value) {
-    _letters = value;
-  }
+  // set letters(List<BaseTopicos> value) {
+  //   _letters = value;
+  // }
 
-  var uuid = Uuid();
+  var uuid = const Uuid();
   late UserRepository userRepository;
 
   Map<String, dynamic> toJson(
@@ -78,7 +77,6 @@ class VelarioRepository extends ChangeNotifier {
   }
 
   getVelas() async {
-    List<BaseTopicos> l = [];
     final firestore = FirebaseFirestore.instance;
     final query = firestore
         .collection('velas')
@@ -87,7 +85,6 @@ class VelarioRepository extends ChangeNotifier {
                 DateTime.now().subtract(const Duration(days: 2)))
         .get();
     final snapshot = await query.then((value) => value.docs);
-    List<Color> colors = [];
     final List vs = snapshot.map((doc) => fromJson(doc.data())).toList();
     _slideItens = [];
     for (VelaInterface element in vs) {

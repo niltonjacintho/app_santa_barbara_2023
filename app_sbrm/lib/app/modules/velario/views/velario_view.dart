@@ -3,16 +3,13 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_carousel_slider/carousel_slider.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-import 'package:get/get.dart';
 import 'package:intl/intl.dart'; // for date format
-import 'package:intl/date_symbol_data_local.dart'; // for other locales
+// for other locales
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:santa_barbara/app/modules/velario/controllers/velario_repository.dart';
 import 'package:santa_barbara/app/modules/velario/vela.Interface.dart';
-import 'package:sz_fancy_bottom_navigation/sz_fancy_bottom_navigation.dart';
-
-import '../controllers/velario_controller.dart';
+import 'package:animated_button_bar/animated_button_bar.dart';
 
 class VelarioView extends StatefulWidget {
   const VelarioView({super.key});
@@ -43,34 +40,69 @@ class _VelarioViewState extends State<VelarioView> {
           centerTitle: true,
         ),
         extendBody: true,
-        bottomNavigationBar: FancyBottomNavigation(
-            barBackgroundColor: const Color.fromARGB(255, 143, 8, 8),
-            circleColor: const Color.fromARGB(243, 243, 241, 0),
-            textColor: const Color.fromARGB(250, 248, 248, 246),
-            tabs: [
-              TabData(iconData: Icons.home, title: "Voltar"),
-              TabData(
-                  iconData: Icons.wb_incandescent_outlined,
-                  title: "Acender Vela"),
-              TabData(iconData: Icons.list_outlined, title: "Velas acesas"),
-              TabData(
-                  iconData: Icons.local_fire_department_outlined,
-                  title: "Suas Velas"),
-            ],
-            onTabChangedListener: (position) {
-              switch (position.toString()) {
-                case '0':
-                  GoRouter.of(context).go('/home');
-                case '1':
-                  _dialogBuilder(context);
-                case '2':
-                  //context.watch<VelarioRepository>().getVelas();
+        bottomNavigationBar: Stack(
+          children: [
+            Positioned(
+              // bottom: 100,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height - 100,
+                  ),
+                  //inverted selection button bar
+                  AnimatedButtonBar(
+                    radius: 8.0,
+                    padding: const EdgeInsets.all(16.0),
+                    invertedSelection: true,
+                    children: [
+                      ButtonBarEntry(
+                          onTap: () => GoRouter.of(context).go('/home'),
+                          child: const Text('Home')),
+                      ButtonBarEntry(
+                          onTap: () => _dialogBuilder(context),
+                          child: const Text('Acender Vela')),
+                      ButtonBarEntry(
+                          onTap: () => _mostrarVelasAcesas(context),
+                          child: const Text('Velas acesas')),
+                    ],
+                  ),
+                  //You can populate it with different types of widgets like Icon
+                ],
+              ),
+            ),
+          ],
+        ),
 
-                  _mostrarVelasAcesas(context);
-                default:
-                  print(position);
-              }
-            }),
+        // FancyBottomNavigation(
+        //     initialSelection: 2,
+        //     barBackgroundColor: const Color.fromARGB(255, 143, 8, 8),
+        //     circleColor: const Color.fromARGB(243, 243, 241, 0),
+        //     textColor: const Color.fromARGB(250, 248, 248, 246),
+        //     tabs: [
+        //       TabData(iconData: Icons.home, title: "Voltar"),
+        //       TabData(
+        //           iconData: Icons.wb_incandescent_outlined,
+        //           title: "Acender Vela"),
+        //       TabData(iconData: Icons.list_outlined, title: "Velas acesas"),
+        //       TabData(
+        //           iconData: Icons.local_fire_department_outlined,
+        //           title: "Suas Velas"),
+        //     ],
+        //     onTabChangedListener: (position) {
+        //       switch (position.toString()) {
+        //         case '0':
+        //           GoRouter.of(context).go('/home');
+        //         case '1':
+        //           _dialogBuilder(context);
+        //         case '2':
+        //           //context.watch<VelarioRepository>().getVelas();
+
+        //           _mostrarVelasAcesas(context);
+        //         default:
+        //           print(position);
+        //       }
+        //     }),
         body: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -157,16 +189,12 @@ class _VelarioViewState extends State<VelarioView> {
   }
 
   Future<void> _mostrarVelasAcesas(BuildContext context) async {
-    final formKey = GlobalKey<FormBuilderState>();
-    final intencaoKey = GlobalKey<FormBuilderFieldState>();
-    final destinatarioKey = GlobalKey<FormBuilderFieldState>();
 
     CarouselSliderController sliderController = CarouselSliderController();
 
     // final textoKey = GlobalKey<FormBuilderFieldState>();
     // VelarioRepository velarioRepository = VelarioRepository();
 
-    VelaInterface vela = VelaInterface();
     VelarioRepository velarioRepository = VelarioRepository();
     await velarioRepository.getVelas();
     return showDialog<void>(

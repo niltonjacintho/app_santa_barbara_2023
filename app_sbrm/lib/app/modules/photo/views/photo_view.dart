@@ -5,16 +5,13 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:santa_barbara/model/avisos.interface.dart';
 import 'package:santa_barbara/modules/avisos/avisos.repository.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 import '../controllers/photo_controller.dart';
 
 class PhotoView extends GetView<PhotoController> {
-  const PhotoView({Key? key}) : super(key: key);
+  const PhotoView({super.key});
   @override
   Widget build(BuildContext context) {
-    late AvisoRepository avisoRepository;
-    avisoRepository = Provider.of<AvisoRepository>(context);
     context.read<AvisoRepository>().recuperarAvisos();
 
     return Scaffold(

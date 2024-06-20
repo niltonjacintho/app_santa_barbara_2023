@@ -18,7 +18,7 @@ class ParoquiasView extends StatelessWidget {
     late ParoquiasRepository paroquiaRepository;
     paroquiaRepository = Provider.of<ParoquiasRepository>(context);
     paroquiaRepository.getData();
-    print('passou na carga');
+    // print('passou na carga');
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Paroquias Paroquiais',
@@ -130,6 +130,7 @@ class ParoquiasView extends StatelessWidget {
                                     customViewPosition:
                                         CustomViewPosition.BEFORE_MESSAGE,
                                     context: context,
+                                    // ignore: dead_code
                                     dialogWidth: true ? 0.8 : null,
                                     onClose: (value) =>
                                         print("returned value is '$value'"),
@@ -156,7 +157,7 @@ class ParoquiasView extends StatelessWidget {
                             )),
                         TextButton(
                             onPressed: () {
-                              print('pressed');
+                              // print('pressed');
                               paroquiaRepository.paroquiaAtual = item;
                               Navigator.push(
                                 context,
@@ -179,16 +180,16 @@ class ParoquiasView extends StatelessWidget {
 
 //
   Widget capelaslist(BuildContext context, ParoquiaInterface paroquia) {
-    print('entrou ');
+    // print('entrou ');
     List<CapelasInterface>? c = [];
-    print(paroquia.capelas);
+    // print(paroquia.capelas);
     for (var i = 0; i < paroquia.capelas!.length; i++) {
       if (i > 1) {
         c.add(paroquia.capelas![i]);
       }
     }
     paroquia.capelas = c;
-    print(paroquia.capelas);
+    // print(paroquia.capelas);
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
