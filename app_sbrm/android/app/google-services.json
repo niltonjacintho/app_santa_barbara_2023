@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "999243580674-7f7k0iv6ci5mm949pl004icfrcv7bjce.apps.googleusercontent.com",
+          "client_id": "999243580674-s9c58quqmbo06eecuih8uf4dt5140eak.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.favillajacintho.app_sbrm",
-            "certificate_hash": "9f8c197aff37adde37583a468ffc5eb8f88d2ae7"
+            "certificate_hash": "d16f19e38f702776a46596b1bd9ed7864160a458"
           }
         },
         {

@@ -62,7 +62,27 @@ class MensagemParocoView extends GetView<MensagemParocoController> {
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(28.0),
-                child: Text('111')
+                child: Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20), // Image border
+                      child: Image.asset('assets/images/paroco/padre_001.png',
+                          height: 600, fit: BoxFit.fitWidth,
+                          errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          'assets/images/default.jpg',
+                        );
+                      }),
+                    ),
+                    Text(
+                      avisoRepository.avisoAtual.conteudo!,
+                      style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontSize: model.fontSize,
+                      ),
+                    ),
+                  ],
+                ),
                 // DropCapText(
                 //   dropCapPosition: DropCapPosition.end,
                 //   dropCap: DropCap(

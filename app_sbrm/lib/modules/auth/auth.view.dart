@@ -54,8 +54,44 @@ class _LoginScreenState extends State<LoginScreen> {
       //   GoRouter.of(context).go('/agenda');
       // }
     } catch (error) {
+      _dialogBuilder(context, error.toString());
+      userRepository.usuario.nome = error.toString();
       GoRouter.of(context).go('/mensagemparoco');
     }
+  }
+
+  Future<void> _dialogBuilder(BuildContext context, String message) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Basic dialog title'),
+          content: Text(
+            message,
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Disable'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Enable'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override

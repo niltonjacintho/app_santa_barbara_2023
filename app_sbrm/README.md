@@ -17,3 +17,11 @@ samples, guidance on mobile development, and a full API reference.
 
 
 https://www.freeprivacypolicy.com/live/b994daa6-682a-48cd-b47f-01cac5585d15
+
+# Comando para gerar chave
+
+keytool -genkey -keyalg RSA -alias paroquia -validity 8000 -keystore ./keystore.jks
+keytool -list -v -keystore ./keystore.jks 
+
+
+java -jar pepk.jar --alias=paroquia --keystore=keystore.jks --output=output.zip --include-cert --rsa-aes-encryption --encryption-key-path=./encryption_public_key.pem

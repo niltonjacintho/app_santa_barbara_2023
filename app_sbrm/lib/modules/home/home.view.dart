@@ -1,5 +1,7 @@
 // ignore_for_file: unnecessary_null_comparison, avoid_print
 
+import 'package:provider/provider.dart';
+import 'package:santa_barbara/modules/auth/auth.repository.dart';
 import 'package:santa_barbara/modules/home/homemenu.card.dart';
 import 'package:santa_barbara/modules/home/homemenu.data.dart';
 import 'package:flexible_grid_view/flexible_grid_view.dart';
@@ -19,6 +21,7 @@ class _HomeState extends State<HomeView> {
   ScrollController? scrollController;
   bool scrollVisible = true;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  late UserRepository userRepository;
 
   @override
   void initState() {
@@ -53,6 +56,7 @@ class _HomeState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    userRepository = Provider.of<UserRepository>(context);
     return SafeArea(
       child: Scaffold(
         //appBar: AppBar(title: const Text('Boom Menu Example')),
@@ -69,6 +73,14 @@ class _HomeState extends State<HomeView> {
                 'Somos Santa Barbara',
                 style: TextStyle(
                   fontSize: 30,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                // ignore: prefer_interpolation_to_compose_strings
+                'versão 20 -- ${userRepository.usuario.nome} --  ',
+                style: const TextStyle(
+                  fontSize: 10,
                 ),
                 textAlign: TextAlign.center,
               ),

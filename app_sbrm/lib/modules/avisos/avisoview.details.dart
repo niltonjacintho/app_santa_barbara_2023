@@ -73,27 +73,50 @@ class _AvisoviewDetailsState extends State<AvisoviewDetails> {
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(28.0),
-                    child: Text('111')
-                  //   DropCapText(
-                  //     dropCapPosition: DropCapPosition.end,
-                  //     dropCap: DropCap(
-                  //       width: MediaQuery.of(context).size.width * 0.92,
-                  //       height: 500,
-                  //       child: Image.network(avisoRepository.avisoAtual.imagem!,
-                  //           height: 400, fit: BoxFit.scaleDown,
-                  //           errorBuilder: (context, error, stackTrace) {
-                  //         return Image.asset(
-                  //           'assets/images/default.jpg',
-                  //         );
-                  //       }),
-                  //     ),
-                  //     avisoRepository.avisoAtual.conteudo!,
-                  //     style: TextStyle(
-                  //       fontStyle: FontStyle.italic,
-                  //       fontSize: model.fontSize,
-                  //     ),
-                  //   ),
-                   ),
+                    child: Column(
+                      children: [
+                        ClipRRect(
+                          borderRadius:
+                              BorderRadius.circular(20), // Image border
+                          child: Image.network(
+                              avisoRepository.avisoAtual.imagem!,
+                              height: 600,
+                              fit: BoxFit.fitWidth,
+                              errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              'assets/images/default.jpg',
+                            );
+                          }),
+                        ),
+                        Text(
+                          avisoRepository.avisoAtual.conteudo!,
+                          style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontSize: model.fontSize,
+                          ),
+                        ),
+                      ],
+                    ),
+                    //   DropCapText(
+                    //     dropCapPosition: DropCapPosition.end,
+                    //     dropCap: DropCap(
+                    //       width: MediaQuery.of(context).size.width * 0.92,
+                    //       height: 500,
+                    //       child: Image.network(avisoRepository.avisoAtual.imagem!,
+                    //           height: 400, fit: BoxFit.scaleDown,
+                    //           errorBuilder: (context, error, stackTrace) {
+                    //         return Image.asset(
+                    //           'assets/images/default.jpg',
+                    //         );
+                    //       }),
+                    //     ),
+                    //     avisoRepository.avisoAtual.conteudo!,
+                    //     style: TextStyle(
+                    //       fontStyle: FontStyle.italic,
+                    //       fontSize: model.fontSize,
+                    //     ),
+                    //   ),
+                  ),
                 ),
               ),
             ),

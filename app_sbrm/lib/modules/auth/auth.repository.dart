@@ -7,6 +7,8 @@ class UserRepository extends ChangeNotifier {
   UserModel get usuario => _usuario;
   set usuario(UserModel value) => {_usuario = value, notifyListeners()};
 
+
+
   usuarioFromAccount(GoogleSignInAccount account) {
     UserModel u = UserModel();
     u.data = DateTime.now();
