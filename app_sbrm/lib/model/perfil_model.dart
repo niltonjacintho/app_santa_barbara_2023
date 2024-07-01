@@ -7,7 +7,7 @@ class PerfilModel {
     required this.updateDate,
   });
 
-  final dynamic nome;
+  late final dynamic nome;
   final dynamic nascimento;
   final dynamic telefone;
   final dynamic createDate;

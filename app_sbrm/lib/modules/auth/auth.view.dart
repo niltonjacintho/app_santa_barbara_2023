@@ -4,7 +4,9 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:localstore/localstore.dart';
 import 'package:provider/provider.dart';
+import 'package:santa_barbara/model/perfil_model.dart';
 import 'package:santa_barbara/modules/auth/auth.repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,10 +25,21 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    autoLogin();
+
+//    autoLogin();
   }
 
   void autoLogin() async {
+
+
+    bool existePerfil = false;
+    userRepository = Provider.of<UserRepository>(context);
+    await userRepository.existePerfil().then((value) {
+      existePerfil = value;
+    });
+    if (!existePerfil) {
+      GoRouter.of(context).go('/perfil');
+    }
     prefs = await SharedPreferences.getInstance();
     String? token = prefs!.getString('token');
 
@@ -42,6 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _handleSignIn() async {
+    userRepository = Provider.of<UserRepository>(context);
     try {
       final GoogleSignInAccount? account = await _googleSignIn.signIn();
       if (account != null) {
@@ -54,49 +68,16 @@ class _LoginScreenState extends State<LoginScreen> {
       //   GoRouter.of(context).go('/agenda');
       // }
     } catch (error) {
-      _dialogBuilder(context, error.toString());
       userRepository.usuario.nome = error.toString();
       GoRouter.of(context).go('/mensagemparoco');
     }
   }
 
-  Future<void> _dialogBuilder(BuildContext context, String message) {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Basic dialog title'),
-          content: Text(
-            message,
-          ),
-          actions: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('Disable'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('Enable'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     userRepository = Provider.of<UserRepository>(context);
+
+    autoLogin();
     return Scaffold(
       backgroundColor: Colors.blue,
       body: Center(

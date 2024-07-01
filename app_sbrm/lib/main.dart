@@ -10,6 +10,7 @@ import 'package:santa_barbara/app/modules/game/gamePodio.view.dart';
 import 'package:santa_barbara/app/modules/mensagem_paroco/views/mensagem_paroco_view.dart';
 import 'package:santa_barbara/app/modules/paroquias/controllers/paroquias.repository.dart';
 import 'package:santa_barbara/app/modules/paroquias/views/paroquias_view.dart';
+import 'package:santa_barbara/app/modules/perfil/perfil_page.dart';
 import 'package:santa_barbara/app/modules/photo/views/photo_view.dart';
 import 'package:santa_barbara/app/modules/photoShow/views/photo_show_view.dart';
 import 'package:santa_barbara/app/modules/velario/views/velario_view.dart';
@@ -111,6 +112,11 @@ final GoRouter _router = GoRouter(
         path: '/velaslista',
         builder: (BuildContext context, GoRouterState state) {
           return const VelarioListaView();
+        }),
+    GoRoute(
+        path: '/perfil',
+        builder: (BuildContext context, GoRouterState state) {
+          return const PerfilPage();
         })
   ],
 );
@@ -147,7 +153,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Clean Code',
+      title: '',
       home: AnimatedSplashScreen(
           duration: 3000,
           splash: SizedBox(
@@ -160,7 +166,7 @@ class MyApp extends StatelessWidget {
               alignment: Alignment.center,
             ),
           ),
-          nextScreen: const LoginScreen(),
+          nextScreen: const HomeView(),
           splashTransition: SplashTransition.fadeTransition,
           splashIconSize: (MediaQuery.of(context).size.height - 50),
           pageTransitionType: PageTransitionType.fade,

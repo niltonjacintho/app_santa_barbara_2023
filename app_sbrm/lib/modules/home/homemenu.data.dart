@@ -21,11 +21,11 @@ final List<MenuItemModel> demoData = [
     'assets/images/agenda.png',
     3,
   ),
-  MenuItemModel(
-    'Quiz',
-    'assets/images/quizlogo.png',
-    4,
-  ),
+  // MenuItemModel(
+  //   'Quiz',
+  //   'assets/images/quizlogo.png',
+  //   4,
+  // ),
   MenuItemModel(
     'Velário',
     'assets/images/velaHome.jpg',
@@ -35,5 +35,5 @@ final List<MenuItemModel> demoData = [
     'Fotos',
     'assets/images/fotoHome.jpg',
     6,
-  ),  
+  ),
 ];
