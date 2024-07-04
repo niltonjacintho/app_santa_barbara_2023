@@ -12,7 +12,7 @@ final List<MenuItemModel> demoData = [
     1,
   ),
   MenuItemModel(
-    'Nossas pastorais',
+    'Paróquias no RJ',
     'assets/images/pastorais.png',
     2,
   ),

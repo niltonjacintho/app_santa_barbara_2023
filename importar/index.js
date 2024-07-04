@@ -17,6 +17,7 @@ async function main() {
         while (existeItem) {
             var currentId = getCurrentId();
             var currentName = getObjParoquia();
+            console.log(currentName);
             await getPaginaDetalhes(currentId).then(function (data) { htmlDetalhes = data; });
             if (currentId == 2) {
                 console.log(htmlDetalhes);

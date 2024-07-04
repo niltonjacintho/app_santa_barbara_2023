@@ -38,7 +38,7 @@ class _AvisoviewDetailsState extends State<AvisoviewDetails> {
               icon: const Icon(Icons.arrow_back_ios),
               iconSize: 20.0,
               onPressed: () {
-                GoRouter.of(context).go('/home');
+                GoRouter.of(context).go('/avisos');
               },
             ),
             actions: <Widget>[
@@ -78,15 +78,18 @@ class _AvisoviewDetailsState extends State<AvisoviewDetails> {
                         ClipRRect(
                           borderRadius:
                               BorderRadius.circular(20), // Image border
-                          child: Image.network(
-                              avisoRepository.avisoAtual.imagem!,
-                              height: 600,
-                              fit: BoxFit.fitWidth,
-                              errorBuilder: (context, error, stackTrace) {
+                          child:
+                              Image.network(avisoRepository.avisoAtual.imagem!,
+                                  // height: 600,
+                                  fit: BoxFit.fitWidth,
+                                  errorBuilder: (context, error, stackTrace) {
                             return Image.asset(
                               'assets/images/default.jpg',
                             );
                           }),
+                        ),
+                        const SizedBox(
+                          height: 10,
                         ),
                         Text(
                           avisoRepository.avisoAtual.conteudo!,
