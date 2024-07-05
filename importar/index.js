@@ -17,6 +17,7 @@ async function main() {
         while (existeItem) {
             var currentId = getCurrentId();
             var currentName = getObjParoquia();
+            limparHtml();
             console.log(currentName);
             await getPaginaDetalhes(currentId).then(function (data) { this.htmlDetalhes = data; });
             if (currentId == 2 | true) {
@@ -28,12 +29,18 @@ async function main() {
             }
             p.currentId = currentId;
             p.currentName = currentName;
-
-            existeItem = html.indexOf('"recuperaDetalhes(') != -1
+            paroquias.push(p);
+            existeItem = this.html.indexOf('"recuperaDetalhes(') != -1
         }
-        existPagina = false;
+        console.log('end')
+        //existPagina = false;
     }
 }
+
+function limparHtml(){
+    this.html = this.html.substring(this.html.indexOf("recuperaDetalhes('panel-body")+41);
+}
+
 function getCurrentId() {
     const html = this.html.substring(this.html.indexOf('"recuperaDetalhes('));
     return parseInt(html.substring(0, html.indexOf("')") + 1).split(',')[1].replace("'", ""));
@@ -98,12 +105,17 @@ function getCapelas() {
         if (element.trim().length > 10) {
             capela = {};
             if (element.length > 2) {
-                capela.nome = element.substring(0, element.indexOf('<a')).replace('&nbsp;', '').trim();
-                htmlLat = element.substring(element.indexOf('exibirMapa') + 11, element.indexOf('DIVMAP') - 3).split(',')
-                try {
-                    capela.latitude = htmlLat[0];
-                    capela.longitude = htmlLat[1];
-                } catch (error) {
+                capela.nome = element.substring(0, element.indexOf('<')).replace('&nbsp;', '').trim();
+                if (element.indexOf('exibirMapa') != -1) {
+                    htmlLat = element.substring(element.indexOf('exibirMapa') + 11, element.indexOf('DIVMAP') - 3).split(',')
+                    try {
+                        capela.latitude = htmlLat[0];
+                        capela.longitude = htmlLat[1];
+                    } catch (error) {
+                        capela.latitude = '';
+                        capela.longitude = '';
+                    }
+                } else {
                     capela.latitude = '';
                     capela.longitude = '';
                 }
@@ -112,10 +124,10 @@ function getCapelas() {
                 //htmlEnd =  element.substring(element.indexOf('<div>') );
                 htmlEnd = htmlEnd.substring(htmlEnd.indexOf('br/>') + 4, htmlEnd.indexOf('</li'));
                 arrayEndereco = htmlEnd.split('<br>')
-                capela.endereco = arrayEndereco[0] != undefined ? arrayEndereco[0].replace('  ', ' ') : '';
-                capela.endereco2 = arrayEndereco[1] != undefined ? arrayEndereco[1].replace('  ', ' ') : '';
-                capela.email = arrayEndereco[2] != undefined ? arrayEndereco[2].replace('  ', ' ') : '';
-                capela.telefones = arrayEndereco[3] != undefined ? arrayEndereco[3].replace('  ', ' ') : '';
+                capela.endereco = arrayEndereco[0] != undefined ? arrayEndereco[0].replaceAll('  ', ' ') : '';
+                capela.endereco2 = arrayEndereco[1] != undefined ? arrayEndereco[1].replaceAll('  ', ' ') : '';
+                capela.email = arrayEndereco[2] != undefined ? arrayEndereco[2].replaceAll('  ', ' ') : '';
+                capela.telefones = arrayEndereco[3] != undefined ? arrayEndereco[3].replaceAll('  ', ' ') : '';
                 p.capelas.push(capela)
 
 
