@@ -23,20 +23,12 @@ async function main() {
                 // console.log('DETALHES DE HTMLDETALHES ', htmlDetalhes);
                 getBaseParoquia();
                 console.log('VALOR DE P', p);
+                getCapelas();
+                getPadres();
             }
             p.currentId = currentId;
             p.currentName = currentName;
 
-            // console.log(html.indexOf('"recuperaDetalhes('))
-            html = html.substring(html.indexOf('"recuperaDetalhes('));
-            // console.log(html.substring(0, 100))
-            // console.log('resultado ', parseInt(html.substring(0, html.indexOf("')") + 1).split(',')[1].replace("'", "")));
-            var id = getCurrentId(html);
-            var htmlDetalhes = getPaginaDetalhes(id).then(v => {
-                //   console.log('detalhes => ', v)
-            });
-            var objParoquia = getObjParoquia(htmlDetalhes);
-            // console.log('OBJ PAROQUIA ', objParoquia, 'DETALHES ', htmlDetalhes);
             existeItem = html.indexOf('"recuperaDetalhes(') != -1
         }
         existPagina = false;
@@ -96,6 +88,57 @@ async function getPaginaDetalhes(id) {
             }
         });
     })
+}
+
+function getCapelas() {
+    p.capelas = [];
+    let html = this.htmlDetalhes.substring(this.htmlDetalhes.indexOf('Locais de culto'));
+    html = html.substring(html.indexOf('<ul>'));
+    html.split('<li>').forEach(element => {
+        if (element.trim().length > 10) {
+            capela = {};
+            if (element.length > 2) {
+                capela.nome = element.substring(0, element.indexOf('<a')).replace('&nbsp;', '').trim();
+                htmlLat = element.substring(element.indexOf('exibirMapa') + 11, element.indexOf('DIVMAP') - 3).split(',')
+                try {
+                    capela.latitude = htmlLat[0];
+                    capela.longitude = htmlLat[1];
+                } catch (error) {
+                    capela.latitude = '';
+                    capela.longitude = '';
+                }
+
+                let htmlEnd = element.substring(element.indexOf('<div '));
+                //htmlEnd =  element.substring(element.indexOf('<div>') );
+                htmlEnd = htmlEnd.substring(htmlEnd.indexOf('br/>') + 4, htmlEnd.indexOf('</li'));
+                arrayEndereco = htmlEnd.split('<br>')
+                capela.endereco = arrayEndereco[0] != undefined ? arrayEndereco[0].replace('  ', ' ') : '';
+                capela.endereco2 = arrayEndereco[1] != undefined ? arrayEndereco[1].replace('  ', ' ') : '';
+                capela.email = arrayEndereco[2] != undefined ? arrayEndereco[2].replace('  ', ' ') : '';
+                capela.telefones = arrayEndereco[3] != undefined ? arrayEndereco[3].replace('  ', ' ') : '';
+                p.capelas.push(capela)
+
+
+                // capela.nome = capela.nome.replace('&nbsp;', '');
+                console.log(element)
+            }
+        }
+    })
+    return '';
+}
+
+function getPadres() {
+    p.padres = [];
+    const html = this.htmlDetalhes.substring(this.htmlDetalhes.indexOf('<ul>') + 4, this.htmlDetalhes.indexOf('</ul>') - 4);
+    html.split('<li>').forEach(element => {
+        if (element.trim().length > 2) {
+            p.padres.push(element)
+            console.log(element)
+        }
+    })
+    return html.substring(0, html.indexOf("</a>")).trim();
+
+
 }
 
 function getBaseParoquia() {
