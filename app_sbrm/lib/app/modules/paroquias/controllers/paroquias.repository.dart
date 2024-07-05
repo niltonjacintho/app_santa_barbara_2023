@@ -21,9 +21,9 @@ class ParoquiasRepository extends ChangeNotifier {
     if (first) {
       print('getting data');
       final firestore = FirebaseFirestore.instance;
-      final query = firestore.collection('paroquias').get();
+      final query = firestore.collection('paroquias2').get();
       final snapshot = await query.then((value) => value.docs);
-      final  paroquias =
+      final paroquias =
           snapshot.map((doc) => paroquiaAtual.fromJson(doc.data())).toList();
       lista = paroquias;
       lista_original = paroquias;
