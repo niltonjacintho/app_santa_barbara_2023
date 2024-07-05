@@ -13,7 +13,7 @@ class ParoquiasRepository extends ChangeNotifier {
     lista = lista_original
         .where((p) => (p.nome!.toLowerCase().contains(value.toLowerCase())))
         .toList();
-    print('Lista filtrada $lista');
+    // print('Lista filtrada $lista');
     notifyListeners();
   }
 
@@ -21,7 +21,7 @@ class ParoquiasRepository extends ChangeNotifier {
     if (first) {
       print('getting data');
       final firestore = FirebaseFirestore.instance;
-      final query = firestore.collection('paroquias2').get();
+      final query = firestore.collection('paroquias').get();
       final snapshot = await query.then((value) => value.docs);
       final paroquias =
           snapshot.map((doc) => paroquiaAtual.fromJson(doc.data())).toList();

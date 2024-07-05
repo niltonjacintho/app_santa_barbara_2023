@@ -1,15 +1,88 @@
-const express = require('express');
-const app = express();
+const fs = require('firebase-admin');
+const serviceAccount = require('./key.json');
+
+fs.initializeApp({
+    credential: fs.credential.cert(serviceAccount)
+});
+
+const db = fs.firestore();
+
 var request = require('request');
 var pagina = 1;
 var existePagina = true;
 var paroquias = []
-var p = Object();
+var p = {}
+var collectionName = 'paroquias'
 var html = '';
 var htmlDetalhes = '';
+//getData();
+
 main();
 
+async function getData() {
+    try {
+        const query = db.collection(collectionName); // Replace with your collection name
+        const querySnapshot = await query.get();
+        const documents = querySnapshot.docs.map((doc) => doc.data()); // Extract document data
+        // console.log('Documents in category:', category);
+        console.log(documents);
+    } catch (error) {
+        console.error('Error retrieving documents:', error);
+    }
+}
+
+async function limparParoquias() {
+    try {
+        const collectionRef = db.collection(collectionName);
+        let deleteCount = 0; // Track deleted documents
+
+        // Create a query to iterate through documents
+        let query = collectionRef.limit(10); // Limit documents per batch
+
+        // Loop to delete documents in batches
+        while (query) {
+            const snapshot = await query.get();
+
+            // Check if any documents were found
+            if (snapshot.size === 0) {
+                console.log('No more documents to delete.');
+                break;
+            }
+
+            // Delete documents in the current batch
+            const batch = db.batch();
+            snapshot.docs.forEach((doc) => batch.delete(doc.ref));
+            await batch.commit();
+
+            deleteCount += snapshot.size; // Update deleted document count
+            console.log('Deleted', deleteCount, 'documents so far.');
+
+            // Update query for the next batch (if documents remain)
+            query = query.startAfter(snapshot.docs[snapshot.docs.length - 1]);
+        }
+
+    } catch (error) {
+        console.error('Error deleting documents:', error);
+    }
+};
+
+async function addParoquia(data, collectionName) {
+    try {
+        const collectionRef = db.collection(collectionName);
+        const docRef = collectionRef.doc(); // Generate a unique document ID
+
+        await docRef.set(data); // Set the data on the newly created document
+        console.log('Data added to collection:', collectionName);
+    } catch (error) {
+        console.error('Error adding data:', error);
+    }
+};
+
+
 async function main() {
+    console.log('excluindo')
+    await limparParoquias()
+    console.log('banco limpo')
     await getPagina(pagina).then(function (data) { this.html = data; });
     while (existePagina) {
         var existeItem = true;
@@ -20,21 +93,34 @@ async function main() {
             console.log(currentName);
             await getPaginaDetalhes(currentId).then(function (data) { this.htmlDetalhes = data; });
             if (currentId == 2 | true) {
-                getBaseParoquia();
-                getCapelas();
-                getPadres();
+                await getBaseParoquia();
+                await getCapelas();
+                await getPadres();
             }
             p.currentId = currentId;
             p.currentName = currentName;
+            console.log('testando paroco ', p.padres[0], p.padres[0] != undefined)
+            p.paroco = p.padres[0] != undefined ? p.padres[0] : '';
+            p.vigario = p.padres[1] != undefined ? p.padres[1] : '';
+
+            p.latitude = p.capelas[0].latitude != undefined ? p.capelas[0].latitude.replace("'", "").replace("'", "") : '';
+            p.longitude = p.capelas[0].latitude != undefined ? p.capelas[0].latitude.replace("'", "").replace("'", "") : '';
+
+            //p.telefones = 
             paroquias.push(p);
             existeItem = this.html.indexOf('"recuperaDetalhes(') != -1
+            // console.log(p)
+            await addParoquia(p, collectionName)
+            p = {}
         }
+
         pagina++;
         console.log(pagina)
         await getPagina(pagina).then(function (data) { this.html = data; });
         existePagina = this.html.indexOf('Clique para exibir/ocultar os detalhes da paróquia') != -1;
+        existePagina = false;
     }
-    console.log('QUANTIDADE DE PAROQUIAS ', paroquias.length)
+    // console.log('QUANTIDADE DE PAROQUIAS ', paroquias.length)
 }
 
 function limparHtml() {
@@ -136,14 +222,17 @@ function getCapelas() {
 function getPadres() {
     p.padres = [];
     const html = this.htmlDetalhes.substring(this.htmlDetalhes.indexOf('<ul>') + 4, this.htmlDetalhes.indexOf('</ul>') - 4);
+    // console.log(html)
+    // console.log(html.split('<li>')[0])
+
     html.split('<li>').forEach(element => {
+        // console.log('padre => ', element)
         if (element.trim().length > 2) {
-            p.padres.push(element)
+            p.padres.push(element.replace('</li>', ''))
         }
     })
+    console.log('PADRES NMONTADOS ', p.padres)
     return html.substring(0, html.indexOf("</a>")).trim();
-
-
 }
 
 function getBaseParoquia() {
@@ -160,8 +249,9 @@ function getBaseParoquia() {
     this.htmlDetalhes = this.htmlDetalhes.substring(this.htmlDetalhes.indexOf('<br>') + 4);
     p.endereco += ' - CEP:' + this.htmlDetalhes.substring(0, this.htmlDetalhes.indexOf('<br>')).trim();
     this.htmlDetalhes = this.htmlDetalhes.substring(this.htmlDetalhes.indexOf('<br>') + 4);
-    p.telefones = this.htmlDetalhes.substring(0, this.htmlDetalhes.indexOf('<br>')).trim();
+    p.telefones = this.htmlDetalhes.substring(0, this.htmlDetalhes.indexOf('<br>')).replace('Telefones:', '').trim();
     this.htmlDetalhes = this.htmlDetalhes.substring(this.htmlDetalhes.indexOf('<br>') + 4);
     p.email = this.htmlDetalhes.substring(this.htmlDetalhes.indexOf(':') + 1, this.htmlDetalhes.indexOf('</p>')).trim();
     this.htmlDetalhes = this.htmlDetalhes.substring(this.htmlDetalhes.indexOf('</p>') + 4);
 }
+

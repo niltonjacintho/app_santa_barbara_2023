@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "999243580674",
+    "firebase_url": "https://paroquia.firebaseio.com",
+    "project_id": "project-2297216869628270192",
+    "storage_bucket": "project-2297216869628270192.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:999243580674:android:801b602c345a15ae352e1b",
+        "android_client_info": {
+          "package_name": "com.favillajacintho.app_sbrm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "999243580674-s9c58quqmbo06eecuih8uf4dt5140eak.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.favillajacintho.app_sbrm",
+            "certificate_hash": "d16f19e38f702776a46596b1bd9ed7864160a458"
+          }
+        },
+        {
+          "client_id": "999243580674-mgp4rm839m00f87p4m0m08utgoka9gnq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZPONCMu1ivn11B2Gy1WS4HNGF54pR-Gk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "110131970568794959687",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

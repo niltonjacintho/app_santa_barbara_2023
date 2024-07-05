@@ -1,4 +1,3 @@
-
 class ParoquiaInterface {
   String? id;
   String? nome;
@@ -48,15 +47,15 @@ class ParoquiaInterface {
       p.capelas = [];
       num c = 0;
       json['capelas'].forEach((v) {
-        if (c == 0) {
-          p.telefones = v['telefone'] ?? '';
-          p.endereco = v['endereco'] ?? '';
-          p.endereco2 = v['endereco2'] ?? '';
-          p.telefones = p.telefones!.replaceAll('  ', ' ');
-          p.endereco = p.endereco!.replaceAll('  ', ' ');
-          p.endereco2 = p.endereco2!.replaceAll('   ', ' ');
-        }
-        c++;
+        // if (c == 0) {
+        //   p.telefones = v['telefone'] ?? '';
+        //   p.endereco = v['endereco'] ?? '';
+        //   p.endereco2 = v['endereco2'] ?? '';
+        //   p.telefones = p.telefones!.replaceAll('  ', ' ');
+        //   p.endereco = p.endereco!.replaceAll('  ', ' ');
+        //   p.endereco2 = p.endereco2!.replaceAll('   ', ' ');
+        // }
+        // c++;
         p.capelas!.add(ci.fromJson(v));
       });
     }

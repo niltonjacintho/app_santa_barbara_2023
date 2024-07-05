@@ -60,8 +60,6 @@ class ParoquiasView extends StatelessWidget {
               enabledColor: Colors.grey,
               focusedColor: Colors.green,
               fillColor: Colors.transparent,
-              // You can use all properties of FilledOrOutlinedTextTheme
-              // to decor text field
             ),
             prefixIcon: const Icon(Icons.search),
             onChanged: (value) => paroquiaRepository.filtrarLista(value),
