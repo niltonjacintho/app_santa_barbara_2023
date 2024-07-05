@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 var request = require('request');
 var pagina = 1;
-var existPagina = true;
+var existePagina = true;
 var paroquias = []
 var p = Object();
 var html = '';
@@ -10,9 +10,8 @@ var htmlDetalhes = '';
 main();
 
 async function main() {
-    while (existPagina) {
-
-        await getPagina(pagina).then(function (data) { this.html = data; });
+    await getPagina(pagina).then(function (data) { this.html = data; });
+    while (existePagina) {
         var existeItem = true;
         while (existeItem) {
             var currentId = getCurrentId();
@@ -21,9 +20,7 @@ async function main() {
             console.log(currentName);
             await getPaginaDetalhes(currentId).then(function (data) { this.htmlDetalhes = data; });
             if (currentId == 2 | true) {
-                // console.log('DETALHES DE HTMLDETALHES ', htmlDetalhes);
                 getBaseParoquia();
-                console.log('VALOR DE P', p);
                 getCapelas();
                 getPadres();
             }
@@ -32,13 +29,16 @@ async function main() {
             paroquias.push(p);
             existeItem = this.html.indexOf('"recuperaDetalhes(') != -1
         }
-        console.log('end')
-        //existPagina = false;
+        pagina++;
+        console.log(pagina)
+        await getPagina(pagina).then(function (data) { this.html = data; });
+        existePagina = this.html.indexOf('Clique para exibir/ocultar os detalhes da paróquia') != -1;
     }
+    console.log('QUANTIDADE DE PAROQUIAS ', paroquias.length)
 }
 
-function limparHtml(){
-    this.html = this.html.substring(this.html.indexOf("recuperaDetalhes('panel-body")+41);
+function limparHtml() {
+    this.html = this.html.substring(this.html.indexOf("recuperaDetalhes('panel-body") + 41);
 }
 
 function getCurrentId() {
@@ -66,7 +66,6 @@ async function getPagina(pagina) {
                 resultado = error;
                 reject(error);
             } else {
-                console.log(response.statusCode, body); // Print the response status code if a response was received
                 resultado = body;
                 resolve(body)
             }
@@ -76,7 +75,6 @@ async function getPagina(pagina) {
 
 async function getPaginaDetalhes(id) {
     // var resultado = 'nada';
-    console.log('https://www.arqrio.com.br/curia/ajaxParoquiasRecuperarDetalhes.php?id=' + id)
     return new Promise(async (resolve, reject) => {
         await request({
             url: 'https://www.arqrio.com.br/curia/ajaxParoquiasRecuperarDetalhes.php?id=' + id, //URL to hit
@@ -129,10 +127,6 @@ function getCapelas() {
                 capela.email = arrayEndereco[2] != undefined ? arrayEndereco[2].replaceAll('  ', ' ') : '';
                 capela.telefones = arrayEndereco[3] != undefined ? arrayEndereco[3].replaceAll('  ', ' ') : '';
                 p.capelas.push(capela)
-
-
-                // capela.nome = capela.nome.replace('&nbsp;', '');
-                console.log(element)
             }
         }
     })
@@ -145,7 +139,6 @@ function getPadres() {
     html.split('<li>').forEach(element => {
         if (element.trim().length > 2) {
             p.padres.push(element)
-            console.log(element)
         }
     })
     return html.substring(0, html.indexOf("</a>")).trim();
@@ -171,9 +164,4 @@ function getBaseParoquia() {
     this.htmlDetalhes = this.htmlDetalhes.substring(this.htmlDetalhes.indexOf('<br>') + 4);
     p.email = this.htmlDetalhes.substring(this.htmlDetalhes.indexOf(':') + 1, this.htmlDetalhes.indexOf('</p>')).trim();
     this.htmlDetalhes = this.htmlDetalhes.substring(this.htmlDetalhes.indexOf('</p>') + 4);
-
-    console.log('BASE PAROQUIA ', p)
-
-
-    //    return parseInt(html.substring(0, html.indexOf("')") + 1).split(',')[1].replace("'", ""));
 }
