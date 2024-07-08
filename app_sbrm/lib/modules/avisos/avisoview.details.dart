@@ -25,14 +25,7 @@ class _AvisoviewDetailsState extends State<AvisoviewDetails> {
         builder: (context, model, child) => Scaffold(
           appBar: AppBar(
             elevation: 10,
-            title: Text(
-              avisoRepository.avisoAtual.titulo!,
-              style: const TextStyle(
-                fontSize: 30,
-                color: Colors.black,
-                decoration: TextDecoration.none,
-              ),
-            ),
+            title: const Text('Avisos'),
             leading: IconButton(
               color: Colors.black,
               icon: const Icon(Icons.arrow_back_ios),
@@ -90,6 +83,16 @@ class _AvisoviewDetailsState extends State<AvisoviewDetails> {
                         ),
                         const SizedBox(
                           height: 10,
+                        ),
+                        Center(
+                          child: Text(
+                            avisoRepository.avisoAtual.titulo!,
+                            style: TextStyle(
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.bold,
+                              fontSize: model.fontSize,
+                            ),
+                          ),
                         ),
                         Text(
                           avisoRepository.avisoAtual.conteudo!,

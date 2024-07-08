@@ -37,6 +37,7 @@ dependencies:
   flutter_form_builder: ^9.3.0
   animated_button_bar: ^1.0.0
   localstore: ^1.4.0
+  back_button_interceptor: ^7.0.3
   
 
 dev_dependencies:
