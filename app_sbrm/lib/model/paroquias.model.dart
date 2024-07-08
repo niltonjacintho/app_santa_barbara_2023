@@ -9,8 +9,8 @@ class ParoquiaInterface {
   String? endereco;
   String? endereco2;
   String? telefones;
-  double? lat;
-  double? long;
+  double? latitude;
+  double? longitude;
   List<CapelasInterface>? capelas;
 
   ParoquiaInterface(
@@ -24,14 +24,14 @@ class ParoquiaInterface {
       this.endereco,
       this.endereco2,
       this.telefones,
-      this.lat,
-      this.long,
+      this.latitude,
+      this.longitude,
       this.capelas});
 
   ParoquiaInterface fromJson(Map<String, dynamic> json) {
     CapelasInterface ci = CapelasInterface();
     ParoquiaInterface p = ParoquiaInterface();
-    p.id = json['id'];
+    p.id = json['currentId:'];
     p.nome = json['nome'] ?? '';
     p.forania = json['forania'] ?? '';
     p.nascimento = json['nascimento'];
@@ -41,8 +41,12 @@ class ParoquiaInterface {
     p.endereco = json['endereco'] ?? '';
     p.endereco2 = json['endereco2'] ?? '';
     p.telefones = json['telefones'] ?? '';
-    p.lat = json['lat'];
-    p.long = json['long'];
+    p.latitude = json['latitude'] != null
+        ? double.parse(json['latitude'].replaceAll("'", ""))
+        : null;
+    p.longitude = json['longitude'] != null
+        ? double.parse(json['longitude'].replaceAll("'", ""))
+        : null;
     if (json['capelas'] != null) {
       p.capelas = [];
       num c = 0;
@@ -74,8 +78,8 @@ class ParoquiaInterface {
     data['endereco'] = endereco;
     data['endereco2'] = endereco2;
     data['telefones'] = telefones;
-    data['lat'] = lat;
-    data['long'] = long;
+    data['latitude'] = latitude;
+    data['longitude'] = longitude;
     if (capelas != null) {
       data['capelas'] = capelas!.map((v) => v.toJson()).toList();
     }
@@ -88,16 +92,16 @@ class CapelasInterface {
   String? endereco;
   String? endereco2;
   String? telefone;
-  double? lat;
-  double? long;
+  double? latitude;
+  double? longitude;
 
   CapelasInterface(
       {this.nome,
       this.endereco,
       this.endereco2,
       this.telefone,
-      this.lat,
-      this.long});
+      this.latitude,
+      this.longitude});
 
   CapelasInterface fromJson(Map<String, dynamic> json) {
     CapelasInterface c = CapelasInterface();
@@ -105,8 +109,17 @@ class CapelasInterface {
     c.endereco = json['endereco'] ?? '';
     c.endereco2 = json['endereco2'] ?? '';
     c.telefone = json['telefone'] ?? '';
-    c.lat = json['lat'];
-    c.long = json['long'];
+    if (json['latitude'] != "") {
+      c.latitude = json['latitude'] != null
+          ? double.parse(json['latitude'].replaceAll("'", ""))
+          : null;
+      c.longitude = json['longitude'] != null
+          ? double.parse(json['longitude'].replaceAll("'", ""))
+          : null;
+    } else {
+      c.latitude = null;
+      c.longitude = null;
+    }
     return c;
   }
 
@@ -116,8 +129,8 @@ class CapelasInterface {
     data['endereco'] = endereco;
     data['endereco2'] = endereco2;
     data['telefone'] = telefone;
-    data['lat'] = lat;
-    data['long'] = long;
+    data['latitude'] = latitude;
+    data['longitude'] = longitude;
     return data;
   }
 }

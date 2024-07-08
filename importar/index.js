@@ -1,5 +1,11 @@
+///
+/// DESATIVADO EM 05/07/2024
+/// UTILIZAR O REPOSITORIO ESPECIFICO
+/// paroquia.importarParoquias
+///
+
 const fs = require('firebase-admin');
-const serviceAccount = require('./key.json');
+const serviceAccount = require('../../key.json');
 
 fs.initializeApp({
     credential: fs.credential.cert(serviceAccount)

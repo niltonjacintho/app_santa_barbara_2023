@@ -169,4 +169,6 @@ replay_pid*
 .history
 .ionide
 
+key.json
+
 # End of https://www.toptal.com/developers/gitignore/api/angular,flutter,dart,java,visualstudiocode

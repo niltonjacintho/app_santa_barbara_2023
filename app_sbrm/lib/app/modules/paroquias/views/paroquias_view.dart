@@ -114,12 +114,12 @@ class ParoquiasView extends StatelessWidget {
                     ButtonBar(
                       children: [
                         TextButton(
-                            onPressed: () => {
+                            onPressed: () =>  {
                                   Dialogs.materialDialog(
                                     title: "Capelas da paróquia ${item.nome!}",
                                     color: const Color.fromARGB(
                                         255, 144, 147, 192),
-                                    customView: item.capelas!.length > 2
+                                    customView: item.capelas!.isNotEmpty
                                         ? capelaslist(context, item)
                                         : const Text(
                                             'Esta paróquia não possui capelas',
@@ -182,9 +182,9 @@ class ParoquiasView extends StatelessWidget {
     List<CapelasInterface>? c = [];
     // print(paroquia.capelas);
     for (var i = 0; i < paroquia.capelas!.length; i++) {
-      if (i > 1) {
+      //if (i > 1) {
         c.add(paroquia.capelas![i]);
-      }
+     // }
     }
     paroquia.capelas = c;
     // print(paroquia.capelas);
