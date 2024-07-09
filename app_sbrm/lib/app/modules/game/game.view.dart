@@ -33,13 +33,23 @@ class _GamesViewState extends State<GamesView> {
       home: Scaffold(
         appBar: AppBar(
           title: Text('Hora de jogar ${userRepository.usuario.nome}'),
-          leading: IconButton(
-            color: Colors.black,
-            icon: const Icon(Icons.arrow_back_ios),
-            iconSize: 20.0,
-            onPressed: () {
-              GoRouter.of(context).go('/home');
-            },
+          leading: PopScope(
+            canPop: false,
+            onPopInvoked: ((didpop) {
+              if (didpop) {
+                return;
+              } else {
+                GoRouter.of(context).go('/home');
+              }
+            }),
+            child: IconButton(
+              color: Colors.black,
+              icon: const Icon(Icons.arrow_back_ios),
+              iconSize: 20.0,
+              onPressed: () {
+                GoRouter.of(context).go('/home');
+              },
+            ),
           ),
         ),
         body: Container(

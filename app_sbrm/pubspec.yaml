@@ -1,6 +1,6 @@
 name: santa_barbara
 description: Unindo a comunidade católica
-version: 1.0.0+26
+version: 1.0.0+28
 
 environment:
   sdk: '>=3.1.5 <4.0.0'

@@ -29,88 +29,83 @@ class _VelarioViewState extends State<VelarioView> {
     //velarioRepository = Provider.of<VelarioRepository>(context);
     return Provider(
       create: (_) => VelarioRepository,
-      child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 51, 4, 4),
-        appBar: AppBar(
-          backgroundColor: const Color.fromARGB(0, 49, 1, 1),
-          title: const Text(
-            'Bem vindo ao nosso Velário',
-            style: TextStyle(color: Colors.white, fontSize: 35),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Avisos Paroquiais',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: Scaffold(
+          backgroundColor: const Color.fromARGB(255, 51, 4, 4),
+          appBar: AppBar(
+            backgroundColor: const Color.fromARGB(0, 49, 1, 1),
+            title: const Text(
+              'Bem vindo ao nosso Velário',
+              style: TextStyle(color: Colors.white, fontSize: 35),
+            ),
+            leading: PopScope(
+              canPop: false,
+              onPopInvoked: ((didpop) {
+                if (didpop) {
+                  return;
+                } else {
+                  GoRouter.of(context).go('/home');
+                }
+              }),
+              child: IconButton(
+                color: Colors.black,
+                icon: const Icon(Icons.arrow_back_ios),
+                iconSize: 20.0,
+                onPressed: () {
+                  GoRouter.of(context).go('/home');
+                },
+              ),
+            ),
+            centerTitle: true,
           ),
-          centerTitle: true,
-        ),
-        extendBody: true,
-        bottomNavigationBar: Stack(
-          children: [
-            Positioned(
-              // bottom: 100,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height - 100,
-                  ),
-                  //inverted selection button bar
-                  AnimatedButtonBar(
-                    radius: 8.0,
-                    padding: const EdgeInsets.all(16.0),
-                    invertedSelection: true,
-                    children: [
-                      ButtonBarEntry(
-                          onTap: () => GoRouter.of(context).go('/home'),
-                          child: const Text('Home')),
-                      ButtonBarEntry(
-                          onTap: () => _dialogBuilder(context),
-                          child: const Text('Acender Vela')),
-                      ButtonBarEntry(
-                          onTap: () => _mostrarVelasAcesas(context),
-                          child: const Text('Velas acesas')),
-                    ],
-                  ),
-                  //You can populate it with different types of widgets like Icon
-                ],
+          extendBody: true,
+          bottomNavigationBar: Stack(
+            children: [
+              Positioned(
+                // bottom: 100,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height - 100,
+                    ),
+                    //inverted selection button bar
+                    AnimatedButtonBar(
+                      radius: 8.0,
+                      padding: const EdgeInsets.all(16.0),
+                      invertedSelection: true,
+                      children: [
+                        ButtonBarEntry(
+                            onTap: () => GoRouter.of(context).go('/home'),
+                            child: const Text('Home')),
+                        ButtonBarEntry(
+                            onTap: () => _dialogBuilder(context),
+                            child: const Text('Acender Vela')),
+                        ButtonBarEntry(
+                            onTap: () => _mostrarVelasAcesas(context),
+                            child: const Text('Velas acesas')),
+                      ],
+                    ),
+                    //You can populate it with different types of widgets like Icon
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-
-        // FancyBottomNavigation(
-        //     initialSelection: 2,
-        //     barBackgroundColor: const Color.fromARGB(255, 143, 8, 8),
-        //     circleColor: const Color.fromARGB(243, 243, 241, 0),
-        //     textColor: const Color.fromARGB(250, 248, 248, 246),
-        //     tabs: [
-        //       TabData(iconData: Icons.home, title: "Voltar"),
-        //       TabData(
-        //           iconData: Icons.wb_incandescent_outlined,
-        //           title: "Acender Vela"),
-        //       TabData(iconData: Icons.list_outlined, title: "Velas acesas"),
-        //       TabData(
-        //           iconData: Icons.local_fire_department_outlined,
-        //           title: "Suas Velas"),
-        //     ],
-        //     onTabChangedListener: (position) {
-        //       switch (position.toString()) {
-        //         case '0':
-        //           GoRouter.of(context).go('/home');
-        //         case '1':
-        //           _dialogBuilder(context);
-        //         case '2':
-        //           //context.watch<VelarioRepository>().getVelas();
-
-        //           _mostrarVelasAcesas(context);
-        //         default:
-        //           print(position);
-        //       }
-        //     }),
-        body: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/gifs/velaAcesa.gif"),
-                fit: BoxFit.cover,
+            ],
+          ),
+          body: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/gifs/velaAcesa.gif"),
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            child: null),
+              child: null),
+        ),
       ),
     );
   }
@@ -189,7 +184,6 @@ class _VelarioViewState extends State<VelarioView> {
   }
 
   Future<void> _mostrarVelasAcesas(BuildContext context) async {
-
     CarouselSliderController sliderController = CarouselSliderController();
 
     // final textoKey = GlobalKey<FormBuilderFieldState>();

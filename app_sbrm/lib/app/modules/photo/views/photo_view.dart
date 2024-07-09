@@ -14,19 +14,37 @@ class PhotoView extends GetView<PhotoController> {
   Widget build(BuildContext context) {
     context.read<AvisoRepository>().recuperarAvisos();
 
-    return Scaffold(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Avisos Paroquiais',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Scaffold(
         appBar: AppBar(
           title: const Text('Nossos albuns de fotos'),
-          leading: IconButton(
-            color: Colors.black,
-            icon: const Icon(Icons.arrow_back_ios),
-            iconSize: 20.0,
-            onPressed: () {
-              GoRouter.of(context).go('/home');
-            },
+          leading: PopScope(
+            canPop: false,
+            onPopInvoked: ((didpop) {
+              if (didpop) {
+                return;
+              } else {
+                GoRouter.of(context).go('/home');
+              }
+            }),
+            child: IconButton(
+              color: Colors.black,
+              icon: const Icon(Icons.arrow_back_ios),
+              iconSize: 20.0,
+              onPressed: () {
+                GoRouter.of(context).go('/home');
+              },
+            ),
           ),
         ),
-        body: PhotosList());
+        body: PhotosList(),
+      ),
+    );
   }
 }
 

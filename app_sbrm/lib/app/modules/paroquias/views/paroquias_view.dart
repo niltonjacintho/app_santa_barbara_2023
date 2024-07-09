@@ -28,13 +28,23 @@ class ParoquiasView extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Paroquias paroquiais'),
-          leading: IconButton(
-            color: Colors.black,
-            icon: const Icon(Icons.arrow_back_ios),
-            iconSize: 20.0,
-            onPressed: () {
-              GoRouter.of(context).go('/home');
-            },
+          leading: PopScope(
+            canPop: false,
+            onPopInvoked: ((didpop) {
+              if (didpop) {
+                return;
+              } else {
+                GoRouter.of(context).go('/home');
+              }
+            }),
+            child: IconButton(
+              color: Colors.black,
+              icon: const Icon(Icons.arrow_back_ios),
+              iconSize: 20.0,
+              onPressed: () {
+                GoRouter.of(context).go('/home');
+              },
+            ),
           ),
         ),
         body: ChangeNotifierProvider<ParoquiasRepository>(
@@ -114,7 +124,7 @@ class ParoquiasView extends StatelessWidget {
                     ButtonBar(
                       children: [
                         TextButton(
-                            onPressed: () =>  {
+                            onPressed: () => {
                                   Dialogs.materialDialog(
                                     title: "Capelas da paróquia ${item.nome!}",
                                     color: const Color.fromARGB(
@@ -183,8 +193,8 @@ class ParoquiasView extends StatelessWidget {
     // print(paroquia.capelas);
     for (var i = 0; i < paroquia.capelas!.length; i++) {
       //if (i > 1) {
-        c.add(paroquia.capelas![i]);
-     // }
+      c.add(paroquia.capelas![i]);
+      // }
     }
     paroquia.capelas = c;
     // print(paroquia.capelas);

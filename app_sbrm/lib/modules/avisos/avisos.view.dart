@@ -5,37 +5,9 @@ import 'package:santa_barbara/model/avisos.interface.dart';
 import 'package:santa_barbara/modules/avisos/avisos.repository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sticky_grouped_list/sticky_grouped_list.dart';
-
-/// This example shows the basic usage of the [StickyGroupedListView].
-// void main() => runApp(const AvisosView());
 
 class AvisosView extends StatelessWidget {
   const AvisosView({super.key});
-
-  // Future<bool?> _dialog(BuildContext context) async {
-  //   return await showDialog(
-  //     context: context,
-  //     builder: (context) => _buildExitDialog(context),
-  //   );
-  // }
-
-  // AlertDialog _buildExitDialog(BuildContext context) {
-  //   return AlertDialog(
-  //     title: const Text('Please confirm'),
-  //     content: const Text('Do you want to exit the app?'),
-  //     actions: <Widget>[
-  //       TextButton(
-  //         onPressed: () => Navigator.of(context).pop(false),
-  //         child: Text('No'),
-  //       ),
-  //       TextButton(
-  //         onPressed: () => Navigator.of(context).pop(true),
-  //         child: Text('Yes'),
-  //       ),
-  //     ],
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
