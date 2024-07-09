@@ -54,49 +54,85 @@ class _HomeState extends State<HomeView> {
         coupon: '10PERCENTOFF');
   }
 
+  Future<bool> _onWillPop(BuildContext context) async {
+    bool? exitResult = await showDialog(
+      context: context,
+      builder: (context) => _buildExitDialog(context),
+    );
+    return exitResult ?? false;
+  }
+
+  Future<bool?> _showExitDialog(BuildContext context) async {
+    return await showDialog(
+      context: context,
+      builder: (context) => _buildExitDialog(context),
+    );
+  }
+
+  AlertDialog _buildExitDialog(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Please confirm'),
+      content: const Text('Do you want to exit the app?'),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(false),
+          child: Text('No'),
+        ),
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(true),
+          child: Text('Yes'),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     userRepository = Provider.of<UserRepository>(context);
-    return SafeArea(
-      child: Scaffold(
-        //appBar: AppBar(title: const Text('Boom Menu Example')),
-        body: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/fundo.jpg"),
-              fit: BoxFit.cover,
+    return WillPopScope(
+      onWillPop: () => _onWillPop(context),
+      child: SafeArea(
+        child: Scaffold(
+          //appBar: AppBar(title: const Text('Boom Menu Example')),
+          body: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/fundo.jpg"),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Column(
+              children: [
+                const Text(
+                  'Somos Santa Barbara',
+                  style: TextStyle(
+                    fontSize: 30,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  // ignore: prefer_interpolation_to_compose_strings
+                  'versão 20 -- ${userRepository.usuario.nome} --  ',
+                  style: const TextStyle(
+                    fontSize: 10,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                Expanded(
+                  child: FlexibleGridView(
+                    padding: const EdgeInsets.all(12),
+                    mainAxisSpacing: 16,
+                    crossAxisSpacing: 16,
+                    children: demoData
+                        .map((e) => CatalogCard(catalogItem: e))
+                        .toList(),
+                  ),
+                ),
+              ],
             ),
           ),
-          child: Column(
-            children: [
-              const Text(
-                'Somos Santa Barbara',
-                style: TextStyle(
-                  fontSize: 30,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              Text(
-                // ignore: prefer_interpolation_to_compose_strings
-                'versão 20 -- ${userRepository.usuario.nome} --  ',
-                style: const TextStyle(
-                  fontSize: 10,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              Expanded(
-                child: FlexibleGridView(
-                  padding: const EdgeInsets.all(12),
-                  mainAxisSpacing: 16,
-                  crossAxisSpacing: 16,
-                  children:
-                      demoData.map((e) => CatalogCard(catalogItem: e)).toList(),
-                ),
-              ),
-            ],
-          ),
+          // floatingActionButton: buildBoomMenu(),
         ),
-        // floatingActionButton: buildBoomMenu(),
       ),
     );
   }

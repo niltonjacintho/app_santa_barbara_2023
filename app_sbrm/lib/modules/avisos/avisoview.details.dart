@@ -14,6 +14,7 @@ class AvisoviewDetails extends StatefulWidget {
 }
 
 class _AvisoviewDetailsState extends State<AvisoviewDetails> {
+
   late AvisoRepository avisoRepository;
   @override
   Widget build(BuildContext context) {

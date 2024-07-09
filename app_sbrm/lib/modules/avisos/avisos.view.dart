@@ -12,6 +12,31 @@ import 'package:sticky_grouped_list/sticky_grouped_list.dart';
 
 class AvisosView extends StatelessWidget {
   const AvisosView({super.key});
+
+  // Future<bool?> _dialog(BuildContext context) async {
+  //   return await showDialog(
+  //     context: context,
+  //     builder: (context) => _buildExitDialog(context),
+  //   );
+  // }
+
+  // AlertDialog _buildExitDialog(BuildContext context) {
+  //   return AlertDialog(
+  //     title: const Text('Please confirm'),
+  //     content: const Text('Do you want to exit the app?'),
+  //     actions: <Widget>[
+  //       TextButton(
+  //         onPressed: () => Navigator.of(context).pop(false),
+  //         child: Text('No'),
+  //       ),
+  //       TextButton(
+  //         onPressed: () => Navigator.of(context).pop(true),
+  //         child: Text('Yes'),
+  //       ),
+  //     ],
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     late AvisoRepository avisoRepository;
@@ -26,13 +51,23 @@ class AvisosView extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Avisos paroquiais'),
-          leading: IconButton(
-            color: Colors.black,
-            icon: const Icon(Icons.arrow_back_ios),
-            iconSize: 20.0,
-            onPressed: () {
-              GoRouter.of(context).go('/home');
-            },
+          leading: PopScope(
+            canPop: false,
+            onPopInvoked: ((didpop) {
+              if (didpop) {
+                return;
+              } else {
+                GoRouter.of(context).go('/home');
+              }
+            }),
+            child: IconButton(
+              color: Colors.black,
+              icon: const Icon(Icons.arrow_back_ios),
+              iconSize: 20.0,
+              onPressed: () {
+                GoRouter.of(context).go('/home');
+              },
+            ),
           ),
         ),
         body: FutureBuilder(

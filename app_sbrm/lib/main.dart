@@ -127,12 +127,20 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   print('Passou ${Firebase.apps}');
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (context) => AvisoRepository()),
-    ChangeNotifierProvider(create: (context) => ParoquiasRepository()),
-    ChangeNotifierProvider(create: (context) => GameRepository()),
-    ChangeNotifierProvider(create: (context) => UserRepository()),
-  ], child: const BaseApp())); //const MyApp()));
+  MaterialApp.router(
+    routerConfig: _router,
+  );
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AvisoRepository()),
+        ChangeNotifierProvider(create: (context) => ParoquiasRepository()),
+        ChangeNotifierProvider(create: (context) => GameRepository()),
+        ChangeNotifierProvider(create: (context) => UserRepository()),
+      ],
+      child: const BaseApp(),
+    ),
+  ); //const MyApp()));
 }
 
 class BaseApp extends StatelessWidget {
