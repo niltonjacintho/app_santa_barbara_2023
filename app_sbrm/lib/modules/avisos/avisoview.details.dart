@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:santa_barbara/model/avisos.interface.dart';
 import 'package:santa_barbara/modules/avisos/avisos.repository.dart';
-import 'package:drop_cap_text/drop_cap_text.dart';
+// import 'package:drop_cap_text/drop_cap_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +14,7 @@ class AvisoviewDetails extends StatefulWidget {
 }
 
 class _AvisoviewDetailsState extends State<AvisoviewDetails> {
+
   late AvisoRepository avisoRepository;
   @override
   Widget build(BuildContext context) {
@@ -25,20 +26,13 @@ class _AvisoviewDetailsState extends State<AvisoviewDetails> {
         builder: (context, model, child) => Scaffold(
           appBar: AppBar(
             elevation: 10,
-            title: Text(
-              avisoRepository.avisoAtual.titulo!,
-              style: const TextStyle(
-                fontSize: 30,
-                color: Colors.black,
-                decoration: TextDecoration.none,
-              ),
-            ),
+            title: const Text('Avisos'),
             leading: IconButton(
               color: Colors.black,
               icon: const Icon(Icons.arrow_back_ios),
               iconSize: 20.0,
               onPressed: () {
-                GoRouter.of(context).go('/home');
+                GoRouter.of(context).go('/avisos');
               },
             ),
             actions: <Widget>[
@@ -73,24 +67,42 @@ class _AvisoviewDetailsState extends State<AvisoviewDetails> {
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(28.0),
-                    child: DropCapText(
-                      dropCapPosition: DropCapPosition.end,
-                      dropCap: DropCap(
-                        width: MediaQuery.of(context).size.width * 0.92,
-                        height: 500,
-                        child: Image.network(avisoRepository.avisoAtual.imagem!,
-                            height: 400, fit: BoxFit.scaleDown,
-                            errorBuilder: (context, error, stackTrace) {
-                          return Image.asset(
-                            'assets/images/default.jpg',
-                          );
-                        }),
-                      ),
-                      avisoRepository.avisoAtual.conteudo!,
-                      style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontSize: model.fontSize,
-                      ),
+                    child: Column(
+                      children: [
+                        ClipRRect(
+                          borderRadius:
+                              BorderRadius.circular(20), // Image border
+                          child:
+                              Image.network(avisoRepository.avisoAtual.imagem!,
+                                  // height: 600,
+                                  fit: BoxFit.fitWidth,
+                                  errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              'assets/images/default.jpg',
+                            );
+                          }),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Center(
+                          child: Text(
+                            avisoRepository.avisoAtual.titulo!,
+                            style: TextStyle(
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.bold,
+                              fontSize: model.fontSize,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          avisoRepository.avisoAtual.conteudo!,
+                          style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontSize: model.fontSize,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

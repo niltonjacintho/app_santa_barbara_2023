@@ -6,11 +6,21 @@ abstract class Routes {
   static const PASTORAIS = _Paths.PASTORAIS;
   static const AGENDA = _Paths.AGENDA;
   static const HOME = _Paths.HOME;
+  static const VELARIO = _Paths.VELARIO;
+  static const PHOTO = _Paths.PHOTO;
+  static const PHOTO_SHOW = _Paths.PHOTO_SHOW;
+  static const PHOTO_LISTA = _Paths.PHOTO_LISTA;
+  static const VELARIO_LISTA = _Paths.VELARIO_LISTA;
 }
 
 abstract class _Paths {
   _Paths._();
   static const PASTORAIS = '/pastorais';
   static const AGENDA = '/agenda';
+  static const VELARIO = '/velario';
   static const HOME = '/home';
+  static const PHOTO = '/photo';
+  static const PHOTO_SHOW = '/photo-show';
+  static const PHOTO_LISTA = '/photo-lista';
+  static const VELARIO_LISTA = '/velario-lista';
 }

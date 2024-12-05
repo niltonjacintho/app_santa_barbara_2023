@@ -28,15 +28,15 @@ class _ParoquiasMapState extends State<ParoquiasMap> {
   @override
   Widget build(BuildContext context) {
     paroquiaRepository = Provider.of<ParoquiasRepository>(context);
-    for (var i = 1; i < paroquiaRepository.paroquiaAtual.capelas!.length; i++) {
+    for (var i = 0; i < paroquiaRepository.paroquiaAtual.capelas!.length; i++) {
       CapelasInterface element = paroquiaRepository.paroquiaAtual.capelas![i];
-      if (element.lat != null && element.long != null) {
-        LatLng position = LatLng(element.lat!, element.long!);
+      if (element.latitude != null && element.longitude != null) {
+        LatLng position = LatLng(element.latitude!, element.longitude!);
         String prefixo = i > 2 ? 'Capela: ' : 'Matriz: ';
         String nome =
             element.nome!.isNotEmpty ? element.nome! : 'Nome não informasdo';
         final Marker m = Marker(
-          markerId: MarkerId(element.long.toString()),
+          markerId: MarkerId(element.longitude.toString()),
           position: position,
           infoWindow: InfoWindow(
               title: prefixo + nome,
@@ -49,8 +49,8 @@ class _ParoquiasMapState extends State<ParoquiasMap> {
         });
       }
     }
-    final LatLng center = LatLng(paroquiaRepository.paroquiaAtual.lat!,
-        paroquiaRepository.paroquiaAtual.long!);
+    final LatLng center = LatLng(paroquiaRepository.paroquiaAtual.latitude!,
+        paroquiaRepository.paroquiaAtual.longitude!);
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(

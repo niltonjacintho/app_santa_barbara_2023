@@ -18,7 +18,7 @@ class ParoquiasView extends StatelessWidget {
     late ParoquiasRepository paroquiaRepository;
     paroquiaRepository = Provider.of<ParoquiasRepository>(context);
     paroquiaRepository.getData();
-    print('passou na carga');
+    // print('passou na carga');
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Paroquias Paroquiais',
@@ -28,13 +28,23 @@ class ParoquiasView extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Paroquias paroquiais'),
-          leading: IconButton(
-            color: Colors.black,
-            icon: const Icon(Icons.arrow_back_ios),
-            iconSize: 20.0,
-            onPressed: () {
-              GoRouter.of(context).go('/home');
-            },
+          leading: PopScope(
+            canPop: false,
+            onPopInvoked: ((didpop) {
+              if (didpop) {
+                return;
+              } else {
+                GoRouter.of(context).go('/home');
+              }
+            }),
+            child: IconButton(
+              color: Colors.black,
+              icon: const Icon(Icons.arrow_back_ios),
+              iconSize: 20.0,
+              onPressed: () {
+                GoRouter.of(context).go('/home');
+              },
+            ),
           ),
         ),
         body: ChangeNotifierProvider<ParoquiasRepository>(
@@ -60,8 +70,6 @@ class ParoquiasView extends StatelessWidget {
               enabledColor: Colors.grey,
               focusedColor: Colors.green,
               fillColor: Colors.transparent,
-              // You can use all properties of FilledOrOutlinedTextTheme
-              // to decor text field
             ),
             prefixIcon: const Icon(Icons.search),
             onChanged: (value) => paroquiaRepository.filtrarLista(value),
@@ -121,7 +129,7 @@ class ParoquiasView extends StatelessWidget {
                                     title: "Capelas da paróquia ${item.nome!}",
                                     color: const Color.fromARGB(
                                         255, 144, 147, 192),
-                                    customView: item.capelas!.length > 2
+                                    customView: item.capelas!.isNotEmpty
                                         ? capelaslist(context, item)
                                         : const Text(
                                             'Esta paróquia não possui capelas',
@@ -130,6 +138,7 @@ class ParoquiasView extends StatelessWidget {
                                     customViewPosition:
                                         CustomViewPosition.BEFORE_MESSAGE,
                                     context: context,
+                                    // ignore: dead_code
                                     dialogWidth: true ? 0.8 : null,
                                     onClose: (value) =>
                                         print("returned value is '$value'"),
@@ -156,7 +165,7 @@ class ParoquiasView extends StatelessWidget {
                             )),
                         TextButton(
                             onPressed: () {
-                              print('pressed');
+                              // print('pressed');
                               paroquiaRepository.paroquiaAtual = item;
                               Navigator.push(
                                 context,
@@ -179,16 +188,16 @@ class ParoquiasView extends StatelessWidget {
 
 //
   Widget capelaslist(BuildContext context, ParoquiaInterface paroquia) {
-    print('entrou ');
+    // print('entrou ');
     List<CapelasInterface>? c = [];
-    print(paroquia.capelas);
+    // print(paroquia.capelas);
     for (var i = 0; i < paroquia.capelas!.length; i++) {
-      if (i > 1) {
-        c.add(paroquia.capelas![i]);
-      }
+      //if (i > 1) {
+      c.add(paroquia.capelas![i]);
+      // }
     }
     paroquia.capelas = c;
-    print(paroquia.capelas);
+    // print(paroquia.capelas);
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(8.0),

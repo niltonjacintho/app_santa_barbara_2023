@@ -53,7 +53,7 @@ class GameRepository extends ChangeNotifier {
       b.nome = e.nome;
       b.cor = e.cor;
       l.add(b);
-      letters.add(b.nome!);
+      letters.add(b.nome!.data!);
       colors.add(Colors.primaries[Random().nextInt(Colors.primaries.length)]);
     }
     listTopicos = l;

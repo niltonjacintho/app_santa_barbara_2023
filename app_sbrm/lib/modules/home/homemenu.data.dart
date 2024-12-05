@@ -12,7 +12,7 @@ final List<MenuItemModel> demoData = [
     1,
   ),
   MenuItemModel(
-    'Nossas pastorais',
+    'Paróquias no RJ',
     'assets/images/pastorais.png',
     2,
   ),
@@ -21,9 +21,19 @@ final List<MenuItemModel> demoData = [
     'assets/images/agenda.png',
     3,
   ),
+  // MenuItemModel(
+  //   'Quiz',
+  //   'assets/images/quizlogo.png',
+  //   4,
+  // ),
   MenuItemModel(
-    'Quiz',
-    'assets/images/quizlogo.png',
-    4,
+    'Velário',
+    'assets/images/velaHome.jpg',
+    5,
+  ),
+  MenuItemModel(
+    'Fotos',
+    'assets/images/fotoHome.jpg',
+    6,
   ),
 ];

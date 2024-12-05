@@ -10,6 +10,11 @@ import 'package:santa_barbara/app/modules/game/gamePodio.view.dart';
 import 'package:santa_barbara/app/modules/mensagem_paroco/views/mensagem_paroco_view.dart';
 import 'package:santa_barbara/app/modules/paroquias/controllers/paroquias.repository.dart';
 import 'package:santa_barbara/app/modules/paroquias/views/paroquias_view.dart';
+import 'package:santa_barbara/app/modules/perfil/perfil_page.dart';
+import 'package:santa_barbara/app/modules/photo/views/photo_view.dart';
+import 'package:santa_barbara/app/modules/photoShow/views/photo_show_view.dart';
+import 'package:santa_barbara/app/modules/velario/views/velario_view.dart';
+import 'package:santa_barbara/app/modules/velarioLista/views/velario_lista_view.dart';
 import 'package:santa_barbara/modules/auth/auth.repository.dart';
 import 'package:santa_barbara/modules/auth/auth.view.dart';
 import 'package:santa_barbara/modules/avisos/avisos.repository.dart';
@@ -87,6 +92,31 @@ final GoRouter _router = GoRouter(
         path: '/avisodetails',
         builder: (BuildContext context, GoRouterState state) {
           return const AvisoviewDetails();
+        }),
+    GoRoute(
+        path: '/velario',
+        builder: (BuildContext context, GoRouterState state) {
+          return const VelarioView();
+        }),
+    GoRoute(
+        path: '/photos',
+        builder: (BuildContext context, GoRouterState state) {
+          return const PhotoView();
+        }),
+    GoRoute(
+        path: '/photoshow',
+        builder: (BuildContext context, GoRouterState state) {
+          return const PhotoShowView();
+        }),
+    GoRoute(
+        path: '/velaslista',
+        builder: (BuildContext context, GoRouterState state) {
+          return const VelarioListaView();
+        }),
+    GoRoute(
+        path: '/perfil',
+        builder: (BuildContext context, GoRouterState state) {
+          return const PerfilPage();
         })
   ],
 );
@@ -97,12 +127,20 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   print('Passou ${Firebase.apps}');
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (context) => AvisoRepository()),
-    ChangeNotifierProvider(create: (context) => ParoquiasRepository()),
-    ChangeNotifierProvider(create: (context) => GameRepository()),
-    ChangeNotifierProvider(create: (context) => UserRepository()),
-  ], child: const BaseApp())); //const MyApp()));
+  MaterialApp.router(
+    routerConfig: _router,
+  );
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AvisoRepository()),
+        ChangeNotifierProvider(create: (context) => ParoquiasRepository()),
+        ChangeNotifierProvider(create: (context) => GameRepository()),
+        ChangeNotifierProvider(create: (context) => UserRepository()),
+      ],
+      child: const BaseApp(),
+    ),
+  ); //const MyApp()));
 }
 
 class BaseApp extends StatelessWidget {
@@ -123,7 +161,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Clean Code',
+      title: '',
       home: AnimatedSplashScreen(
           duration: 3000,
           splash: SizedBox(
@@ -136,7 +174,7 @@ class MyApp extends StatelessWidget {
               alignment: Alignment.center,
             ),
           ),
-          nextScreen: const LoginScreen(),
+          nextScreen: const HomeView(),
           splashTransition: SplashTransition.fadeTransition,
           splashIconSize: (MediaQuery.of(context).size.height - 50),
           pageTransitionType: PageTransitionType.fade,

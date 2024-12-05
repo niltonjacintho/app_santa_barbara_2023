@@ -1,16 +1,16 @@
 // ignore_for_file: unnecessary_null_comparison, avoid_print
 
-import 'package:santa_barbara/modules/auth/auth.service.dart';
-import 'package:santa_barbara/modules/avisos/avisos.view.dart';
+import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:santa_barbara/modules/auth/auth.repository.dart';
 import 'package:santa_barbara/modules/home/homemenu.card.dart';
 import 'package:santa_barbara/modules/home/homemenu.data.dart';
 import 'package:flexible_grid_view/flexible_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_boom_menu_new/flutter_boom_menu_new.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -23,6 +23,7 @@ class _HomeState extends State<HomeView> {
   ScrollController? scrollController;
   bool scrollVisible = true;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  late UserRepository userRepository;
 
   @override
   void initState() {
@@ -44,64 +45,6 @@ class _HomeState extends State<HomeView> {
     return const Text('alive');
   }
 
-  BoomMenu buildBoomMenu() {
-    return BoomMenu(
-        animatedIcon: AnimatedIcons.menu_close,
-        animatedIconTheme: const IconThemeData(size: 22.0),
-        //child: Icon(Icons.add),
-        onOpen: () => print('OPENING DIAL'),
-        onClose: () => print('DIAL CLOSED'),
-        scrollVisible: scrollVisible,
-        overlayColor: Colors.black,
-        elevation: 10,
-        overlayOpacity: 0.7,
-        children: [
-          MenuItemModel(
-//          child: Icon(Icons.accessibility, color: Colors.black, size: 40,),
-            child: Image.asset('assets/images/avisos.png',
-                color: Colors.grey[850]),
-            title: "Avisos Paroquiais",
-            titleColor: Colors.grey[850]!,
-            subtitle: "O dia a dia da sua paróquia!!",
-            subTitleColor: Colors.grey[850]!,
-            backgroundColor: Colors.grey[50]!,
-            onTap: () async => {
-              await AuthService()
-                  .login(email: 'teste@123.com', password: '123456'),
-              print('THIRD CHILD'),
-            },
-            elevation: 10,
-          ),
-          MenuItemModel(
-            child: Image.asset('assets/images/avisos.png',
-                color: Colors.grey[850]),
-            title: "Avisos Paroquiais",
-            titleColor: Colors.grey[850]!,
-            subtitle: "O dia a dia da sua paróquia!!",
-            subTitleColor: Colors.grey[850]!,
-            backgroundColor: Colors.grey[50]!,
-            onTap: () => {
-              log(),
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const AvisosView()),
-              ),
-            },
-            elevation: 10,
-          ),
-          MenuItemModel(
-            child: Image.asset('assets/images/padres.png', color: Colors.white),
-            title: "Mensagem do Pároco",
-            titleColor: Colors.white,
-            subtitle: "Mensagem semanal dos nossos padres!",
-            subTitleColor: Colors.white,
-            backgroundColor: Colors.pinkAccent,
-            onTap: () => print('FOURTH CHILD'),
-            elevation: 10,
-          ),
-        ]);
-  }
-
   log() async {
     await FirebaseAnalytics.instance.logBeginCheckout(
         value: 10.0,
@@ -113,11 +56,71 @@ class _HomeState extends State<HomeView> {
         coupon: '10PERCENTOFF');
   }
 
+  Future<bool> _onWillPop(BuildContext context) async {
+    bool? exitResult = await showDialog(
+      context: context,
+      builder: (context) => _buildExitDialog(context),
+    );
+    return exitResult ?? false;
+  }
+
+  Future<bool?> _showExitDialog(BuildContext context) async {
+    return await showDialog(
+      context: context,
+      builder: (context) => _buildExitDialog(context),
+    );
+  }
+
+  AlertDialog _buildExitDialog(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Please confirm'),
+      content: const Text('Desejas realmente sair?'),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(false),
+          child: const Text('Não'),
+        ),
+        TextButton(
+          onPressed: () =>
+              SystemNavigator.pop(), // GoRouter.of(context). .pop(true),
+          child: const Text('Sim'),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        //appBar: AppBar(title: const Text('Boom Menu Example')),
+    userRepository = Provider.of<UserRepository>(context);
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      //title: 'Avisos Paroquiais',
+
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          // title: const Text('Boom Menu Example'),
+          leading: PopScope(
+            canPop: false,
+            onPopInvoked: ((didpop) {
+              if (didpop) {
+                return;
+              } else {
+                _onWillPop(context);
+              }
+            }),
+            child: IconButton(
+              color: Colors.black,
+              icon: const Icon(Icons.arrow_back_ios),
+              iconSize: 20.0,
+              onPressed: () {
+                GoRouter.of(context).go('/home');
+              },
+            ),
+          ),
+        ),
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -134,6 +137,14 @@ class _HomeState extends State<HomeView> {
                 ),
                 textAlign: TextAlign.center,
               ),
+              Text(
+                // ignore: prefer_interpolation_to_compose_strings
+                'versão 20 -- ${userRepository.usuario.nome} --  ',
+                style: const TextStyle(
+                  fontSize: 10,
+                ),
+                textAlign: TextAlign.center,
+              ),
               Expanded(
                 child: FlexibleGridView(
                   padding: const EdgeInsets.all(12),
@@ -146,7 +157,7 @@ class _HomeState extends State<HomeView> {
             ],
           ),
         ),
-        floatingActionButton: buildBoomMenu(),
+        // floatingActionButton: buildBoomMenu(),
       ),
     );
   }

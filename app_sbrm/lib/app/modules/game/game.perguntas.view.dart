@@ -1,6 +1,5 @@
 import 'package:go_router/go_router.dart';
 import 'package:santa_barbara/app/modules/game/game.repository.dart';
-import 'package:santa_barbara/app/modules/game/gamePodio.view.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:emoji_alert/arrays.dart';
 import 'package:emoji_alert/emoji_alert.dart';
